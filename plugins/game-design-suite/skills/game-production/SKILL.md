@@ -7,6 +7,8 @@ description: 负责游戏整体体验、玩法循环、系统规则、奖励框�
 
 把玩家体验目标转化为可执行、可测试、可交付的系统规则。
 
+涉及跨系统绑定、系统参与度、强制依赖或“为了联动而联动”时，优先读取 [System Coupling & Anti-patterns](references/system-coupling-and-antipatterns.md)。
+
 ## 先定义设计问题
 
 明确：
