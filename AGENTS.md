@@ -20,15 +20,16 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 
 当用户提出游戏设计、系统、玩法、数值、经济、成长、战斗、技能、关卡、UI、配置、代码验证、评审或 GDD 需求时：
 
-1. 先读取 `plugins/game-design-suite/skills/game-design/SKILL.md`。
-2. 由 `game-design` 选择最小充分 Skill 集。
+1. 优先读取 `plugins/game-design-suite/skills/game-design/SKILL.md`；若宿主直接命中专业 Skill，也允许 Direct Specialist Entry，但不得绕过 Header 规则。
+2. 由 `game-design` 选择最小充分 Skill 集；Direct Specialist Entry 时只加载完成任务真正需要的其他 Skill。
 3. 完整读取被选 Skill 的 `plugins/game-design-suite/skills/<skill-name>/SKILL.md`。
 4. 只按 Skill 路由读取会改变当前判断的 reference；不要为了显得全面加载全部资料。
-5. 对已有项目，优先检查现有规则、文件、配置、数据与必要代码，不把项目当白纸。
-6. 缺关键资料时执行 Missing Evidence Guard：标记证据边界，列出最小缺失材料，同时继续所有独立可做工作。
-7. 在用户可见的正式答案开始前，按 `game-design/references/professional-context-header.md` 输出 Professional Context Header：主责专业、必要协同专业，以及真正会改变结论的关键约束/证据边界。
-8. 继续执行任务并交付实际结果。
-9. 最终回复应是设计、结论、配置修改、验证结果或待确认 Human Gate，不是 Skill 名称列表。
+5. **在任何正式结论之前输出 Professional Context Header。** 若 `game-design` 已输出则不重复；若宿主直接进入专业 Skill，该 Skill 必须自行输出，只列实际已读取/使用的专业。
+6. 对已有项目，优先检查现有规则、文件、配置、数据与必要代码，不把项目当白纸。
+7. 缺关键资料时执行 Missing Evidence Guard：标记证据边界，列出最小缺失材料，同时继续所有独立可做工作。
+8. 配置表任务执行 Field Attribution Guard：先锁定 `Table/Sheet + RowKey/ID + FieldName + RawValue`，再解释数值；不得跨列串位。
+9. 继续执行任务并交付实际结果。
+10. 最终回复应是设计、结论、配置修改、验证结果或待确认 Human Gate，不是 Skill 名称列表。
 
 ## Professional Context Header
 
@@ -40,7 +41,9 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 - 不得列出未实际读取/使用的 Skill；
 - 不得为了显得全面把全部 Skill 都列出来；
 - 不得只写“我是资深 XX 策划”代替实际路由；
-- Header 后必须继续完成任务，不能只汇报路由。
+- Header 必须出现在正式答案前部，不能回答完再补；
+- Header 后必须继续完成任务，不能只汇报路由；
+- 如果宿主跳过 Router 直接调用专业 Skill，该专业 Skill 必须自行补 Header；同一轮已有 Header 时不重复。
 
 推荐格式：
 
@@ -56,6 +59,10 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 协同：数值策划（balance-design） / 配置审计（config-audit） / 代码验证（code-verification）
 证据边界：当前仅有真实配置，可验证到 verified-config；代码语义仍为 unverified
 ```
+
+统一规则见：
+
+`plugins/game-design-suite/skills/game-design/references/professional-context-header.md`
 
 ## Host 适配
 
@@ -93,6 +100,19 @@ Deep Code 通过：
 - 配置事实、代码事实、数值候选、设计判断和 Playtest 证据分层处理。
 - 新证据可以推翻旧 candidate；不要为了维护历史回答一致而忽略更高质量证据。
 - Professional Context Header 必须与实际路由一致；若后续证据使主责专业发生实质变化，可在正文中说明路由调整，不必反复重发完整 Header。
+- Direct Specialist Entry 不得虚构尚未加载的协同 Skill。
+
+## 配置读取硬规则
+
+涉及 Excel/CSV/JSON/配置表时：
+
+1. 先确认 Sheet/表名、Header Row 与准确列名；
+2. 关键事实绑定 `Table/Sheet + RowKey/ID + FieldName + RawValue`；工具可提供时同时保留 CellAddress；
+3. 关键修改项在输出前重新检查一次字段归属；
+4. 不得把 `CoverCheckType = 2` 读成 `UniqueId = 2`，也不得把 A 列的值分布转写成 B 列的分布；
+5. 不得根据截图视觉邻近、上一轮讨论字段或“数字看起来像某枚举”推断字段归属；
+6. 用户指出“看错字段/看错列”时，撤销所有依赖该错误归属的结论并从表头重新读取；
+7. 代码解释必须等待字段身份锁定后再做枚举 / Parser / Runtime 追踪。
 
 ## 长期项目
 
