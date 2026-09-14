@@ -21,6 +21,7 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 6. 区分 `confirmed / supported-inference / candidate / assumed / unknown / verified / not-yet-playtested / externally-blocked`。
 7. 路由不是最终答案；继续把任务做完。
 8. 专业身份来自实际路由，不来自角色扮演；先路由，再显示 Professional Context Header，再执行正文。
+9. 宿主若直接进入某个专业 Skill 而跳过本 Router，该专业 Skill 仍必须按共享规则自行输出 Header；Header 不能依赖 `game-design` 一定先被调用。
 
 ## Professional Context Header
 
@@ -54,14 +55,16 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 
 ### 约束
 
+- Header 必须出现在正式结论之前，不能长篇回答后再补；
 - 不得为了显得专业而列出没有实际读取/使用的 Skill；
 - 不得把 14 个 Skill 全部列出；
 - 不得只写“我是资深 XX 策划”替代实际路由；
 - 不得因为用户指定某职业就跳过真正应主责的专业；
 - `game-design` 是路由器，通常不作为主责职业显示；
-- Header 后必须继续完成任务，不能只汇报路由。
+- Header 后必须继续完成任务，不能只汇报路由；
+- Direct Specialist Entry 时，只能显示实际已加载的专业，不能虚构理想协同阵容。
 
-主责专业的选择、Skill 到用户可见职业名的映射、证据边界写法与回归要求，见 [Professional Context Header](references/professional-context-header.md)。
+主责专业的选择、Skill 到用户可见职业名的映射、证据边界写法与 Direct Specialist Entry 规则，见 [Professional Context Header](references/professional-context-header.md)。
 
 ## Professional Judgment Guard
 
