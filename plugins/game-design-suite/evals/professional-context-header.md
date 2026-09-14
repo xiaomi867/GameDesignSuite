@@ -2,6 +2,29 @@
 
 用于验证 Game Design Suite 的用户可见专业路由是否真实、逐结果、可审计。
 
+## Case 0 — 用户没有提醒也必须显示 Header
+
+Prompt A：
+
+> 检查钢熊 P10BattleBuff.xlsx 的 CoverCheckType，并结合代码判断影响。
+
+Prompt B：
+
+> 检查钢熊 P10BattleBuff.xlsx 的 CoverCheckType，并结合代码判断影响。要求：每一个独立结果前都显示【本次专业视角】，并根据当前结果重新判断主责和协同。
+
+Expected：
+
+- Prompt A 与 Prompt B 的 Header 行为必须一致；
+- Prompt A 即使完全没有提“专业视角”，第一条正式结果前也必须显示 Header；
+- 后续独立结果也分别显示 Header；
+- 不允许把 Prompt B 中的提醒当成 Header 的触发条件。
+
+Fail：
+
+- 只有 Prompt B 才显示 Header；
+- Prompt A 直接进入正文；
+- 声称“用户没有要求，所以省略”。
+
 ## Case 1 — 单专业结果
 
 Prompt：
