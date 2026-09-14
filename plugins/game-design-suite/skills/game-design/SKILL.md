@@ -14,8 +14,27 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 3. 已有项目先理解现状，不把项目当白纸。
 4. 用户明确要求保持不变的机制、范围或规则视为硬约束。
 5. 多 Skill 参与时形成统一结论，不机械拼接。
-6. 区分 `confirmed / supported-inference / candidate / assumed / unknown / verified / not-yet-playtested`。
+6. 区分 `confirmed / supported-inference / candidate / assumed / unknown / verified / not-yet-playtested / externally-blocked`。
 7. 路由不是最终答案；继续把任务做完。
+
+## Missing Evidence Guard
+
+当任务需要配置表、代码、Telemetry、Playtest、地图、文档或其他项目证据，但当前会话和可访问项目资料中没有对应材料时：
+
+1. 只做一次必要的可用性检查；不要反复搜索不存在的文件、插件、网页或无关来源。
+2. 立即把依赖该证据的结论标记为 `unverified` 或 `externally-blocked`，不得从命名、经验或相似项目补成事实。
+3. 列出继续验证所需的最小材料，例如具体文件、表、目录、代码模块或数据范围。
+4. 继续完成所有不依赖缺失证据的独立工作，例如设计风险、候选数值框架、检查清单、验证方案和可执行下一步。
+5. 不因为一个专业分支缺证据而中止整项任务。
+6. 如果用户当前只是测试 Skill 路由或询问“需要哪些专业能力”，只说明路由、职责、证据缺口和下一步，不进入文件检索。
+7. 若用户明确要求“不猜”，缺证据部分必须停在证据边界上，不用外部公开资料替代其私有项目事实。
+
+推荐状态表达：
+
+- `verified`：已有直接实现、运行时或项目证据支持；
+- `candidate`：设计或数值候选，可继续推演但尚未实证；
+- `unverified`：理论上可检查，但当前缺少对应项目证据；
+- `externally-blocked`：必须由当前不可访问的外部材料或运行环境才能继续。
 
 ## 路由
 
@@ -93,7 +112,7 @@ GDD、System Spec、Pitch Design Doc 等正式文档整理。
 6. 必要客户端/服务器代码；
 7. 当前制作和技术约束。
 
-关键证据缺失时继续完成独立可做部分，并明确未知项，不补成事实。
+关键证据缺失时执行 `Missing Evidence Guard`：继续完成独立可做部分，并明确未知项，不补成事实，也不在缺失材料上无限检索。
 
 ## 边界
 
@@ -101,3 +120,4 @@ GDD、System Spec、Pitch Design Doc 等正式文档整理。
 - 不强制输出大型文档或图。
 - 不保存无意义中间状态。
 - 不把模拟、Spreadsheet 或理论分析描述成“已验证好玩”。
+- 不因缺少某个文件或代码分支而让整项任务无输出地停止。
