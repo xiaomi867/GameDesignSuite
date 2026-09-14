@@ -15,6 +15,12 @@ description: 负责关卡、地图、波次和可玩空间设计，包括 Layout
 - Boss、机械峰值、情绪峰值、收束 -> [Emotion, Encounter & Closure](references/emotion-encounter-and-closure.md)
 - 角色技能、队伍体系如何被 Encounter 验证 -> [Kit-to-Encounter Contract](references/kit-encounter-contract.md)
 
+## Result-Level Professional Context
+
+每一个独立 Layout、路径、导航、Encounter、波次、节奏、Boss 或机制教学结论前，按 `../game-design/references/professional-context-header.md` 输出一次结果级 Header。
+
+空间和关卡编排本身由 `level-design` 主责；底层战斗规则由 `combat-design` 主责；具体强度曲线由 `balance-design` 主责；系统玩法结构由 `game-production` 主责；界面引导问题可由 `game-interface-design` 主责。相邻结果即使专业组合相同，也重复显示 Header。
+
 ## 1. 先定义关卡问题
 
 明确：
