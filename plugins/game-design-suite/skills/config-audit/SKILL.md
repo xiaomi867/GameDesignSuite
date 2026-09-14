@@ -9,19 +9,33 @@ description: 审查游戏 Excel/CSV/JSON/配置表，包括 Row/Key/ID、字段�
 
 证据状态遵循 [Evidence Standard](../game-design/references/evidence-standard.md)。配置文件直接确认的事实优先标记 `verified-config`，不要笼统写 `verified`。
 
-## Professional Context Header
+## Per-Result Professional Context Header
 
-如果本轮尚未由 `game-design` 输出 Professional Context Header，则本 Skill 在正式答案的第一段自行补出，规则读取 [Professional Context Header](../game-design/references/professional-context-header.md)。
+每一个独立配置结果、字段异常、引用断链或修改建议之前，都必须按 [Professional Context Header](../game-design/references/professional-context-header.md) 输出一次结果级 Header。
 
-直接进入本 Skill 时，只显示本轮**实际已经读取/使用**的专业能力，不猜测尚未加载的协同 Skill。例如：
+即使连续两个结果主责相同，也重复显示，不因上一段已经写过而省略。
+
+配置事实类结果默认：
 
 ```text
 【本次专业视角】
 主责：配置审计（config-audit）
-证据边界：当前仅能确认真实配置字段与引用；运行时语义需要 code-verification
 ```
 
-若本轮已经有 Header，不重复输出。Header 必须出现在正式结论前，不能回答完以后再补。
+如果当前结果同时需要源码解释字段运行时语义，可写：
+
+```text
+【本次专业视角】
+主责：配置审计（config-audit）
+协同：代码 / 实现验证（code-verification）
+证据边界：字段事实可到 verified-config；运行时语义按源码证据决定
+```
+
+**发现 `_lv` 系列字段不一致、字段值异常、漏配、错引，本身仍是配置审计主责。** 不因为该差异可能影响强度就改成 `balance-design` 主责。
+
+只有后续结果开始回答“这个差异造成多少强度/覆盖率变化、候选值应该是多少”时，才切换到 `balance-design` 主责并单独形成下一结果块。
+
+若当前结果只是代码枚举/Parser/Runtime Consumer 的语义结论，则应切换为 `code-verification` 主责，`config-audit` 协同。
 
 ## 基本流程
 
