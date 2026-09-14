@@ -13,6 +13,7 @@ description: 负责关卡、地图、波次和可玩空间设计，包括 Layout
 - 节奏、强度、Beat、时长预算 -> [Pacing, Intensity & Beat Budget](references/pacing-intensity-and-beat-budget.md)
 - 波次、随机事件、Roguelite 结构 -> [Wave & Randomized Level Architecture](references/wave-random-level-architecture.md)
 - Boss、机械峰值、情绪峰值、收束 -> [Emotion, Encounter & Closure](references/emotion-encounter-and-closure.md)
+- 角色技能、队伍体系如何被 Encounter 验证 -> [Kit-to-Encounter Contract](references/kit-encounter-contract.md)
 
 ## 1. 先定义关卡问题
 
@@ -188,6 +189,41 @@ description: 负责关卡、地图、波次和可玩空间设计，包括 Layout
 
 中点喘息用于重建节奏，不等于无意义暂停。
 
+### Kit-to-Encounter Contract
+
+已有角色制项目还必须检查“关卡是否真的允许角色机制发生”。
+
+典型映射：
+
+- 反击/受击角色 -> 敌人需要有可读且足够频率的攻击；
+- AoE/扩散 -> 需要合理目标密度；
+- 单体爆发 -> 需要高价值单体/优先目标；
+- DoT/状态引爆 -> 目标需要存活足够久且状态不会频繁无条件清空；
+- Break/失衡 -> 需要 Gauge 与明确 Payoff Window；
+- 换人/支援 -> 需要清晰 Telegraph 和响应窗口；
+- 低血/护盾循环 -> 需要可控压力而不是随机秒杀。
+
+允许局部 Soft Counter，但避免大量关卡长期 Hard Invalidate 一整类角色。
+
+### Encounter Matrix
+
+一组关卡至少跨以下维度变化：
+
+- Enemy Count；
+- Target Density；
+- Attack Frequency；
+- Telegraph；
+- Mobility；
+- Weakness/Resistance；
+- Break/Stun Length；
+- Invulnerability；
+- Adds；
+- Phase Change；
+- Resource Pressure；
+- Time Limit。
+
+用矩阵检查是否只有一种队伍/角色在所有环境都最优。
+
 ## 10. Boss
 
 Boss 至少明确：
@@ -215,6 +251,21 @@ Boss 至少明确：
 - Ultimate Skill Check；
 
 再决定难度和时长。多个峰值可以重合，也可以错开。
+
+### Stress，不是 Nullify
+
+Boss 优先通过：
+
+- 改节奏；
+- 改窗口；
+- 改目标数量；
+- 强制转火；
+- 资源保留；
+- 防守响应；
+
+来测试角色，而不是简单“免疫该体系”。
+
+若必须免疫，提供明确 Telegraph、替代解法、有限持续和后续奖励窗口。
 
 ## 11. 波次 / Roguelite / 随机事件关卡
 
@@ -289,6 +340,8 @@ UI 动画、品质展示、等待、结算和选择停留都要算。
 - Intensity Curve；
 - Emotion Curve；
 - Encounter Plan；
+- Encounter Matrix；
+- Kit Coverage；
 - Decision Budget；
 - Time Budget；
 - Random Distribution Rules；
@@ -316,7 +369,8 @@ UI 动画、品质展示、等待、结算和选择停留都要算。
 - 每 Beat 实际时长；
 - 失败/退出分布；
 - 自评紧张/挫败/成就；
-- P50/P90 总时长。
+- P50/P90 总时长；
+- 不同角色/Build 的循环完成率与失效原因。
 
 文档、白盒、强度图或未游玩地图不能证明“好玩/节奏已验证”。
 
@@ -336,6 +390,14 @@ UI 动画、品质展示、等待、结算和选择停留都要算。
 - Animation Tax；
 - Beat Filler；
 - Paper Pacing；
-- Fake Precision。
+- Fake Precision；
+- **DPS Dummy Level**：所有关卡只换血量；
+- **System Invalidation**：大量内容直接封印某体系；
+- **Window Theft**：玩家刚进入爆发就强制转场；
+- **Counter Starvation**：反击角色因敌人低频行动无法玩；
+- **Trash Too Fragile**：状态/构筑尚未成立，目标已死亡；
+- **Boss Immunity Soup**：靠堆免疫制造难度；
+- **Tutorial by Button List**：角色试玩只教按钮不教循环；
+- **One-Roster Check**：只用最强标准队验证关卡。
 
 发现这些问题时，优先修结构，不用更多敌人、更多事件、更多数值把问题盖住。
