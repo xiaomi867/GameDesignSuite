@@ -11,6 +11,14 @@ description: 负责游戏数值策划与平衡，包括属性、技能倍率、D
 
 涉及角色基础属性、速度/行动频率、共享技能资源、能量循环、命中/抵抗、目标权重、装备词条预算或类似回合制 RPG 理论计算时，优先读取 [HSR-Inspired Theorycrafting Patterns](references/hsr-theorycrafting-patterns.md)。
 
+## Result-Level Professional Context
+
+每一个独立数值判断、强度结论、候选值、Benchmark 结论或极端验证结果前，按 `../game-design/references/professional-context-header.md` 输出一次结果级 Header。
+
+只有当前结果核心是“强度/倍率/曲线/概率/Power Delta 是否合理”时，`balance-design` 才主责。若当前结果只是发现配置字段不一致，应由 `config-audit` 主责；若只是解释代码枚举/运行时语义，应由 `code-verification` 主责；若是成长成本结构或经济根因，应分别由 `progression-design` / `economy-design` 主责。
+
+相邻结果即使专业组合相同，也重复显示 Header。
+
 ## 0. 数值合法性先于数值精度
 
 一个方案数学上能闭环，不代表设计上合理。
