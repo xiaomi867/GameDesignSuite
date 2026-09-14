@@ -1,6 +1,6 @@
 ---
 name: progression-design
-description: 负责角色、账户、装备、技能、星级、突破、解锁和长期成长设计。用于成长路径、等级曲线、星级收益、解锁节奏、追赶机制、卡点、成长上限和资源需求等问题。
+description: 负责角色、账户、装备、技能、星级、突破、技能树、解锁和长期成长设计。用于成长路径、等级曲线、技能节点、星级收益、解锁节奏、追赶机制、卡点、成长上限和资源需求等问题。
 ---
 
 # 成长策划
@@ -8,6 +8,8 @@ description: 负责角色、账户、装备、技能、星级、突破、解锁�
 成长不是单纯“数字变大”，需要明确玩家获得的是强度、能力、选择、内容权限还是收藏完成度。
 
 涉及角色基础属性、等级/突破采样、装备基础值与百分比属性分层时，与 `balance-design` 的 HSR-style theorycrafting reference 协作，只学习结构，不照抄外部游戏成长率。
+
+涉及技能等级、技能树、关键被动、升星/命座/影画式里程碑时，优先读取 [Skill Progression & Upgrade Topology](../skill-design/references/skill-progression-and-upgrade-topology.md)。
 
 ## 成长类型
 
@@ -120,6 +122,75 @@ description: 负责角色、账户、装备、技能、星级、突破、解锁�
 - Time-to-Upgrade；
 - 玩家可感知收益。
 
+## Skill Tree / 技能树拓扑
+
+技能树要同时承担“稳定成长”和“关键里程碑”，不能只是把线性升级画成树。
+
+建议区分：
+
+- **Skill Rank**：倍率、护盾、治疗、概率等稳定纵向成长；
+- **Major Passive**：补循环、条件、可靠性、资源关系；
+- **Minor Stat Node**：提供 Build 支撑；
+- **Milestone Node**：关键等级/星级改变技能交互；
+- **Capstone**：完成角色玩法身份或突破上限。
+
+### 核心身份应尽早成立
+
+角色的主循环不应被拆到后期才完整。
+
+早期：让玩家看懂角色是谁、怎么玩。
+
+中期：提高可靠性、资源效率、Build 空间。
+
+后期：扩大上限、改变交互、提供更高执行/组合空间。
+
+如果“没点到某高阶节点前角色像残缺品”，标记 `Identity Locked Late / Problem-Sell-Solution` 风险。
+
+## Upgrade Value Classes
+
+关键节点至少标记它主要改善什么：
+
+- Vertical Power；
+- Reliability；
+- Rotation/Cycle；
+- Resource Economy；
+- Target Coverage；
+- Survivability；
+- Team Synergy；
+- Execution/QoL；
+- Mechanic Transformation。
+
+不要把不同升级全部压成“等效伤害提升”后结束。
+
+## Milestone Cohesion / 节点主题一致性
+
+同一角色的成长节点最好围绕它的核心循环逐步深化。
+
+例如反击角色可以按：
+
+`循环成立 -> 触发更可靠 -> 反击转资源 -> 场景覆盖扩大 -> 高阶突破触发限制`
+
+而不是：
+
+`+攻击 -> +生命 -> 随机控制 -> +暴击 -> 再+攻击`
+
+后者会导致成长没有玩法方向。
+
+## Window Fit / 实际兑现
+
+技能/星级节点增加：
+
+- 额外攻击次数；
+- 额外行动；
+- 状态持续；
+- Burst Length；
+
+都必须与真实战斗窗口检查。
+
+纸面增加 3 段攻击，但只能有 1 段落在敌方失衡/易伤期，不应把 3 段全部当成实战提升。
+
+与 `skill-design + combat-design + balance-design` 联合验证。
+
 ## 节奏
 
 检查：
@@ -183,7 +254,8 @@ description: 负责角色、账户、装备、技能、星级、突破、解锁�
 - 是否存在“投入大量资源但体验不变”；
 - 节点价值是否与成本同步；
 - 是否出现“低级频繁交税，高级才有真正收益”的坏节奏；
-- 是否跨过 Action / Energy / Hit / Stack Breakpoint。
+- 是否跨过 Action / Energy / Hit / Stack Breakpoint；
+- 是否只是修复基础角色人为制造的资源/触发缺陷。
 
 ## 成长成本
 
@@ -224,7 +296,13 @@ description: 负责角色、账户、装备、技能、星级、突破、解锁�
 - **Resource Pile-on**：为了体现复杂度不断叠加升级材料；
 - **All-Stats Inflation**：所有属性一起涨，导致角色定位与系统阈值失控；
 - **Benchmark Drift**：不同角色用不同养成标准比较强度；
-- **Breakpoint Accident**：某节点无意跨过关键速度/能量/控制阈值造成异常爆发。
+- **Breakpoint Accident**：某节点无意跨过关键速度/能量/控制阈值造成异常爆发；
+- **Linear Tree Cosplay**：树形 UI，实际全是线性加数；
+- **Identity Locked Late**：核心玩法太晚才完整；
+- **Problem-Sell-Solution**：高阶节点只是修基础缺陷；
+- **Upgrade Soup**：节点价值类型混乱；
+- **Window Spill**：纸面升级无法在实际窗口兑现；
+- **Dead Rank**：升级了几乎不用的技能。
 
 发现这些问题时，不通过再加材料或再加层级解决。
 
@@ -232,7 +310,7 @@ description: 负责角色、账户、装备、技能、星级、突破、解锁�
 
 对正式成长方案至少给：
 
-| 阶段 | 条件 | 成本 | Cost Role | Base/Power Delta | 解锁 | Benchmark | 玩家目标 | 风险 | 验证 |
-|---|---|---|---|---|---|---|---|---|---|
+| 阶段/节点 | 条件 | 成本 | Cost Role | Base/Power Delta | 升级类型 | 解锁/交互 | Benchmark | 玩家目标 | 风险 | 验证 |
+|---|---|---|---|---|---|---|---|---|---|---|
 
 未知数值标 `TBD/candidate`，不虚构。
