@@ -1,9 +1,10 @@
 # Header & Field Attribution Regression Cases
 
-These cases protect two production-critical behaviors:
+These cases protect three production-critical behaviors:
 
 1. Professional Context Header must remain visible even when a host enters a specialist Skill directly.
-2. Spreadsheet/config values must never be attributed to the wrong field.
+2. Every independent result must expose its own actual professional routing.
+3. Spreadsheet/config values must never be attributed to the wrong field.
 
 ## 1. Direct Specialist Entry Still Shows Header
 
@@ -15,7 +16,7 @@ These cases protect two production-critical behaviors:
 
 ### Pass
 
-The first visible answer section includes a Professional Context Header such as:
+The result begins with a Professional Context Header such as:
 
 ```text
 【本次专业视角】
@@ -32,19 +33,34 @@ If `code-verification` has not actually been loaded, it must not be listed as an
 
 ---
 
-## 2. Do Not Duplicate Header
+## 2. Repeat Header for Every Independent Result
 
 ### Setup
 
-`game-design` already emitted the Header, then delegates to `config-audit`.
+The answer finds two independent configuration findings one after another.
 
 ### Pass
 
-`config-audit` continues the answer without emitting a second full Header.
+Each finding receives its own Header, even if both use exactly the same routing:
+
+```text
+【本次专业视角】
+主责：配置审计（config-audit）
+```
+
+...result 1...
+
+```text
+【本次专业视角】
+主责：配置审计（config-audit）
+```
+
+...result 2...
 
 ### Fail
 
-The response repeats multiple identical routing banners.
+- only the first result has a Header;
+- the second Header is omitted because “the profession has not changed”.
 
 ---
 
@@ -175,3 +191,83 @@ The assistant treats screenshot proximity as insufficient evidence and relies on
 ### Fail
 
 Uses visual adjacency to assign the numeric value to `UniqueId`.
+
+---
+
+## 9. Bear CoverCheckType Mismatch Is Config-Audit Primary
+
+### Data
+
+```text
+BUF_bear_def_pct       CoverCheckType = 3
+BUF_bear_def_pct_lv2   CoverCheckType = 2
+BUF_bear_def_pct_lv3   CoverCheckType = 2
+BUF_bear_def_pct_lv4   CoverCheckType = 2
+BUF_bear_def_pct_lv5   CoverCheckType = 2
+```
+
+### Pass
+
+The finding that the base row differs from lv2~lv5 begins with:
+
+```text
+【本次专业视角】
+主责：配置审计（config-audit）
+```
+
+If the implementation is also consulted, `code-verification` may be supporting.
+
+### Fail
+
+Uses:
+
+```text
+主责：数值策划（balance-design）
+```
+
+merely because the values are numeric or because the mismatch may ultimately affect strength.
+
+---
+
+## 10. Code Meaning Gets Its Own Result Block
+
+### Continuation of Case 9
+
+The answer then explains what `CoverCheckType = 2/3` means in the parser/runtime.
+
+### Pass
+
+A new result block starts with:
+
+```text
+【本次专业视角】
+主责：代码 / 实现验证（code-verification）
+协同：配置审计（config-audit）
+```
+
+### Fail
+
+Keeps the previous config-audit Header while presenting a distinct code-semantics conclusion without rerouting.
+
+---
+
+## 11. Strength Impact Gets Its Own Result Block
+
+### Continuation of Case 9/10
+
+The answer evaluates how the behavior difference affects Buff uptime, EHP, DPS, or hero strength.
+
+### Pass
+
+Only now can a result use:
+
+```text
+【本次专业视角】
+主责：数值策划（balance-design）
+```
+
+with only actually used supporting Skills.
+
+### Fail
+
+Labels the original field mismatch itself as a balance finding.
