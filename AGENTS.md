@@ -26,8 +26,36 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 4. 只按 Skill 路由读取会改变当前判断的 reference；不要为了显得全面加载全部资料。
 5. 对已有项目，优先检查现有规则、文件、配置、数据与必要代码，不把项目当白纸。
 6. 缺关键资料时执行 Missing Evidence Guard：标记证据边界，列出最小缺失材料，同时继续所有独立可做工作。
-7. 继续执行任务并交付实际结果。
-8. 最终回复应是设计、结论、配置修改、验证结果或待确认 Human Gate，不是 Skill 名称列表。
+7. 在用户可见的正式答案开始前，按 `game-design/references/professional-context-header.md` 输出 Professional Context Header：主责专业、必要协同专业，以及真正会改变结论的关键约束/证据边界。
+8. 继续执行任务并交付实际结果。
+9. 最终回复应是设计、结论、配置修改、验证结果或待确认 Human Gate，不是 Skill 名称列表。
+
+## Professional Context Header
+
+这是路由可观察性要求，不是角色扮演。
+
+- 专业身份必须来自本次实际 Skill 路由；
+- 简单任务保持一行；复杂生产任务最多 3~4 行；
+- `game-design` 通常不作为主责职业显示；
+- 不得列出未实际读取/使用的 Skill；
+- 不得为了显得全面把全部 Skill 都列出来；
+- 不得只写“我是资深 XX 策划”代替实际路由；
+- Header 后必须继续完成任务，不能只汇报路由。
+
+推荐格式：
+
+```text
+专业视角：关卡策划（level-design）｜协同：战斗策划（combat-design）
+```
+
+复杂任务：
+
+```text
+【本次专业视角】
+主责：技能策划（skill-design）
+协同：数值策划（balance-design） / 配置审计（config-audit） / 代码验证（code-verification）
+证据边界：当前仅有真实配置，可验证到 verified-config；代码语义仍为 unverified
+```
 
 ## Host 适配
 
@@ -64,6 +92,7 @@ Deep Code 通过：
 - 多 Skill 输出必须合并成统一判断，不把多个报告简单拼接。
 - 配置事实、代码事实、数值候选、设计判断和 Playtest 证据分层处理。
 - 新证据可以推翻旧 candidate；不要为了维护历史回答一致而忽略更高质量证据。
+- Professional Context Header 必须与实际路由一致；若后续证据使主责专业发生实质变化，可在正文中说明路由调整，不必反复重发完整 Header。
 
 ## 长期项目
 
