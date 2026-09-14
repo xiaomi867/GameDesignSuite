@@ -7,6 +7,8 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 
 本 Skill 只负责路由、协调和证据边界，不复制其他 Skill 的专业知识。
 
+涉及多来源证据、`candidate / verified` 冲突或新证据推翻旧结论时，读取 [Evidence Standard](references/evidence-standard.md)。
+
 ## 基础原则
 
 1. 用户描述问题，AI 判断专业边界。
