@@ -7,6 +7,8 @@ description: 负责游戏数值策划与平衡，包括属性、技能倍率、D
 
 目标不是“让数字看起来顺”，而是让数值稳定支持目标体验、角色定位、成长节奏和系统经济。
 
+跨类型能力比较、极端组合、成长强度或复杂验证时，优先读取 [Power Budget & Validation](references/power-budget-and-validation.md)。
+
 ## 0. 数值合法性先于数值精度
 
 一个方案数学上能闭环，不代表设计上合理。
