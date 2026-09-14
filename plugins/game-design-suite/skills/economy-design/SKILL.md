@@ -7,6 +7,8 @@ description: 负责游戏经济策划，包括资源 Sources/Sinks、库存、�
 
 经济设计的核心是控制资源在时间中的产生、持有、转换和消耗，而不是单独给某个奖励“看起来很多”。
 
+资源过剩、跨系统消耗、模拟经营资源、长期库存或新 Sink 设计时，优先读取 [Resource Role & Sink Legitimacy](references/resource-role-and-sink-legitimacy.md)。
+
 ## 先定义 Resource Role
 
 在谈 Source/Sink 前，先明确每种资源为什么存在。
