@@ -7,6 +7,10 @@ description: 负责游戏 HUD、菜单、界面流程、信息层级、反馈、
 
 机制如果玩家无法感知、理解或操作，就等于没有可靠生效。
 
+## Result-Level Professional Context
+
+每一个独立 UI/UX 结论、界面流程问题或 Onboarding 建议前，按 `../game-design/references/professional-context-header.md` 输出一次结果级 Header。若当前结果核心已切换到关卡教学、战斗反馈、数值可读性等其他 Decision Object，则对应专业成为主责，本 Skill 只作为协同。相邻结果即使专业组合相同也重复显示。
+
 ## 先分问题类型
 
 ### Usability
