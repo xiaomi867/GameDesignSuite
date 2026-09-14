@@ -9,19 +9,21 @@ description: 只读验证游戏客户端/服务器代码如何读取和执行设
 
 证据状态遵循 [Evidence Standard](../game-design/references/evidence-standard.md)。代码直接确认用 `verified-code`，真实运行/日志确认用 `verified-runtime`，不要笼统写 `verified`。
 
-## Professional Context Header
+## Per-Result Professional Context Header
 
-如果本轮尚未由 `game-design` 输出 Professional Context Header，则在正式答案第一段自行补出，规则读取 [Professional Context Header](../game-design/references/professional-context-header.md)。
+每一个独立代码语义结论、执行链结论、运行时对象结论或实现差异结论前，都按 [Professional Context Header](../game-design/references/professional-context-header.md) 输出一次结果级 Header。
 
-直接进入本 Skill 时，只显示本轮真实已读取/使用的专业能力，不猜测尚未加载的协同 Skill。例如：
+默认代码语义结果：
 
 ```text
 【本次专业视角】
 主责：代码 / 实现验证（code-verification）
-证据边界：源码可支持 verified-code；没有运行日志时不得升级为 verified-runtime
+协同：配置审计（config-audit）
 ```
 
-若本轮已经有 Header，不重复输出。
+如果当前结果只是在报告真实配置字段不一致，应让 `config-audit` 主责；如果下一结果开始评估强度影响，才切换为 `balance-design` 主责。
+
+即使连续两个结果专业组合相同，也重复显示 Header。
 
 ## Field Identity Lock
 
