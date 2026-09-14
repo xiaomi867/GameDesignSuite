@@ -6,9 +6,9 @@
 
 当用户提出游戏设计、系统、玩法、数值、经济、成长、战斗、技能、关卡、UI、配置、代码验证、评审或 GDD 需求时：
 
-1. 先读取 `skills/game-design/SKILL.md`。
+1. 先读取 `plugins/game-design-suite/skills/game-design/SKILL.md`。
 2. 由 `game-design` 选择最小充分 Skill 集。
-3. 读取被选 Skill 的 `SKILL.md`。
+3. 读取被选 Skill 的 `plugins/game-design-suite/skills/<skill-name>/SKILL.md`。
 4. 对已有项目，优先检查现有规则、文件、配置、数据与必要代码，不把项目当白纸。
 5. 继续执行任务并交付实际结果。
 6. 最终回复应是设计、结论、配置修改、验证结果或待确认 Human Gate，不是 Skill 名称列表。

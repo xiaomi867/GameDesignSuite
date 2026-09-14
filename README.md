@@ -13,7 +13,58 @@
 - 设计评审
 - GDD / System Spec
 
-## 核心结构
+## 插件与 Marketplace 结构
+
+本仓库已按 Codex / ChatGPT 插件市场结构整理：
+
+```text
+GameDesignSuite/
+├── .agents/
+│   └── plugins/
+│       └── marketplace.json
+├── plugins/
+│   └── game-design-suite/
+│       ├── .codex-plugin/
+│       │   └── plugin.json
+│       └── skills/
+│           ├── game-design/
+│           ├── game-production/
+│           ├── balance-design/
+│           └── ...
+├── AGENTS.md
+├── README.md
+├── skills-index.json
+└── validate_skills.py
+```
+
+其中：
+
+- `.agents/plugins/marketplace.json`：插件市场入口。
+- `plugins/game-design-suite/.codex-plugin/plugin.json`：Game Design Suite 插件清单。
+- `plugins/game-design-suite/skills/*/SKILL.md`：14 个专业 Skill。
+
+## 从 GitHub 安装
+
+在“添加插件市场”中填写：
+
+```text
+来源：
+https://github.com/xiaomi867/GameDesignSuite.git
+
+Git 引用：
+main
+
+稀疏路径：
+留空
+```
+
+不要填写 `tree/main`，也不要把稀疏路径设为 `skills`，因为 Marketplace manifest 位于仓库根目录下的 `.agents/plugins/marketplace.json`。
+
+## 从本地目录测试
+
+“来源”直接选择或填写包含 `.agents/` 和 `plugins/` 的 **GameDesignSuite 根目录**；Git 引用与稀疏路径留空。
+
+## 核心 Skill
 
 | Skill | 主要职责 |
 |---|---|
@@ -58,13 +109,23 @@
 
 `game-production + 必要专业 Skill + design-review + game-design-doc`
 
-## 导入方式
+## 建议测试 Prompt
 
-本仓库采用通用 `skills/<skill-name>/SKILL.md` 结构。
+安装后可用以下问题验证：
 
-- 如果你的 GPT/Agent 支持 Git 仓库作为 Skill 来源：把整个 `GameDesignSuite` 推到 GitHub，再添加仓库。
-- 如果支持上传单个 Skill：上传对应 `skills/<name>` 目录，或使用本包内生成的单 Skill ZIP。
-- 不同宿主对 marketplace manifest 的要求可能不同；本仓库不伪造某一宿主专属 manifest。若宿主报缺少 manifest，应按该宿主当前规范补充。
+```text
+请分析一个 RPG 英雄 Lv1~Lv100 的攻击、生命、防御成长曲线，
+给出基准值、成长公式、关键等级采样和验证方法，
+并明确哪些结论是 verified，哪些只是 candidate。
+```
+
+或：
+
+```text
+这是一个已有英雄技能系统，不允许修改技能机制。
+请检查技能倍率、Buff、Target、成长和配置引用；
+没有代码证据时不要声称代码已经验证，最后做一次设计审查。
+```
 
 ## 设计原则
 
