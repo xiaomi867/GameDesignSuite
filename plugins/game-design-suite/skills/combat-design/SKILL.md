@@ -11,6 +11,12 @@ description: 负责战斗系统与遭遇规则，包括攻击、受击、目标�
 
 涉及速度、行动顺序、额外行动、共享技能点、能量循环、目标概率、韧性/Break 等问题时，与 `balance-design` 的 HSR-style theorycrafting reference 协作，不照抄外部游戏数值。
 
+## Result-Level Professional Context
+
+每一个独立战斗规则、AI、Target、资源循环、Gauge、Boss 战斗窗口或 Encounter 行为结论前，按 `../game-design/references/professional-context-header.md` 输出一次结果级 Header。
+
+战斗规则本身由 `combat-design` 主责；具体技能机制切换到 `skill-design` 主责；倍率/TTK/覆盖率等强度判断由 `balance-design` 主责；空间和关卡编排由 `level-design` 主责。相邻结果即使专业组合相同，也重复显示 Header。
+
 ## Combat Grammar / 战斗语法
 
 先把一次完整战斗行为拆成可验证链路：
