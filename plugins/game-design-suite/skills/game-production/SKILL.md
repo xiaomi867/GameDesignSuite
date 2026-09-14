@@ -9,6 +9,8 @@ description: 负责游戏整体体验、玩法循环、系统规则、奖励框�
 
 涉及跨系统绑定、系统参与度、强制依赖或“为了联动而联动”时，优先读取 [System Coupling & Anti-patterns](references/system-coupling-and-antipatterns.md)。
 
+涉及 Roguelite、三选一、祝福/卡牌池、Build、体系成型、随机权重、保底、主/副体系或局内共鸣时，优先读取 [Roguelite Build Architecture](references/roguelite-build-architecture.md)。
+
 ## 先定义设计问题
 
 明确：
@@ -111,6 +113,53 @@ description: 负责游戏整体体验、玩法循环、系统规则、奖励框�
 
 局部系统不能当孤岛，但也不能为了“看起来有联动”强行增加耦合。
 
+## Roguelite 构筑规则
+
+局内 Build 不应退化为“同标签卡越多越好”。至少检查：
+
+- Seed：玩家何时知道本局方向；
+- Engine：几张卡后核心循环真正成立；
+- Scaler：成型后如何继续成长；
+- Stabilizer：生存/资源/容错怎么补；
+- Capstone：何时出现质变和完成感；
+- 主体系 + 副体系关系；
+- Off-build 卡是否仍有合理用途；
+- 核心组件在关键波次前的出现概率；
+- Dead Pick Rate；
+- 成型保底；
+- Boss 是否能反向检验构筑。
+
+### 三选一不是静态卡牌比较
+
+每次选择的价值取决于：
+
+- 当前 Build；
+- 已有核心卡；
+- 当前血量/资源；
+- 距离 Boss 的阶段；
+- 队伍构成；
+- 后续成型概率；
+- 当前选项的机会成本。
+
+禁止只按“卡牌品质/裸倍率”排序。
+
+### 构筑阈值
+
+可通过同体系数量阈值、共鸣、成型件提供阶段性回报，但阈值数量必须由本项目一局选择次数推导，不照抄外部参考游戏。
+
+### 动态随机
+
+允许根据局内状态动态调整权重，例如：
+
+- 已选体系；
+- 连续未出主体系；
+- Build 缺失组件；
+- Boss 前生存不足；
+- 奶妈存在且队伍低血；
+- 已经完成引擎后降低重复低价值组件。
+
+动态权重用于降低“随机系统拒绝玩家构筑”的挫败，不应保证每局完美成型。
+
 ## 玩法策划关注点
 
 ### Core Loop
@@ -137,7 +186,11 @@ description: 负责游戏整体体验、玩法循环、系统规则、奖励框�
 - **Feature-as-Fix**：发现问题第一反应是再加一个系统；
 - **Reward Bribery**：系统本身无价值，只靠奖励强迫参与；
 - **Hollow Loop**：奖励不能反馈到下一层循环；
-- **Complexity Over Depth**：规则增加而决策没有增加。
+- **Complexity Over Depth**：规则增加而决策没有增加；
+- **Same-color Drafting**：Roguelite 只剩同体系卡越拿越多；
+- **Core-or-Brick**：没抽到单张核心卡整局直接报废；
+- **Fake Choice Pool**：大量不属于当前 Build 的死选项；
+- **Completed-build Lottery**：只平衡最终成型强度，不管成型概率。
 
 ## 平台与性能
 
@@ -161,12 +214,24 @@ description: 负责游戏整体体验、玩法循环、系统规则、奖励框�
 - Acceptance Scenarios
 - Open Decisions
 
+Roguelite 还应根据需要包含：
+
+- Build Inventory；
+- Core/Support/Capstone 标签；
+- Pool / Weight；
+- Completion Threshold；
+- Pity / Guarantee；
+- Build Completion Rate；
+- Dead Pick 指标；
+- Boss Check。
+
 ## 验证
 
 - 规则：状态路径 walkthrough / 配置 / 实现检查
 - 数值：交给 `balance-design`，再通过模拟/对照/实战数据
 - 经济：交给 `economy-design`，同时检查 Resource Role 与 Sink Legitimacy
 - 成长：交给 `progression-design`，检查 Cost Semantics 与 Switching Cost
+- Roguelite：同时检查构筑成型概率、Dead Pick、Choice Quality、极端 Build、Boss Conversion
 - 可用性：代表性用户测试
 - 好玩：Playtest，不可由文档证明
 - 性能：Profiling
