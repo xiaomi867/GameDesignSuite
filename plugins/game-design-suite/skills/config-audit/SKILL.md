@@ -9,17 +9,128 @@ description: 审查游戏 Excel/CSV/JSON/配置表，包括 Row/Key/ID、字段�
 
 证据状态遵循 [Evidence Standard](../game-design/references/evidence-standard.md)。配置文件直接确认的事实优先标记 `verified-config`，不要笼统写 `verified`。
 
+## Professional Context Header
+
+如果本轮尚未由 `game-design` 输出 Professional Context Header，则本 Skill 在正式答案的第一段自行补出，规则读取 [Professional Context Header](../game-design/references/professional-context-header.md)。
+
+直接进入本 Skill 时，只显示本轮**实际已经读取/使用**的专业能力，不猜测尚未加载的协同 Skill。例如：
+
+```text
+【本次专业视角】
+主责：配置审计（config-audit）
+证据边界：当前仅能确认真实配置字段与引用；运行时语义需要 code-verification
+```
+
+若本轮已经有 Header，不重复输出。Header 必须出现在正式结论前，不能回答完以后再补。
+
 ## 基本流程
 
 1. 确认涉及哪些表；
 2. 找到主 Key/ID；
-3. 追踪跨表引用；
-4. 检查字段类型、默认值、空值和合法范围；
-5. 检查缺失行、重复 Key、断链；
-6. 检查等级/星级/品质映射；
-7. 检查 Target、Buff、Group、Stack、Duration 等关联；
-8. 若字段语义依赖实现，交给 `code-verification`；
-9. 输出字段级修改与验证方法。
+3. **先锁定表头与列映射，再读取字段值**；
+4. 追踪跨表引用；
+5. 检查字段类型、默认值、空值和合法范围；
+6. 检查缺失行、重复 Key、断链；
+7. 检查等级/星级/品质映射；
+8. 检查 Target、Buff、Group、Stack、Duration 等关联；
+9. 若字段语义依赖实现，交给 `code-verification`；
+10. 输出字段级修改与验证方法。
+
+## Field Attribution Guard
+
+这是配置审计的硬约束。**先证明“值属于哪个字段”，再讨论这个值是什么意思。**
+
+### 1. Schema Pass / 表头锁定
+
+读取数据前先确认：
+
+- Sheet/表名；
+- 真正的 Header Row；
+- 每个关键字段的准确列名；
+- 是否存在多行表头、合并单元格、隐藏列、重复列名、空列名、别名或导出后列位移；
+- 主 Key/ID 位于哪一列。
+
+如果表头不清楚，先标记 `unverified-config`，不得根据视觉位置或历史印象猜列。
+
+### 2. Value Pass / 值读取
+
+每个关键字段事实都应绑定至少以下四元组：
+
+`(Table/Sheet, RowKey/ID, FieldName, RawValue)`
+
+工具能提供单元格地址时，优先扩展成：
+
+`(Table/Sheet, RowKey/ID, FieldName, CellAddress, RawValue)`
+
+例如：
+
+```text
+P10BattleBuff.xlsx | BUF_bear_taunt | CoverCheckType | 2
+```
+
+不能只写“这里是 2”，更不能因为附近另一个字段也出现 2，就把它归属到错误字段。
+
+### 3. 禁止字段串位
+
+禁止以下行为：
+
+- 把 `CoverCheckType = 2` 写成 `UniqueId = 2`；
+- 把 A 列的值分布当成 B 列的值分布；
+- 从截图中的视觉邻近关系推断列归属；
+- 因为上一轮讨论过某字段，就默认本轮看到的数字仍属于该字段；
+- 把行号、枚举值、ID、等级或数量相互混淆；
+- 在未锁定字段名时先解释数字含义。
+
+**数字本身没有字段语义。字段身份必须先于数值解释。**
+
+### 4. Critical Field Two-Pass Check
+
+对会直接导致修改建议的关键字段，至少做两次独立检查：
+
+1. 第一次确认 Header -> Column -> RowKey -> RawValue；
+2. 第二次在输出结论前重新确认同一 RowKey 的准确 FieldName 与 RawValue。
+
+以下字段默认视为关键字段：
+
+- UniqueId / GroupKey / CoverCheckType / CoverType / CountCoverType / TimeCoverType；
+- Target / TargetSelector；
+- DamageCfg / DamageCfgSec / HealCfg；
+- BuffCfg / AttachToKey；
+- 等级/星级映射；
+- 任何用户明确指出“你看错字段”的字段。
+
+### 5. Distribution / 批量统计保护
+
+统计某字段分布时，必须明确：
+
+- 统计的是哪个 `FieldName`；
+- 有效行范围；
+- 空值是否计入；
+- 是否过滤注释行/模板行/废弃行；
+- 每个分组值是否来自该字段本身。
+
+例如：
+
+```text
+Field = UniqueId
+空 = 85
+bleed = 3
+...
+```
+
+只有在逐行读取 `UniqueId` 列后才能成立。不得从 `CoverCheckType` 的 1/2/3 分布反推 `UniqueId`。
+
+### 6. 用户纠错后的处理
+
+如果用户指出“你看错列/看错字段”：
+
+1. 立即撤销受该字段归属影响的结论；
+2. 回到 Schema Pass 重新确认列；
+3. 重新读取对应 RowKey + Field；
+4. 明确哪些旧结论被撤回、哪些仍独立成立；
+5. 不用新的解释去维护旧答案。
+
+用户纠错不是“风格意见”，而是触发一次字段归属重新验证。
 
 ## Missing Evidence Guard
 
@@ -45,7 +156,8 @@ description: 审查游戏 Excel/CSV/JSON/配置表，包括 Row/Key/ID、字段�
 - 默认值与空值语义错误；
 - 类型/枚举不合法；
 - 客户端和服务器表版本不一致；
-- 文案描述与实际字段不一致。
+- 文案描述与实际字段不一致；
+- **字段串位、列错读、统计列与解释列不一致**。
 
 ## 配置事实的边界
 
@@ -56,6 +168,8 @@ description: 审查游戏 Excel/CSV/JSON/配置表，包括 Row/Key/ID、字段�
 - 某字段当前值为 X；
 - 某引用指向 Y；
 - Lv2~Lv5 缺行或不一致。
+
+`verified-config` 必须建立在字段归属已锁定的前提上。字段名不确定时不能使用该状态。
 
 ### `needs-code-verification`
 配置结构可以确认，但运行时语义依赖代码，例如：
@@ -75,6 +189,10 @@ description: 审查游戏 Excel/CSV/JSON/配置表，包括 Row/Key/ID、字段�
 
 | 表 | Row/Key/ID | 字段 | 当前值 | 改后值 | 关联项 | 问题 | Evidence | 理由 | 验证 |
 |---|---|---|---|---|---|---|---|---|---|
+
+涉及高风险字段时，在正文或附表中保留最小证据定位：
+
+`Table/Sheet + RowKey/ID + FieldName + RawValue`
 
 新增行要明确：
 
