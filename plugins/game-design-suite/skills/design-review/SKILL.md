@@ -1,6 +1,6 @@
 ---
 name: design-review
-description: 对已有游戏概念、GDD、机制、技能、战斗、经济、成长、关卡、UI、原型、配置方案或 Playtest 结果进行评审、比较和压力测试。识别弱点、矛盾、主导策略、False Choice、失衡和证据缺口，并给出最小有效修改与下一步验证实验。
+description: 对已有游戏概念、GDD、机制、技能、英雄、战斗、经济、成长、关卡、UI、原型、配置方案或 Playtest 结果进行评审、比较和压力测试。识别弱点、矛盾、主导策略、False Choice、失衡和证据缺口，并给出最小有效修改与下一步验证实验。
 ---
 
 # 游戏设计评审
@@ -51,7 +51,7 @@ description: 对已有游戏概念、GDD、机制、技能、战斗、经济、�
 3. **Root Cause**：问题真正来自局部参数、系统结构、内容生命周期、信息/UX、上下游依赖还是制作约束；
 4. **Patch Risk**：当前建议是不是只在症状上打补丁。
 
-如果建议只是“新增 Sink、增加奖励、再加一个功能、强制绑定另一个系统”，默认进入反模式检查。
+如果建议只是“新增 Sink、增加奖励、再加一个功能、强制绑定另一个系统、直接加倍率”，默认进入反模式检查。
 
 ## 5. Finding 质量
 
@@ -80,6 +80,33 @@ description: 对已有游戏概念、GDD、机制、技能、战斗、经济、�
 - Complexity Over Depth
 - Unclear Telegraph
 - Recovery Failure
+
+### 英雄与技能
+- Button Zoo
+- Passive Soup
+- Multiplier-only Design
+- Role by Label
+- Resource Orphan
+- Trigger Lottery / Trigger Starvation
+- Pair Lock / Team Tax
+- Stat Split Tax
+- Overloaded Skill
+- Dead Slot / Dead Rank
+- Window Spill
+- Identity Locked Late
+- Problem-Sell-Solution
+- Direct Replacement / Roster Power Creep
+
+### 战斗与 Encounter
+- All-phase Carry
+- Gauge as Extra HP
+- Shared Resource Blindness
+- Reaction Monopoly
+- Permanent Burst
+- System Invalidation
+- Boss Immunity Soup
+- DPS Dummy Level
+- Window Theft
 
 ### 数值与成长
 - Power Creep / Treadmill
@@ -114,7 +141,27 @@ description: 对已有游戏概念、GDD、机制、技能、战斗、经济、�
 
 发现这些模式时，优先解释“为什么它会发生”，而不是直接给一个更复杂的新系统。
 
-## 7. Sink / Cost Legitimacy Review
+## 7. Hero/Kit Review
+
+评审英雄或技能时，不只看技能文本和倍率。至少检查：
+
+- Core Loop 是否一句话能说清；
+- State Machine 是否明确；
+- Resource Graph 是否闭环；
+- Generator / Setup / Payoff / Recovery 是否都有意义；
+- Phase Ownership；
+- Field/Action Time；
+- Team Hook 与 Pair Lock 风险；
+- Trigger Reliability；
+- Failure Case；
+- Skill Tree 是否有里程碑，而不是全加数；
+- 高阶节点是否只是修基础缺陷；
+- 升级的 Paper Value 是否能在真实窗口兑现；
+- Encounter 是否允许核心机制发生。
+
+如果角色只能在木桩环境成立，或必须依赖唯一队友/特定 Boss 行为，不能只用高倍率解释为“定位特色”。
+
+## 8. Sink / Cost Legitimacy Review
 
 任何新增资源消耗或成长成本都检查：
 
@@ -128,7 +175,7 @@ description: 对已有游戏概念、GDD、机制、技能、战斗、经济、�
 
 不能因为“经济闭环”看起来更完整，就通过不合理 Sink。
 
-## 8. Tradeoff
+## 9. Tradeoff
 
 重要修改说明：
 
@@ -139,7 +186,7 @@ description: 对已有游戏概念、GDD、机制、技能、战斗、经济、�
 - 制作成本；
 - 新风险。
 
-## 9. Severity
+## 10. Severity
 
 需要排优先级时使用：
 
@@ -149,7 +196,7 @@ description: 对已有游戏概念、GDD、机制、技能、战斗、经济、�
 
 严重度必须由最终评审统一判断，不能原样继承其他 Skill 的标签。
 
-## 10. 正式报告格式
+## 11. 正式报告格式
 
 ```markdown
 # Design Review: [对象]
@@ -177,12 +224,15 @@ description: 对已有游戏概念、GDD、机制、技能、战斗、经济、�
 ...
 ```
 
-## 11. 下一步实验
+## 12. 下一步实验
 
 尽量提出最快减少不确定性的测试，例如：
 
 - Spreadsheet Simulation
 - Combat Simulation
+- Rotation Test
+- Trigger Reliability Test
+- Encounter Matrix Test
 - Greybox
 - Prototype
 - Playtest
