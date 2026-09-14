@@ -11,6 +11,12 @@ description: 负责角色、账户、装备、技能、星级、突破、技能�
 
 涉及技能等级、技能树、关键被动、升星/命座/影画式里程碑时，优先读取 [Skill Progression & Upgrade Topology](../skill-design/references/skill-progression-and-upgrade-topology.md)。
 
+## Result-Level Professional Context
+
+每一个独立成长节点、成本结构、解锁节奏、成长曲线或追赶机制结论前，按 `../game-design/references/professional-context-header.md` 输出一次结果级 Header。
+
+成长结构本身由 `progression-design` 主责；资源长期健康度转由 `economy-design` 主责；具体 Power Delta、倍率、曲线点值是否合理可由 `balance-design` 主责；技能节点机制含义可由 `skill-design` 主责。相邻结果即使专业组合相同，也重复显示 Header。
+
 ## 成长类型
 
 区分：
