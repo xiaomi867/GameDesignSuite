@@ -157,6 +157,40 @@ deepcode
 | `design-review` | 根因、反模式、矛盾、主导策略、比较与压力测试 |
 | `game-design-doc` | GDD、System Spec、正式设计文档 |
 
+## Professional Context Header
+
+从 `v1.1.0` 开始，Game Design Suite 在正式回答游戏设计问题前，会先显示本次真实专业路由，让用户能直接判断是否“找对策划”。
+
+简单任务示例：
+
+```text
+专业视角：关卡策划（level-design）｜协同：战斗策划（combat-design）
+```
+
+复杂生产任务示例：
+
+```text
+【本次专业视角】
+主责：技能策划（skill-design）
+协同：数值策划（balance-design） / 配置审计（config-audit） / 代码验证（code-verification）
+证据边界：当前只有真实配置，可验证到 verified-config；代码语义仍为 unverified
+```
+
+规则：
+
+- Header 来自实际 Skill Routing，不是角色扮演；
+- 只显示最小充分专业集合；
+- 简单问题一行，复杂问题最多 3~4 行；
+- 不列未实际使用的 Skill；
+- 不用“我是资深 XX 策划”替代路由；
+- Header 后继续完成实际任务。
+
+详细规范见：
+
+```text
+plugins/game-design-suite/skills/game-design/references/professional-context-header.md
+```
+
 ## 推荐调用示例
 
 ### 英雄技能调整
@@ -194,6 +228,14 @@ game-production + 必要专业 Skill + design-review + game-design-doc
 一个卡牌 Roguelite 里，三选一时玩家永远选伤害技能，治疗、防御和功能卡没人拿。
 不要让我选择专业方向，你自己分析并给出验证方案。
 ```
+
+### Professional Context Header 测试
+
+```text
+我们游戏食物、水、电、硅晶后期会大量堆积，你判断根因并给出处理方案。
+```
+
+预期主责应优先为 `经济策划（economy-design）`，而不是因为涉及资源数值就只显示 `balance-design`。
 
 ### 配置 + 代码证据测试
 
