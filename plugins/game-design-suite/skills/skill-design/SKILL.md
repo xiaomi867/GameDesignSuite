@@ -13,6 +13,12 @@ description: 负责角色/英雄技能设计、诊断和改造，包括角色循
 - 技能等级、技能树、被动节点、升星/里程碑升级 -> [Skill Progression & Upgrade Topology](references/skill-progression-and-upgrade-topology.md)
 - 角色池定位、横向差异、团队槽位和角色生态 -> [Hero Roster Architecture](../game-production/references/hero-roster-architecture.md)
 
+## Result-Level Professional Context
+
+每一个独立英雄/技能机制、Target、触发、状态机、Buff、升级或构筑结论前，按 `../game-design/references/professional-context-header.md` 输出一次结果级 Header。
+
+技能机制本身由 `skill-design` 主责；具体倍率/强度转由 `balance-design` 主责；真实表字段不一致转由 `config-audit` 主责；代码语义转由 `code-verification` 主责；团队底层战斗规则可由 `combat-design` 主责。相邻结果即使专业组合相同，也重复显示 Header。
+
 ## 0. 机制保护
 
 先区分：
