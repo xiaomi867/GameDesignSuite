@@ -9,6 +9,14 @@ description: 负责游戏经济策划，包括资源 Sources/Sinks、库存、�
 
 资源过剩、跨系统消耗、模拟经营资源、长期库存或新 Sink 设计时，优先读取 [Resource Role & Sink Legitimacy](references/resource-role-and-sink-legitimacy.md)。
 
+## Result-Level Professional Context
+
+每一个独立经济根因、资源处理方向、奖励投放结论或 Sink/Source 调整建议前，按 `../game-design/references/professional-context-header.md` 输出一次结果级 Header。
+
+经济问题本身由 `economy-design` 主责；如果当前结果切换到“英雄升级成本结构”，应让 `progression-design` 主责；如果切换到“具体倍率/价格点值是否平衡”，`balance-design` 可主责；如果切换到“玩法循环为什么需要这个资源”，`game-production` 可主责。
+
+相邻结果即使专业组合相同，也重复显示 Header，不因前文已有而省略。
+
 ## 先定义 Resource Role
 
 在谈 Source/Sink 前，先明确每种资源为什么存在。
