@@ -1,0 +1,43 @@
+{
+  "name": "game-design-suite",
+  "version": "1.0.0",
+  "description": "Professional game design suite covering systems, gameplay, combat, skills, balance, economy, progression, level design, UX, configuration auditing, code verification, design review, and GDD workflows.",
+  "author": {
+    "name": "xiaomi867",
+    "url": "https://github.com/xiaomi867"
+  },
+  "homepage": "https://github.com/xiaomi867/GameDesignSuite",
+  "repository": "https://github.com/xiaomi867/GameDesignSuite",
+  "license": "MIT",
+  "keywords": [
+    "game-design",
+    "systems-design",
+    "combat-design",
+    "skill-design",
+    "balance-design",
+    "economy-design",
+    "progression-design",
+    "level-design"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Game Design Suite",
+    "shortDescription": "Professional game design and balancing workflows",
+    "longDescription": "A multi-skill suite for gameplay and systems design, combat and skill design, numerical balancing, economy and progression, level design, game UX, configuration auditing, code verification, design review, and formal GDD production.",
+    "developerName": "xiaomi867",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/xiaomi867/GameDesignSuite",
+    "defaultPrompt": [
+      "Analyze this game system and propose a production-ready design.",
+      "Review this hero skill, its balance, configuration, and implementation.",
+      "Audit this game economy and progression loop for balance risks."
+    ],
+    "brandColor": "#111111",
+    "screenshots": []
+  }
+}
