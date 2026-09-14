@@ -2,6 +2,18 @@
 
 本仓库提供一组可组合的游戏策划 Skills。用户不需要知道 Skill 名称；宿主 Agent 应根据任务自动路由并继续完成工作，而不是只返回“建议使用某个 Skill”。
 
+## NON-OPTIONAL USER-VISIBLE OUTPUT CONTRACT
+
+**无论用户是否在 Prompt 中提醒，只要 Game Design Suite 正在回答游戏设计/策划相关任务，每一个独立正式结果前都必须显示 `【本次专业视角】`。**
+
+用户不需要重复写“每一个独立结果前都显示【本次专业视角】……”。这条规则是默认宿主协议，不是测试提示词。
+
+固定顺序：
+
+`Header -> Result -> Evidence/Reasoning -> Recommendation/Validation`
+
+如果下一个结果的 Decision Object 变化，重新判断主责/协同；如果专业组合相同，也重复 Header。Direct Specialist Entry 同样执行。
+
 ## 唯一真源 / Canonical Skill Root
 
 所有专业规则只维护在：
@@ -24,7 +36,7 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 2. 由 `game-design` 选择最小充分 Skill 集；Direct Specialist Entry 时只加载完成任务真正需要的其他 Skill。
 3. 完整读取被选 Skill 的 `plugins/game-design-suite/skills/<skill-name>/SKILL.md`。
 4. 只按 Skill 路由读取会改变当前判断的 reference；不要为了显得全面加载全部资料。
-5. **把回答拆成独立 Result Blocks。每一个正式结果、Finding、字段修改、设计判断或验证结论前，都重新判断当前 Decision Object，并输出 Professional Context Header。**
+5. **把回答拆成独立 Result Blocks。每一个正式结果、Finding、字段修改、设计判断或验证结论前，都重新判断当前 Decision Object，并输出 Professional Context Header。用户没有提醒也必须执行。**
 6. 对已有项目，优先检查现有规则、文件、配置、数据与必要代码，不把项目当白纸。
 7. 缺关键资料时执行 Missing Evidence Guard：标记证据边界，列出最小缺失材料，同时继续所有独立可做工作。
 8. 配置表任务执行 Field Attribution Guard：先锁定 `Table/Sheet + RowKey/ID + FieldName + RawValue`，再解释数值；不得跨列串位。
@@ -35,7 +47,12 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 
 这是**结果级路由可观察性要求**，不是角色扮演，也不是整篇答案只显示一次的总标签。
 
-### 每个结果都必须显示
+### 默认始终显示
+
+- 不依赖用户提醒；
+- 不依赖用户是否点名 Skill；
+- 不依赖 `game-design` Router 是否被先调用；
+- 不得因为“上一段已经显示过”而省略下一独立结果的 Header。
 
 每一个独立正式结果前都使用：
 
