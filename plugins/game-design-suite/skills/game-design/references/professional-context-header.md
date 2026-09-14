@@ -15,6 +15,30 @@ Header 是可观察的路由结果，不是角色扮演。
 
 Header 不能替代真正的 Skill 执行，也不能因为写了一个职业名称就声称对应 Skill 已被使用。
 
+## 强制时机
+
+Professional Context Header 必须是**正式答案最先出现的用户可见内容之一**，不得在长篇分析之后才补。
+
+有两种入口：
+
+### Router Entry
+
+如果本轮先进入 `game-design`，由 Router 完成主责/协同选择后输出 Header。
+
+### Direct Specialist Entry
+
+宿主可能根据 Skill description 直接加载 `config-audit`、`balance-design`、`skill-design` 等专业 Skill，而没有先执行 `game-design`。
+
+这种情况下：
+
+- 当前专业 Skill 必须自行补出 Header；
+- 只列当前轮**已经真实读取/使用**的 Skill；
+- 不得为了还原“理想路由”而虚构尚未加载的协同 Skill；
+- 如果之后又加载其他 Skill，可以在必要时更新一次 Header，但不要反复刷屏；
+- 同一轮已有 Header 时不要重复。
+
+因此，**Header 不依赖 Router 必须先被调用**。
+
 ## 输出规则
 
 ### 简单任务
@@ -76,6 +100,8 @@ Header 不能替代真正的 Skill 执行，也不能因为写了一个职业名
 
 若两个专业都对核心决策不可缺少，选择对**最终设计决策承担责任**的一方为主责，另一方列入协同；不要写“双主责”来逃避判断。
 
+Direct Specialist Entry 时，如果无法确认更高层主责，只显示当前 Skill 的专业身份，不凭空推断其他专业已经参与。
+
 ## 关键约束
 
 只显示会改变本次结论的硬约束，例如：
@@ -115,7 +141,8 @@ Header 不能替代真正的 Skill 执行，也不能因为写了一个职业名
 - 不得让 Header 超过正文的重要信息；
 - 不得因为 Header 已经输出就停止任务；
 - 不得把 `candidate` 写成 `verified`；
-- 不得为了迎合用户指定身份而跳过真正应主责的专业。
+- 不得为了迎合用户指定身份而跳过真正应主责的专业；
+- 不得因为直接进入专业 Skill 就省略 Header。
 
 ## 质量标准
 
