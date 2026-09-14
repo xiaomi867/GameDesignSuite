@@ -13,6 +13,12 @@ description: 负责游戏整体体验、玩法循环、系统规则、奖励框�
 
 涉及机制教学、局内节奏、玩法 Beat、决策密度、系统如何交给关卡承载时，优先读取 [Gameplay Structure & Pacing](references/gameplay-structure-and-pacing.md)。
 
+## Result-Level Professional Context
+
+每一个独立玩法循环、系统规则、跨系统关系、奖励框架、教学或制作范围结论前，按 `../game-design/references/professional-context-header.md` 输出一次结果级 Header。
+
+系统/玩法结构本身由 `game-production` 主责；经济根因转由 `economy-design` 主责；成长结构转由 `progression-design` 主责；具体数值强度转由 `balance-design` 主责；关卡空间与 Encounter 转由 `level-design` 主责。相邻结果即使专业组合相同，也重复显示 Header。
+
 ## 先定义设计问题
 
 明确：
