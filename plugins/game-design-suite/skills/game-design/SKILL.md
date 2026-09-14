@@ -9,7 +9,7 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 
 涉及多来源证据、`candidate / verified` 冲突或新证据推翻旧结论时，读取 [Evidence Standard](references/evidence-standard.md)。
 
-正式回答游戏设计任务前，按 [Professional Context Header](references/professional-context-header.md) 向用户暴露本次真实专业路由。
+所有正式结果按 [Professional Context Header](references/professional-context-header.md) 暴露**当前结果**的真实专业路由。
 
 ## 基础原则
 
@@ -20,51 +20,78 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 5. 多 Skill 参与时形成统一结论，不机械拼接。
 6. 区分 `confirmed / supported-inference / candidate / assumed / unknown / verified / not-yet-playtested / externally-blocked`。
 7. 路由不是最终答案；继续把任务做完。
-8. 专业身份来自实际路由，不来自角色扮演；先路由，再显示 Professional Context Header，再执行正文。
-9. 宿主若直接进入某个专业 Skill 而跳过本 Router，该专业 Skill 仍必须按共享规则自行输出 Header；Header 不能依赖 `game-design` 一定先被调用。
+8. 专业身份来自实际路由，不来自角色扮演。
+9. **路由粒度是“独立结果块”，不是整篇答案。** 每个新的正式结果出现前重新判断主责/协同。
+10. 宿主若直接进入某个专业 Skill 而跳过本 Router，该专业 Skill 仍必须按共享规则自行输出结果级 Header。
 
-## Professional Context Header
+## Result-Level Professional Context Header
 
-在用户可见的正式答案开始前，先输出本次专业上下文，让用户能检查是否找对了专业方向。
+不要只在答案最前面显示一次“本次专业视角”。
 
-### 必须表达
+### 强制规则
 
-- **主责专业**：对本次核心决策承担责任的 Skill；
-- **协同专业**：仅列真正参与且会改变判断的 Skill；
-- **关键约束**：存在会改变结论的 Fixed Rules 时显示；
-- **证据边界**：任务依赖配置、代码、Telemetry、Playtest 等证据时显示。
-
-### 简单任务
-
-保持一行，例如：
-
-```text
-专业视角：技能策划（skill-design）｜协同：数值策划（balance-design）
-```
-
-### 复杂生产任务
-
-最多 3~4 行，例如：
+每一个独立正式结果、Finding、字段修改、设计判断或验证结论之前，都先输出：
 
 ```text
 【本次专业视角】
-主责：技能策划（skill-design）
-协同：数值策划（balance-design） / 配置审计（config-audit） / 代码验证（code-verification）
-证据边界：当前只有真实配置，可验证到 verified-config；代码语义仍为 unverified
+主责：...
+协同：...
 ```
 
-### 约束
+存在会改变该结果的 Fixed Rule 或 Evidence Boundary 时，再加对应行。
 
-- Header 必须出现在正式结论之前，不能长篇回答后再补；
-- 不得为了显得专业而列出没有实际读取/使用的 Skill；
-- 不得把 14 个 Skill 全部列出；
-- 不得只写“我是资深 XX 策划”替代实际路由；
-- 不得因为用户指定某职业就跳过真正应主责的专业；
-- `game-design` 是路由器，通常不作为主责职业显示；
-- Header 后必须继续完成任务，不能只汇报路由；
-- Direct Specialist Entry 时，只能显示实际已加载的专业，不能虚构理想协同阵容。
+### 即使专业组合没变，也重复
 
-主责专业的选择、Skill 到用户可见职业名的映射、证据边界写法与 Direct Specialist Entry 规则，见 [Professional Context Header](references/professional-context-header.md)。
+用户需要逐项确认 Skill 是否代入正确专业。因此相邻两个结果即使都是：
+
+```text
+主责：配置审计（config-audit）
+协同：代码 / 实现验证（code-verification）
+```
+
+也必须在两个结果前分别显示，不因“上一段已经写过”而省略。
+
+### 专业变化时同步变化
+
+如果下一个结果从“配置事实”切换到“代码语义”“数值强度”“经济根因”等不同 Decision Object，重新路由并显示新的主责/协同。
+
+例如：
+
+```text
+【本次专业视角】
+主责：配置审计（config-audit）
+协同：代码 / 实现验证（code-verification）
+
+结果：BUF_bear_def_pct 基础行 CoverCheckType=3，lv2~lv5=2，存在配置不一致。
+```
+
+如果下一结果只是解释 `CoverCheckType=2` 的代码含义：
+
+```text
+【本次专业视角】
+主责：代码 / 实现验证（code-verification）
+协同：配置审计（config-audit）
+```
+
+只有当下一结果开始评估“这个差异导致多少强度变化”时，才应切换为：
+
+```text
+【本次专业视角】
+主责：数值策划（balance-design）
+协同：技能 / 英雄策划（skill-design） / 配置审计（config-audit）
+```
+
+**“发现配置不一致”本身不是数值策划结果。** 不因为字段中有数字或最终影响强度，就把 `balance-design` 错设为主责。
+
+### 输出顺序
+
+必须是：
+
+`Header -> Result -> Evidence/Reasoning -> Recommendation/Validation`
+
+不能先输出一大段结论，再补 Header。
+
+主责专业选择、Skill 映射、Direct Specialist Entry、混合结果拆分等细则见 [Professional Context Header](references/professional-context-header.md)。
 
 ## Professional Judgment Guard
 
