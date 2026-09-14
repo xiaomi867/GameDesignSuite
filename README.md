@@ -13,39 +13,59 @@
 - 设计评审
 - GDD / System Spec
 
-## 插件与 Marketplace 结构
+## 多 Agent 架构
 
-本仓库已按 Codex / ChatGPT 插件市场结构整理：
+Game Design Suite 现在采用 **单一专业真源 + 多宿主适配层**：
 
 ```text
 GameDesignSuite/
 ├── .agents/
 │   └── plugins/
-│       └── marketplace.json
+│       └── marketplace.json          # ChatGPT / Codex Marketplace
+├── .deepcode/
+│   └── skills/                       # DeepSeek Deep Code discovery adapters
+│       ├── game-design/
+│       ├── balance-design/
+│       └── ...
 ├── plugins/
 │   └── game-design-suite/
 │       ├── .codex-plugin/
 │       │   └── plugin.json
-│       └── skills/
-│           ├── game-design/
-│           ├── game-production/
-│           ├── balance-design/
-│           └── ...
+│       ├── skills/                   # 唯一专业真源 / Canonical Skills
+│       │   ├── game-design/
+│       │   ├── game-production/
+│       │   ├── balance-design/
+│       │   └── ...
+│       └── evals/
+├── scripts/
+│   └── sync_agent_skills.py          # 同步/检查宿主适配层
+├── docs/
+│   └── MULTI_AGENT.md
 ├── AGENTS.md
 ├── README.md
 ├── skills-index.json
 └── validate_skills.py
 ```
 
-其中：
+### 唯一真源
 
-- `.agents/plugins/marketplace.json`：插件市场入口。
-- `plugins/game-design-suite/.codex-plugin/plugin.json`：Game Design Suite 插件清单。
-- `plugins/game-design-suite/skills/*/SKILL.md`：14 个专业 Skill。
+所有专业规则只维护在：
 
-## 从 GitHub 安装
+```text
+plugins/game-design-suite/skills/<skill-name>/SKILL.md
+```
 
-在“添加插件市场”中填写：
+以及这些 Skill 引用的 `references/`、模板和 `plugins/game-design-suite/evals/`。
+
+`.deepcode/skills/` 只负责让 Deep Code 发现 Skill；执行时会继续读取 canonical `SKILL.md`。不要维护第二套专业正文。
+
+更多说明见 `docs/MULTI_AGENT.md`。
+
+---
+
+## ChatGPT / Codex：从 GitHub 安装
+
+在 ChatGPT 的“添加插件市场”中填写：
 
 ```text
 来源：
@@ -60,9 +80,63 @@ main
 
 不要填写 `tree/main`，也不要把稀疏路径设为 `skills`，因为 Marketplace manifest 位于仓库根目录下的 `.agents/plugins/marketplace.json`。
 
-## 从本地目录测试
+其中：
+
+- `.agents/plugins/marketplace.json`：插件市场入口；
+- `plugins/game-design-suite/.codex-plugin/plugin.json`：Game Design Suite 插件清单；
+- `plugins/game-design-suite/skills/*/SKILL.md`：14 个专业 Skill。
+
+### 本地目录测试
 
 “来源”直接选择或填写包含 `.agents/` 和 `plugins/` 的 **GameDesignSuite 根目录**；Git 引用与稀疏路径留空。
+
+---
+
+## DeepSeek Deep Code：项目级使用
+
+Deep Code 使用项目级 Agent Skills 时，会从：
+
+```text
+.deepcode/skills/<skill-name>/SKILL.md
+```
+
+发现 Skill。本仓库已经提供 14 个对应适配器。
+
+### 1. 获取仓库
+
+```bash
+git clone https://github.com/xiaomi867/GameDesignSuite.git
+cd GameDesignSuite
+```
+
+已有本地仓库则：
+
+```bash
+git pull
+```
+
+### 2. 在仓库根目录启动 Deep Code
+
+```bash
+deepcode
+```
+
+进入后可使用 `/` 查看可发现的 Skills，或直接点名：
+
+```text
+/game-design
+/balance-design
+/skill-design
+/level-design
+```
+
+也可以直接用自然语言描述任务，让 Agent 根据 Skill description 选择专业能力。
+
+### 3. DeepSeek 网页/App 与 Deep Code 的区别
+
+普通 DeepSeek 网页/App 聊天不是本仓库的项目 Skill 安装入口；要让 DeepSeek 自动发现并读取这套仓库 Skills，优先使用 Deep Code 或其他支持仓库级 Agent Skills / `AGENTS.md` 的宿主。
+
+---
 
 ## 核心 Skill
 
@@ -71,67 +145,108 @@ main
 | `game-design` | 总入口、路由、多 Skill 协调 |
 | `game-production` | 玩法、系统、产品、制作约束 |
 | `design-frameworks` | MDA、Core Loop、Flow、设计 Pattern |
-| `balance-design` | 数值模型、强度、曲线、DPS/HPS、参数验证 |
-| `economy-design` | Sources/Sinks、流速、价值、通胀、产销 |
-| `progression-design` | 等级、星级、解锁、成长节奏 |
-| `combat-design` | 战斗规则、目标、节奏、状态、AI 与遭遇 |
-| `skill-design` | 技能机制、Target、Buff/Debuff、升级与构筑 |
-| `level-design` | 关卡、地图、空间、路径、Encounter、节奏 |
+| `balance-design` | 数值模型、Power Budget、成长、DPS/HPS、概率与参数验证 |
+| `economy-design` | Resource Role、Sources/Sinks、流速、价值、通胀、产销 |
+| `progression-design` | 等级、星级、技能树、解锁、成长节奏 |
+| `combat-design` | 战斗规则、行动/资源经济、状态、Gauge、AI 与遭遇 |
+| `skill-design` | Hero Kit、状态机、资源图、Target、Buff/Debuff、升级与构筑 |
+| `level-design` | 关卡、地图、波次、Mechanic Lifecycle、Encounter、节奏与 Boss |
 | `game-interface-design` | HUD、菜单、引导、反馈、Accessibility |
 | `config-audit` | Excel/配置字段、ID、引用、漏配、一致性 |
 | `code-verification` | 客户端/服务器代码读取、实际生效链路 |
-| `design-review` | 风险、矛盾、主导策略、比较与压力测试 |
+| `design-review` | 根因、反模式、矛盾、主导策略、比较与压力测试 |
 | `game-design-doc` | GDD、System Spec、正式设计文档 |
 
 ## 推荐调用示例
 
 ### 英雄技能调整
 
-`skill-design + balance-design`
-
-已有生产项目通常再加：
-
-`config-audit + code-verification`
-
-定稿前：
-
-`design-review`
+```text
+skill-design + balance-design
++ config-audit（已有配置）
++ code-verification（需要确认实现）
++ design-review（定稿前）
+```
 
 ### 七日奖励 / 日常任务 / 资源循环
 
-`game-production + economy-design + progression-design + balance-design`
+```text
+game-production + economy-design + progression-design + balance-design
+```
 
-### Boss 关卡
+### Boss / 关卡
 
-`game-production + combat-design + level-design`
+```text
+game-production + combat-design + level-design
+```
 
 ### 完整 GDD
 
-`game-production + 必要专业 Skill + design-review + game-design-doc`
+```text
+game-production + 必要专业 Skill + design-review + game-design-doc
+```
 
 ## 建议测试 Prompt
 
-安装后可用以下问题验证：
+### 自动路由测试
 
 ```text
-请分析一个 RPG 英雄 Lv1~Lv100 的攻击、生命、防御成长曲线，
-给出基准值、成长公式、关键等级采样和验证方法，
-并明确哪些结论是 verified，哪些只是 candidate。
+一个卡牌 Roguelite 里，三选一时玩家永远选伤害技能，治疗、防御和功能卡没人拿。
+不要让我选择专业方向，你自己分析并给出验证方案。
 ```
 
-或：
+### 配置 + 代码证据测试
 
 ```text
-这是一个已有英雄技能系统，不允许修改技能机制。
-请检查技能倍率、Buff、Target、成长和配置引用；
-没有代码证据时不要声称代码已经验证，最后做一次设计审查。
+这是一个已经开发中的坦克英雄，技能机制不能改。
+检查伤害倍率、护甲 Buff、嘲讽 Target、升星成长和配置引用。
+缺少代码或配置时不要猜；真实代码出现后允许推翻旧 candidate。
 ```
 
-## 设计原则
+## 证据原则
+
+重要结论尽量区分：
+
+- `verified-config`
+- `verified-code`
+- `verified-runtime`
+- `verified-data`
+- `confirmed`
+- `supported-inference`
+- `candidate`
+- `unverified`
+- `not-yet-playtested`
+- `externally-blocked`
+
+核心规则：
 
 1. 已有项目先读现状，再设计。
 2. 用户明确要求“不改机制”时，Fixed Rules 视为不可变约束。
-3. 事实、推断、提案、候选值、验证结果分开表达。
-4. 理论计算不能冒充 Playtest。
-5. 数值修改必须考虑横向强度和上下游系统。
-6. 配置问题必须落到表、行/Key、字段、值、引用、验证。
+3. 症状不等于方案；先查根因。
+4. 事实、推断、候选值和验证结果分开表达。
+5. 理论计算 / Spreadsheet / Simulation 不能冒充 Playtest。
+6. 配置问题必须落到表、Row/Key/ID、字段、引用和值。
+7. 代码验证必须追到 Parser / Runtime Consumer / Target / Result，而不是看到字段名就猜语义。
+8. 新证据可以推翻旧 candidate。
+
+## 维护与同步
+
+新增/删除 Skill，或修改 canonical Skill 的 `name` / `description` 后运行：
+
+```bash
+python scripts/sync_agent_skills.py
+```
+
+检查 Deep Code 适配层：
+
+```bash
+python scripts/sync_agent_skills.py --check
+```
+
+若需要要求适配层完全由 canonical description 自动生成：
+
+```bash
+python scripts/sync_agent_skills.py --check --strict
+```
+
+专业正文只改 `plugins/game-design-suite/skills/`，不要人工维护多份。
