@@ -9,6 +9,8 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 
 涉及多来源证据、`candidate / verified` 冲突或新证据推翻旧结论时，读取 [Evidence Standard](references/evidence-standard.md)。
 
+正式回答游戏设计任务前，按 [Professional Context Header](references/professional-context-header.md) 向用户暴露本次真实专业路由。
+
 ## 基础原则
 
 1. 用户描述问题，AI 判断专业边界。
@@ -18,6 +20,48 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 5. 多 Skill 参与时形成统一结论，不机械拼接。
 6. 区分 `confirmed / supported-inference / candidate / assumed / unknown / verified / not-yet-playtested / externally-blocked`。
 7. 路由不是最终答案；继续把任务做完。
+8. 专业身份来自实际路由，不来自角色扮演；先路由，再显示 Professional Context Header，再执行正文。
+
+## Professional Context Header
+
+在用户可见的正式答案开始前，先输出本次专业上下文，让用户能检查是否找对了专业方向。
+
+### 必须表达
+
+- **主责专业**：对本次核心决策承担责任的 Skill；
+- **协同专业**：仅列真正参与且会改变判断的 Skill；
+- **关键约束**：存在会改变结论的 Fixed Rules 时显示；
+- **证据边界**：任务依赖配置、代码、Telemetry、Playtest 等证据时显示。
+
+### 简单任务
+
+保持一行，例如：
+
+```text
+专业视角：技能策划（skill-design）｜协同：数值策划（balance-design）
+```
+
+### 复杂生产任务
+
+最多 3~4 行，例如：
+
+```text
+【本次专业视角】
+主责：技能策划（skill-design）
+协同：数值策划（balance-design） / 配置审计（config-audit） / 代码验证（code-verification）
+证据边界：当前只有真实配置，可验证到 verified-config；代码语义仍为 unverified
+```
+
+### 约束
+
+- 不得为了显得专业而列出没有实际读取/使用的 Skill；
+- 不得把 14 个 Skill 全部列出；
+- 不得只写“我是资深 XX 策划”替代实际路由；
+- 不得因为用户指定某职业就跳过真正应主责的专业；
+- `game-design` 是路由器，通常不作为主责职业显示；
+- Header 后必须继续完成任务，不能只汇报路由。
+
+主责专业的选择、Skill 到用户可见职业名的映射、证据边界写法与回归要求，见 [Professional Context Header](references/professional-context-header.md)。
 
 ## Professional Judgment Guard
 
