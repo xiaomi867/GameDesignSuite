@@ -11,6 +11,8 @@ description: 负责游戏整体体验、玩法循环、系统规则、奖励框�
 
 涉及 Roguelite、三选一、祝福/卡牌池、Build、体系成型、随机权重、保底、主/副体系或局内共鸣时，优先读取 [Roguelite Build Architecture](references/roguelite-build-architecture.md)。
 
+涉及机制教学、局内节奏、玩法 Beat、决策密度、系统如何交给关卡承载时，优先读取 [Gameplay Structure & Pacing](references/gameplay-structure-and-pacing.md)。
+
 ## 先定义设计问题
 
 明确：
@@ -69,6 +71,78 @@ description: 负责游戏整体体验、玩法循环、系统规则、奖励框�
 10. 正常、边界、失败、恢复和 Exploit 路径；
 11. 最小原型/模拟；
 12. 观察指标和决策规则。
+
+## Gameplay Structure
+
+系统不能只描述“有什么功能”，还必须描述玩家如何在时间中体验它。
+
+优先建立：
+
+`Observe -> Interpret -> Decide -> Act -> Feedback -> Update Plan`
+
+并检查：
+
+- 这一系统新增了什么玩家动词；
+- 是深化已有动词，还是只增加数值/UI；
+- 机制第一次如何被教会；
+- 什么时候进入真正测试；
+- 后续如何 Twist/Combine；
+- 什么时候允许玩家休息、领奖和重规划；
+- Session 内有多少高压力决策；
+- 是否出现“菜单时间 > 实际玩法时间”。
+
+### Mechanic Lifecycle
+
+新机制应同时规划内容生命周期：
+
+`Introduce -> Practice -> Test -> Twist -> Combine -> Mastery`
+
+系统策划必须向关卡策划提供首次教学条件、安全网、可调参数、失败恢复、Twist 方向和不允许的组合，而不是把系统做完后让关卡“自己想办法塞进去”。
+
+### Decision Budget
+
+选择不是免费的。每个关键决策都有时间和认知成本。
+
+至少检查：
+
+- 影响范围；
+- 不可逆性；
+- 信息量；
+- 后续持续时间；
+- 与 Build/队伍的耦合；
+- 是否连续出现高压力选择；
+- 是否发生在本就高压的战斗阶段。
+
+“更多三选一”不自动等于“更有 Roguelite 深度”。
+
+### Gameplay Rhythm
+
+玩法元素应承担不同节奏角色：
+
+- Pressure；
+- Choice；
+- Reward；
+- Recovery；
+- Setup；
+- Payoff；
+- Twist；
+- Closure。
+
+如果所有系统都在制造选择，玩家会菜单疲劳；如果所有系统都只给奖励，体验会失去张力。
+
+### Intensity != Difficulty
+
+玩法强度可以来自：
+
+- 重新规划；
+- 信息压力；
+- 时间压力；
+- 资源危机；
+- 场地/目标变化；
+- 不确定性；
+- 情绪赌注。
+
+不要把节奏问题全部交给敌人加血加攻。
 
 ## System Coupling Legitimacy
 
@@ -160,6 +234,19 @@ description: 负责游戏整体体验、玩法循环、系统规则、奖励框�
 
 动态权重用于降低“随机系统拒绝玩家构筑”的挫败，不应保证每局完美成型。
 
+### 随机玩法仍需结构保证
+
+随机只意味着具体内容可变，不代表宏观节奏无需设计。
+
+需要定义：
+
+- 连续高压事件上限；
+- 关键决策最小间隔；
+- Boss 前恢复下限；
+- 新机制首次出现的安全环境；
+- Build 核心组件的最低可达性；
+- P50/P90 Session 时长。
+
 ## 玩法策划关注点
 
 ### Core Loop
@@ -172,10 +259,16 @@ description: 负责游戏整体体验、玩法循环、系统规则、奖励框�
 失败原因可理解，存在恢复路径，避免形成“失败 -> 更弱 -> 更容易继续失败”的负循环。
 
 ### Onboarding
-推荐 `Introduce -> Practice -> Confirm -> Combine -> Apply Under Pressure`。
+优先通过真实玩法教学。可参考：
+
+`Introduce -> Practice -> Confirm -> Combine -> Apply Under Pressure`
+
+不要一次引入多个新规则，也不要把弹窗当机制教学的默认替代品。
 
 ### Content Scope
 内容数量必须与团队、周期和复用能力相匹配，不用“很多内容”代替预算。
+
+同一机制能否通过环境、目标、敌人、时间和组合产生变奏，比单纯增加新机制数量更重要。
 
 ## 常见系统反模式
 
@@ -190,7 +283,11 @@ description: 负责游戏整体体验、玩法循环、系统规则、奖励框�
 - **Same-color Drafting**：Roguelite 只剩同体系卡越拿越多；
 - **Core-or-Brick**：没抽到单张核心卡整局直接报废；
 - **Fake Choice Pool**：大量不属于当前 Build 的死选项；
-- **Completed-build Lottery**：只平衡最终成型强度，不管成型概率。
+- **Completed-build Lottery**：只平衡最终成型强度，不管成型概率；
+- **Choice Spam**：选择密度高到吞掉实际玩法；
+- **Difficulty-only Pacing**：用战力曲线替代节奏设计；
+- **Mechanic Dump**：一次性把多个新系统扔给玩家；
+- **Random = No Structure**：把“随机”当成“不需要编排”。
 
 ## 平台与性能
 
@@ -206,9 +303,14 @@ description: 负责游戏整体体验、玩法循环、系统规则、奖励框�
 - Player Outcome
 - Rules
 - States / Transitions
+- Player Verbs
+- Mechanic Lifecycle
+- Decision Budget
+- Rhythm Roles
 - Tunables
 - Dependencies
 - Coupling Rationale
+- Level Handoff
 - Technical Touchpoints
 - Exclusions
 - Acceptance Scenarios
@@ -232,6 +334,7 @@ Roguelite 还应根据需要包含：
 - 经济：交给 `economy-design`，同时检查 Resource Role 与 Sink Legitimacy
 - 成长：交给 `progression-design`，检查 Cost Semantics 与 Switching Cost
 - Roguelite：同时检查构筑成型概率、Dead Pick、Choice Quality、极端 Build、Boss Conversion
+- 玩法节奏：与 `level-design` 联合检查 Beat、Decision Budget、休止符、峰值和真实时长
 - 可用性：代表性用户测试
 - 好玩：Playtest，不可由文档证明
 - 性能：Profiling
