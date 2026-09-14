@@ -7,6 +7,10 @@ description: 生成、整理、重构和维护 Game Design Document（GDD）、S
 
 本 Skill 负责整理、组织、关联、表达和维护；专业设计由对应 Skill 完成。
 
+## Result-Level Professional Context
+
+当文档任务中输出一个新的专业设计结论、系统决策、风险 Finding 或正式规则前，按 `../game-design/references/professional-context-header.md` 输出一次结果级 Header。`game-design-doc` 只有在“文档组织/规格化表达本身”是当前 Decision Object 时才主责；具体经济、技能、数值、关卡等内容必须由对应专业主责，本 Skill 作为协同。相邻结果专业相同也重复显示。
+
 ## 文档类型
 
 根据用户目标选择：
