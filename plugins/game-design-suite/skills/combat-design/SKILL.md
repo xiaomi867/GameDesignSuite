@@ -1,11 +1,13 @@
 ---
 name: combat-design
-description: 负责战斗系统与遭遇规则，包括攻击、受击、目标选择、资源、状态、AI、战斗节奏、敌我职责、Boss/小怪战斗行为和战斗可读性。具体技能机制交给 skill-design，具体参数交给 balance-design。
+description: 负责战斗系统与遭遇规则，包括攻击、受击、目标选择、资源、状态、AI、战斗节奏、团队职责、反应动作、窗口、Boss/小怪战斗行为和战斗可读性。具体技能机制交给 skill-design，具体参数交给 balance-design。
 ---
 
 # 战斗策划
 
-目标是让玩家能理解战斗状态、做出有意义决策，并通过规则与反馈形成可控节奏。
+目标是让玩家能理解战斗状态、做出有意义决策，并通过规则与反馈形成可控节奏，而不是只让敌我数值互相消耗。
+
+涉及团队阶段职责、打条/失衡/异常、前后台切换、反击/追加、共享资源、敌人与角色循环关系时，优先读取 [Team Combat Loop & Role Contracts](references/team-combat-loop-and-role-contracts.md)。
 
 涉及速度、行动顺序、额外行动、共享技能点、能量循环、目标概率、韧性/Break 等问题时，与 `balance-design` 的 HSR-style theorycrafting reference 协作，不照抄外部游戏数值。
 
@@ -44,6 +46,91 @@ description: 负责战斗系统与遭遇规则，包括攻击、受击、目标�
 - Boss 阶段；
 - AI 决策。
 
+## Team Combat Loop / 团队阶段循环
+
+角色职责必须映射到团队循环，而不是只写“输出/坦克/奶妈”。
+
+建议按项目需要拆：
+
+`Build-up -> Setup -> Window Creation -> Exploit -> Sustain -> Recover/Reset`
+
+检查：
+
+- 谁负责积累 Gauge/状态/资源；
+- 谁创造 Burst/Break/失衡窗口；
+- 谁在窗口中兑现；
+- 谁负责维持血线/护盾/资源；
+- 循环结束后如何恢复；
+- 一个角色是否在所有阶段都最优。
+
+### Phase Ownership
+
+每个角色至少定义主阶段职责。相同“输出”标签可以因 Phase Ownership 不同形成完全不同玩法。
+
+## Gauge / 第二战斗轴
+
+若有韧性、护甲槽、Stagger、Break、Poise、异常积蓄等 Gauge，必须明确：
+
+- Gauge 上限；
+- 每技能贡献；
+- 阈值；
+- 触发状态；
+- Window Duration；
+- 恢复/重置；
+- Boss/Elite 差异；
+- 重复触发是否提高门槛或收益衰减；
+- 哪些角色主要负责 Build-up，哪些负责 Exploit。
+
+Gauge 的目的应是增加决策轴，而不是多一条血量。
+
+### Cross-State Interaction
+
+不同 Gauge/状态若存在交互，应优先创造新决策，例如：
+
+- 状态 A + 状态 B 触发额外结果；
+- Break 后异常更易积累；
+- 受击转反击/资源；
+- 队友行动触发追加；
+
+不要只做“同时存在时伤害 +X%”。
+
+## Action Combat Reaction Verbs
+
+动作战斗中，防守阶段也应有玩家动词：
+
+- Dodge；
+- Perfect Dodge；
+- Dodge Counter；
+- Parry/Assist；
+- Swap；
+- Defensive Assist；
+- Interrupt；
+- Positioning；
+- Invulnerability/Armor Window。
+
+每个敌方关键攻击明确：
+
+- Telegraph；
+- 可以怎么响应；
+- 成功响应收益；
+- 失败后果；
+- 是否有多种正确答案。
+
+## Turn-Based Reactive Verbs
+
+回合制也可以通过：
+
+- Counter；
+- Follow-up；
+- Action Advance/Delay；
+- Ultimate 插入；
+- Ally-action Trigger；
+- Enemy-action Trigger；
+- Resource Refund；
+- Conditional Extra Turn；
+
+建立回合外决策和构筑。
+
 ## Action Economy / 行动经济
 
 对回合制或自动战斗，必须把“行动次数”视为资源。
@@ -60,9 +147,7 @@ description: 负责战斗系统与遭遇规则，包括攻击、受击、目标�
 - 行动是否刷新/减少 Buff；
 - 额外行动是否导致资源循环转负。
 
-### 原则
-
-单次技能倍率低，不代表角色弱；如果其单位时间行动次数更多、能触发队友或生成资源，Effective Power 可能更高。
+单次倍率低不代表角色弱；如果单位时间行动更多、触发队友或生成资源，Effective Power 可能更高。
 
 不要脱离真实战斗窗口讨论速度阈值。
 
@@ -118,27 +203,6 @@ Target 价值影响：
 - Boss 点名；
 - 阵型站位。
 
-## Secondary Gauge / 第二战斗轴
-
-若有韧性、护甲槽、Stagger、Break、Poise 等 Gauge，必须明确：
-
-- Gauge 上限；
-- 每技能削减值；
-- Break 条件；
-- Break 奖励；
-- 恢复时间；
-- Boss 抗性；
-- 控制/爆发窗口；
-- Build 联动。
-
-这类系统的目的应是增加战斗决策轴，而不是多一条需要清空的血条。
-
-同时检查：
-
-- 只打 HP 是否永远最优；
-- 只打 Gauge 是否形成万能解；
-- 功能角色的 Gauge 贡献是否被正确计入价值。
-
 ## Status Reliability / 状态可靠性
 
 控制、Debuff、异常状态不能只看文本 Base Chance。
@@ -154,6 +218,27 @@ Target 价值影响：
 
 对关键控制技能至少检查普通怪/Elite/Boss 的实际成功率和 Breakpoint。
 
+## Field-Time / Action-Time Competition
+
+队伍中的角色会争抢：
+
+- 前台时间；
+- 行动次数；
+- 换人窗口；
+- 终结技插入时机；
+- 共享资源；
+- Break/失衡/易伤窗口。
+
+因此不能把每个角色各自的最强连段简单相加。
+
+### Window Realization
+
+记录：
+
+`Real Payoff Time = Window Duration - Entry Cost - Setup Cost - Reposition/Swap Cost`
+
+升级增加的攻击次数/连段如果落在窗口外，只能按实际可兑现部分计入价值。
+
 ## 决策与可读性
 
 检查玩家是否能：
@@ -164,33 +249,29 @@ Target 价值影响：
 - 预判 Boss 行为；
 - 通过构筑或操作响应；
 - 看懂共享资源是否即将不足；
-- 看懂 Break/控制窗口。
+- 看懂 Break/控制窗口；
+- 知道何时进入 Build-up、何时进入 Payoff。
 
 Telegraph 不应与实际结果冲突。
 
-## 角色职责
+## Role Contract / 角色职责合同
 
-区分：
+每个角色至少记录：
 
-- Carry / Burst / Sustained DPS
-- Tank
-- Healer
-- Control
-- Support
-- Hybrid
+| 维度 | 定义 |
+|---|---|
+| Primary Role | 主职责 |
+| Phase Ownership | 负责哪个战斗阶段 |
+| Resource Relation | 生成/消费/中性 |
+| Field/Action Time | 占用多少操作/行动 |
+| Target Shape | 单体/扩散/群体/随机 |
+| Trigger | 主触发来源 |
+| Window | 主要收益窗口 |
+| Team Hook | 为队友创造/消费什么 |
+| Failure Case | 什么环境会显著失效 |
+| Recovery | 循环断裂后如何恢复 |
 
-职责可以混合，但应明确主要价值、资源成本和代价。
-
-角色职责评估至少考虑：
-
-- Personal Output；
-- Team Amplification；
-- Survival；
-- Action Economy；
-- Resource Economy；
-- Target Value；
-- Gauge Contribution；
-- Reliability。
+职业标签写“Tank/Support/击破/异常”，但上表无法对应时，说明标签没有落实成玩法。
 
 ## 遭遇设计
 
@@ -203,8 +284,11 @@ Telegraph 不应与实际结果冲突。
 - Composition Synergy；
 - Recovery Window；
 - Resource Pressure；
+- Attack Frequency；
+- Target Density；
+- Gauge/Status Interaction；
 - 是否检验不同 Build；
-- 是否只针对某一角色。
+- 是否长期系统性封印某类角色。
 
 ## Boss
 
@@ -220,13 +304,14 @@ Boss 至少明确：
 - 是否依赖特定角色才能通过；
 - Break/控制抗性；
 - 目标选择规则；
-- 资源与 Burst Window。
+- 资源与 Burst Window；
+- 是否通过节奏/目标/窗口 Stress 角色，而不是简单免疫体系。
 
 ## 与其他 Skill 协作
 
 - 具体技能 -> `skill-design`
 - 参数与强度 -> `balance-design`
-- 场地空间 -> `level-design`
+- 场地空间/Encounter Matrix -> `level-design`
 - 配置 -> `config-audit`
 - 实际实现 -> `code-verification`
 
@@ -234,10 +319,15 @@ Boss 至少明确：
 
 ## 战斗反模式
 
+- **Role by Label**：职业名与实际行为无关；
+- **All-phase Carry**：一个角色准备、开窗、爆发、续航全部最优；
 - **Single-hit Fallacy**：只看单次倍率不看行动频率；
 - **Infinite Action Value**：加速、追击、插队形成失控循环；
 - **Resource Blindness**：个人输出很高但团队资源破产；
 - **Hidden Target RNG**：目标概率不透明导致 Tank/反击价值不可控；
 - **Fake Control**：文本控制很强但 Boss 实际高抗/免疫；
-- **Second HP Bar**：第二 Gauge 没有新决策，只是额外血量；
+- **Second HP Bar / Gauge as Extra HP**：第二 Gauge 没有新决策；
+- **Trigger Starvation**：敌人行为让反击/受击/状态角色长期无法工作；
+- **Reaction Monopoly**：敌方攻击只有一种正确防守答案；
+- **Permanent Burst**：高收益状态覆盖过高，阶段结构消失；
 - **Boss-by-Immunity**：靠全面免疫解决构筑过强，直接杀死体系价值。
