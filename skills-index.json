@@ -1,0 +1,72 @@
+[
+  {
+    "name": "balance-design",
+    "path": "skills/balance-design/SKILL.md",
+    "description": "负责游戏数值策划与平衡，包括属性、技能倍率、DPS/HPS、控制覆盖率、成长曲线、敌我强度、掉落/价格参数、难度曲线和横向强度比较。用于提出候选数值、建立公式、模拟和验证，不把理论计算冒充真实 Playtest。"
+  },
+  {
+    "name": "code-verification",
+    "path": "skills/code-verification/SKILL.md",
+    "description": "只读验证游戏客户端/服务器代码如何读取和执行设计与配置，包括字段解析、默认值、枚举、Target、Buff、状态、存档、网络、结算和上传校验。用于确认“表里这样填到底是否生效”，不负责大规模重构实现。"
+  },
+  {
+    "name": "combat-design",
+    "path": "skills/combat-design/SKILL.md",
+    "description": "负责战斗系统与遭遇规则，包括攻击、受击、目标选择、资源、状态、AI、战斗节奏、敌我职责、Boss/小怪战斗行为和战斗可读性。具体技能机制交给 skill-design，具体参数交给 balance-design。"
+  },
+  {
+    "name": "config-audit",
+    "path": "skills/config-audit/SKILL.md",
+    "description": "审查游戏 Excel/CSV/JSON/配置表，包括 Row/Key/ID、字段、引用、缺失、重复、类型、Target、Buff、Group、等级映射、星级映射和跨表一致性。用于回答“具体改哪一行哪一字段”，不凭字段名猜运行时语义。"
+  },
+  {
+    "name": "design-frameworks",
+    "path": "skills/design-frameworks/SKILL.md",
+    "description": "游戏设计方法论与模式库。用于 MDA、Core Loop、Flow、Core Dialectic、设计支柱、玩家动机、Depth vs Complexity、Pattern 等分析，辅助其他策划 Skill 判断设计为什么成立或失败，不替代具体数值、配置、关卡或代码验证。"
+  },
+  {
+    "name": "design-review",
+    "path": "skills/design-review/SKILL.md",
+    "description": "对已有游戏概念、GDD、机制、技能、战斗、经济、成长、关卡、UI、原型、配置方案或 Playtest 结果进行评审、比较和压力测试。识别弱点、矛盾、主导策略、False Choice、失衡和证据缺口，并给出最小有效修改与下一步验证实验。"
+  },
+  {
+    "name": "economy-design",
+    "path": "skills/economy-design/SKILL.md",
+    "description": "负责游戏经济策划，包括资源 Sources/Sinks、库存、流速、价值锚点、兑换、价格、奖励投放、产销闭环、通胀、囤积、付费边界和长期资源健康度。用于签到、任务、商店、抽卡、体力、养成资源等经济问题。"
+  },
+  {
+    "name": "game-design",
+    "path": "skills/game-design/SKILL.md",
+    "description": "游戏设计通用入口。用户提出玩法、系统、体验、规则、平衡、技能、战斗、经济、成长、关卡、UI、配置、实现验证、评审或 GDD 等游戏设计问题时使用。负责自动选择并协调最小充分的专业 Skill，不要求用户预先判断专业边界。"
+  },
+  {
+    "name": "game-design-doc",
+    "path": "skills/game-design-doc/SKILL.md",
+    "description": "生成、整理、重构和维护 Game Design Document（GDD）、System Spec、Concept GDD、Production GDD 或 Pitch Design Document。优先复用已确认项目事实，不为了填满模板而虚构数值、内容量、商业化方案或验收标准。"
+  },
+  {
+    "name": "game-interface-design",
+    "path": "skills/game-interface-design/SKILL.md",
+    "description": "负责游戏 HUD、菜单、界面流程、信息层级、反馈、Onboarding、输入提示、对话选择和 Accessibility。用于判断玩家是否能感知、理解并操作系统，不负责最终视觉资产制作。"
+  },
+  {
+    "name": "game-production",
+    "path": "skills/game-production/SKILL.md",
+    "description": "负责游戏整体体验、玩法循环、系统规则、奖励框架、教程、产品节奏、制作范围、依赖和验证。适用于玩法策划、系统策划、现有系统诊断和跨系统方案设计；具体数值、经济、技能、关卡、配置或代码问题应与对应专业 Skill 协作。"
+  },
+  {
+    "name": "level-design",
+    "path": "skills/level-design/SKILL.md",
+    "description": "负责关卡、地图和可玩空间设计，包括 Layout、Metrics、Blockout、路径、导航、探索、Encounter、视线、掩体、空间教学、节奏、Checkpoint 和关卡 Playtest。"
+  },
+  {
+    "name": "progression-design",
+    "path": "skills/progression-design/SKILL.md",
+    "description": "负责角色、账户、装备、技能、星级、突破、解锁和长期成长设计。用于成长路径、等级曲线、星级收益、解锁节奏、追赶机制、卡点、成长上限和资源需求等问题。"
+  },
+  {
+    "name": "skill-design",
+    "path": "skills/skill-design/SKILL.md",
+    "description": "负责角色/英雄技能设计、诊断和改造，包括普攻、主动、被动、大招、Target、触发、Buff/Debuff、持续、叠加、技能等级、升星影响和构筑关系。已有项目默认不改变用户要求保持的技能机制。"
+  }
+]
