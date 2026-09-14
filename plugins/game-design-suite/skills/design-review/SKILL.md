@@ -7,6 +7,10 @@ description: 对已有游戏概念、GDD、机制、技能、英雄、战斗、�
 
 评审是决策辅助，不是万能清单，也不能替代 Playtest。
 
+## Result-Level Professional Context
+
+每一个独立 Review Finding 前，按 `../game-design/references/professional-context-header.md` 输出一次结果级 Header。`design-review` 只有在当前结果本身是“评审/取舍/优先级判断”时主责；如果 Finding 的核心是在确认配置事实、代码语义、数值强度、经济根因等，应由对应专业主责，`design-review` 作为协同。相邻 Finding 即使专业组合相同也重复显示。
+
 ## 1. 定义评审对象与决策
 
 先明确：
