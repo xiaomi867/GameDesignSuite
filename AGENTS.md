@@ -24,7 +24,7 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 2. 由 `game-design` 选择最小充分 Skill 集；Direct Specialist Entry 时只加载完成任务真正需要的其他 Skill。
 3. 完整读取被选 Skill 的 `plugins/game-design-suite/skills/<skill-name>/SKILL.md`。
 4. 只按 Skill 路由读取会改变当前判断的 reference；不要为了显得全面加载全部资料。
-5. **在任何正式结论之前输出 Professional Context Header。** 若 `game-design` 已输出则不重复；若宿主直接进入专业 Skill，该 Skill 必须自行输出，只列实际已读取/使用的专业。
+5. **把回答拆成独立 Result Blocks。每一个正式结果、Finding、字段修改、设计判断或验证结论前，都重新判断当前 Decision Object，并输出 Professional Context Header。**
 6. 对已有项目，优先检查现有规则、文件、配置、数据与必要代码，不把项目当白纸。
 7. 缺关键资料时执行 Missing Evidence Guard：标记证据边界，列出最小缺失材料，同时继续所有独立可做工作。
 8. 配置表任务执行 Field Attribution Guard：先锁定 `Table/Sheet + RowKey/ID + FieldName + RawValue`，再解释数值；不得跨列串位。
@@ -33,32 +33,66 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 
 ## Professional Context Header
 
-这是路由可观察性要求，不是角色扮演。
+这是**结果级路由可观察性要求**，不是角色扮演，也不是整篇答案只显示一次的总标签。
 
-- 专业身份必须来自本次实际 Skill 路由；
-- 简单任务保持一行；复杂生产任务最多 3~4 行；
+### 每个结果都必须显示
+
+每一个独立正式结果前都使用：
+
+```text
+【本次专业视角】
+主责：配置审计（config-audit）
+协同：代码 / 实现验证（code-verification）
+```
+
+然后再输出该结果。
+
+如果下一结果的 Decision Object 变化，Header 必须同步变化。例如：
+
+```text
+【本次专业视角】
+主责：代码 / 实现验证（code-verification）
+协同：配置审计（config-audit）
+```
+
+如果后续才进入强度评估：
+
+```text
+【本次专业视角】
+主责：数值策划（balance-design）
+协同：技能 / 英雄策划（skill-design） / 配置审计（config-audit）
+```
+
+### 重复不是错误
+
+相邻两个独立结果即使主责/协同完全相同，也**重复显示 Header**。用户需要逐项确认每个结果是否使用了正确专业视角。
+
+不要因为“上一段已经有 Header”而省略下一结果的 Header。
+
+### 必须按 Decision Object 选主责
+
+- 发现字段不一致、漏配、错引 -> `config-audit` 主责；
+- 解释枚举、Parser、Runtime Consumer -> `code-verification` 主责；
+- 评估倍率、覆盖率、TTK、Power Delta -> `balance-design` 主责；
+- 资源生命周期、Source/Sink 根因 -> `economy-design` 主责；
+- 成长成本/节点结构 -> `progression-design` 主责；
+- 技能机制/Target/状态机 -> `skill-design` 主责；
+- 战斗规则/AI/资源窗口 -> `combat-design` 主责；
+- 关卡/空间/Encounter/波次 -> `level-design` 主责；
+- 玩法循环/系统结构 -> `game-production` 主责。
+
+**配置里出现数字不代表数值策划主责。** 例如 `BUF_bear_def_pct` 基础行 `CoverCheckType=3`、lv2~lv5 为 `2`，这个“不一致事实”首先是 `config-audit` 的结果；只有另一个结果开始计算它造成多少强度变化时，才切换为 `balance-design`。
+
+### 其他约束
+
+- 专业身份必须来自当前结果实际使用的 Skill；
 - `game-design` 通常不作为主责职业显示；
 - 不得列出未实际读取/使用的 Skill；
 - 不得为了显得全面把全部 Skill 都列出来；
 - 不得只写“我是资深 XX 策划”代替实际路由；
-- Header 必须出现在正式答案前部，不能回答完再补；
-- Header 后必须继续完成任务，不能只汇报路由；
-- 如果宿主跳过 Router 直接调用专业 Skill，该专业 Skill 必须自行补 Header；同一轮已有 Header 时不重复。
-
-推荐格式：
-
-```text
-专业视角：关卡策划（level-design）｜协同：战斗策划（combat-design）
-```
-
-复杂任务：
-
-```text
-【本次专业视角】
-主责：技能策划（skill-design）
-协同：数值策划（balance-design） / 配置审计（config-audit） / 代码验证（code-verification）
-证据边界：当前仅有真实配置，可验证到 verified-config；代码语义仍为 unverified
-```
+- Header 必须先于对应结果；
+- Direct Specialist Entry 也必须遵守；
+- 混合了配置事实、代码语义、数值判断的内容必须拆成多个结果块，不用一个大 Header 糊在一起。
 
 统一规则见：
 
@@ -99,7 +133,8 @@ Deep Code 通过：
 - 多 Skill 输出必须合并成统一判断，不把多个报告简单拼接。
 - 配置事实、代码事实、数值候选、设计判断和 Playtest 证据分层处理。
 - 新证据可以推翻旧 candidate；不要为了维护历史回答一致而忽略更高质量证据。
-- Professional Context Header 必须与实际路由一致；若后续证据使主责专业发生实质变化，可在正文中说明路由调整，不必反复重发完整 Header。
+- Professional Context Header 必须与**当前结果**的实际路由一致，而不是与整篇问题的初始主题永久绑定。
+- 一个结果的主责改变时必须显示新的 Header；相邻结果主责不变时仍然重复显示 Header。
 - Direct Specialist Entry 不得虚构尚未加载的协同 Skill。
 
 ## 配置读取硬规则
