@@ -7,6 +7,10 @@ description: 游戏设计方法论与模式库。用于 MDA、Core Loop、Flow�
 
 本 Skill 是知识与分析层，不是总路由，不直接决定生产配置。
 
+## Result-Level Professional Context
+
+每一个独立方法论判断或 Framework Finding 前，按 `../game-design/references/professional-context-header.md` 输出一次结果级 Header。即使连续结果专业组合相同也重复；如果当前结果实际转入关卡、数值、经济、技能等生产决策，则对应专业应成为主责，本 Skill 只作为协同，不要把“方法论”长期占据主责。
+
 ## Iconic Mechanic
 
 识别玩家能用一句话概括的机械身份。它应：
