@@ -7,7 +7,7 @@
   {
     "name": "code-verification",
     "path": "plugins/game-design-suite/skills/code-verification/SKILL.md",
-    "description": "只读验证游戏客户端/服务器代码如何读取和执行设计与配置，包括字段解析、默认值、枚举、Target、Buff、状态、存档、网络、结算和上传校验。用于确认“表里这样填到底是否生效”，不负责大规模重构实现。"
+    "description": "只读验证游戏客户端/服务器代码如何读取和执行设计与配置，包括字段解析、默认值、枚举、Target、Buff、状态、存档、网络、结算和上传校验。用于确认表里这样填到底是否生效，不负责大规模重构实现。"
   },
   {
     "name": "combat-design",
@@ -17,7 +17,7 @@
   {
     "name": "config-audit",
     "path": "plugins/game-design-suite/skills/config-audit/SKILL.md",
-    "description": "审查游戏 Excel/CSV/JSON/配置表，包括 Row/Key/ID、字段、引用、缺失、重复、类型、Target、Buff、Group、等级映射、星级映射和跨表一致性。用于回答“具体改哪一行哪一字段”，不凭字段名猜运行时语义。"
+    "description": "审查游戏 Excel/CSV/JSON/配置表，包括 Row/Key/ID、字段、引用、缺失、重复、类型、Target、Buff、Group、等级映射、星级映射和跨表一致性。用于回答具体改哪一行哪一字段，不凭字段名猜运行时语义。"
   },
   {
     "name": "design-frameworks",
@@ -42,7 +42,7 @@
   {
     "name": "game-design",
     "path": "plugins/game-design-suite/skills/game-design/SKILL.md",
-    "description": "游戏设计通用入口。用户提出玩法、系统、体验、规则、平衡、技能、战斗、经济、成长、关卡、UI、配置、实现验证、评审或 GDD 等游戏设计问题时使用。负责自动选择并协调最小充分的专业 Skill，不要求用户预先判断专业边界。"
+    "description": "游戏设计通用入口。用户提出玩法、系统、体验、规则、平衡、技能、战斗、经济、成长、关卡、UI、配置、实现验证、模拟、Telemetry、Meta平衡、评审或GDD等问题时使用。负责自动选择并协调最小充分专业Skill。"
   },
   {
     "name": "game-design-doc",
@@ -65,13 +65,28 @@
     "description": "负责关卡、地图和可玩空间设计，包括 Layout、Metrics、Blockout、路径、导航、探索、Encounter、视线、掩体、空间教学、节奏、Checkpoint 和关卡 Playtest。"
   },
   {
+    "name": "meta-balance",
+    "path": "plugins/game-design-suite/skills/meta-balance/SKILL.md",
+    "description": "负责多角色、多Build、多队伍、多内容环境下的版本级平衡与生态健康，包括Roster/Composition/Matchup矩阵、Pick/Win/Presence、Synergy、Counter、Power Creep、可用池、多样性和版本改动风险。"
+  },
+  {
     "name": "progression-design",
     "path": "plugins/game-design-suite/skills/progression-design/SKILL.md",
     "description": "负责角色、账户、装备、技能、星级、突破、解锁和长期成长设计。用于成长路径、等级曲线、星级收益、解锁节奏、追赶机制、卡点、成长上限和资源需求等问题。"
   },
   {
+    "name": "simulation-design",
+    "path": "plugins/game-design-suite/skills/simulation-design/SKILL.md",
+    "description": "负责游戏数值与系统的可重复模拟、参数扫描、Monte Carlo、离散事件仿真、Bot/策略代理、长期经济与成长模拟。用于回答100/1000/10000次结果分布、敏感性、极端组合与稳定性问题，不把模拟冒充真实玩家体验。"
+  },
+  {
     "name": "skill-design",
     "path": "plugins/game-design-suite/skills/skill-design/SKILL.md",
     "description": "负责角色/英雄技能设计、诊断和改造，包括普攻、主动、被动、大招、Target、触发、Buff/Debuff、持续、叠加、技能等级、升星影响和构筑关系。已有项目默认不改变用户要求保持的技能机制。"
+  },
+  {
+    "name": "telemetry-experiment-design",
+    "path": "plugins/game-design-suite/skills/telemetry-experiment-design/SKILL.md",
+    "description": "负责游戏埋点、指标体系、玩家分群、漏斗、留存/行为分析、A/B测试、统计显著性、样本偏差与线上验证。用于把设计问题转成可测量假设并判断改动是否真的有效，不把相关性误写成因果。"
   }
 ]
