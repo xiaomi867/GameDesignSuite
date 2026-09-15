@@ -34,10 +34,11 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 6. 已有项目先检查真实规则、文件、配置、代码、数据、Runtime/日志，再设计。
 7. 缺证据执行 Missing Evidence Guard，不猜。
 8. 配置任务执行 Field Attribution Guard。
-9. 模拟任务记录 seed/model/config/agent version，不把 Simulation 冒充 Playtest。
-10. Telemetry/实验任务先定义 Decision/Hypothesis/Metric/Segment，检查 SRM 和数据质量，不把相关性冒充因果。
-11. Meta平衡按 Skill/Mastery/Composition/Content 分层，不只看总体胜率。
-12. 继续执行并交付结果。
+9. 装备/Itemization 任务先明确 Itemization Job、Slot/Budget/Affix/Acquisition/Replacement，再做具体数值。
+10. 模拟任务记录 seed/model/config/agent version，不把 Simulation 冒充 Playtest。
+11. Telemetry/实验任务先定义 Decision/Hypothesis/Metric/Segment，检查 SRM 和数据质量，不把相关性冒充因果。
+12. Meta平衡按 Skill/Mastery/Composition/Content 分层，不只看总体胜率。
+13. 继续执行并交付结果。
 
 ## Professional Context Header Decision Map
 
@@ -48,6 +49,7 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 - Monte Carlo/离散事件/参数扫描/分布/敏感性 -> `simulation-design`
 - 埋点/KPI/分群/A-B/SRM/统计分析 -> `telemetry-experiment-design`
 - Roster/Composition/Matchup/Synergy/Counter/Power Creep -> `meta-balance`
+- 装备槽位/品质/主副词条/词条池/Roll/套装/唯一特效/Loot可用率/BiS结构 -> `itemization-design`
 - Resource Role/Source/Sink/库存 -> `economy-design`
 - 等级/星级/突破/成长成本 -> `progression-design`
 - 技能机制/Target/状态机 -> `skill-design`
@@ -55,7 +57,7 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 - 关卡/空间/波次/Encounter -> `level-design`
 - 玩法循环/系统结构 -> `game-production`
 
-配置里出现数字不等于数值策划主责；有1000次模拟也不等于体验已验证；总体50%胜率也不等于Meta健康。
+配置里出现数字不等于数值策划主责；出现装备不等于 `itemization-design` 可以包办代码、经济、模拟或Meta结论；有1000次模拟也不等于体验已验证；总体50%胜率也不等于Meta健康。
 
 统一 Header 规则见：
 
@@ -67,6 +69,7 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 
 ```text
 Design Intent
+-> itemization-design (when equipment/build rules matter)
 -> formula-verification
 -> config-audit / code-verification
 -> simulation-design
@@ -90,15 +93,16 @@ Design Intent
 - schema/version guard；
 - distribution/tail checks；
 - telemetry data-quality checks；
+- loot funnel / affix guard；
 - generic anti-patterns。
 
 禁止复制：
 
 - 私有项目名；
-- 私有角色/技能/表名；
+- 私有角色/技能/装备/表名；
 - 私有ID/路径；
 - 私有真实公式；
-- 私有经济/运营数据；
+- 私有装备数值/掉率/经济/运营数据；
 - 未公开业务规则。
 
 项目专属适配应留在项目私有 workspace，不污染通用 Game Design Suite。
@@ -156,7 +160,7 @@ Deep Code adapter 必须继续读取 canonical Skill。
 - 不虚构 Telemetry、Playtest、市场数据或代码行为。
 - 不为模板制造数值、功能或商业化方案。
 - 不把 Spreadsheet / Simulation / observational telemetry 冒充更高层证据。
-- 外部游戏的公式、阈值和案例只做方法参考，不是项目真值。
+- 外部游戏的公式、阈值、装备词条、掉率和案例只做方法参考，不是项目真值。
 
 ## 维护
 
