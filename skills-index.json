@@ -35,6 +35,11 @@
     "description": "负责游戏经济策划，包括资源 Sources/Sinks、库存、流速、价值锚点、兑换、价格、奖励投放、产销闭环、通胀、囤积、付费边界和长期资源健康度。用于签到、任务、商店、抽卡、体力、养成资源等经济问题。"
   },
   {
+    "name": "formula-verification",
+    "path": "plugins/game-design-suite/skills/formula-verification/SKILL.md",
+    "description": "负责游戏内公式的建立、还原、校验、对照和压力测试，包括伤害、治疗、护盾、防御、抗性、暴击、命中、行动值、攻速/攻击间隔、资源/能量、仇恨、Gauge、DoT/异常、成长与概率公式。用于验证公式数学结构、代码实现、边界与参考模型，不把外部游戏公式直接当成本项目标准。"
+  },
+  {
     "name": "game-design",
     "path": "plugins/game-design-suite/skills/game-design/SKILL.md",
     "description": "游戏设计通用入口。用户提出玩法、系统、体验、规则、平衡、技能、战斗、经济、成长、关卡、UI、配置、实现验证、评审或 GDD 等游戏设计问题时使用。负责自动选择并协调最小充分的专业 Skill，不要求用户预先判断专业边界。"
