@@ -1,6 +1,6 @@
 ---
 name: game-design
-description: 游戏设计通用入口。用户提出玩法、系统、体验、规则、平衡、公式、模拟、Telemetry、A/B实验、Meta生态、技能、战斗、装备/Itemization、经济、成长、关卡、UI、配置、实现验证、评审或 GDD 等游戏设计问题时使用。负责自动选择并协调最小充分的专业 Skill，不要求用户预先判断专业边界。无论用户是否提醒，每个独立正式结果前都必须显示【本次专业视角】并标出主责/协同。
+description: 游戏设计通用入口。用户提出玩法、系统、体验、规则、平衡、公式、模拟、Telemetry、A/B实验、Meta生态、技能、战斗、装备/Itemization、外部装备Benchmark、经济、成长、关卡、UI、配置、实现验证、评审或 GDD 等游戏设计问题时使用。负责自动选择并协调最小充分的专业 Skill，不要求用户预先判断专业边界。无论用户是否提醒，每个独立正式结果前都必须显示【本次专业视角】并标出主责/协同。
 ---
 
 # 游戏设计总入口
@@ -9,7 +9,7 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 >
 > 只要本套件正在回答游戏设计/策划相关任务，用户不需要在 Prompt 里额外要求“显示专业视角”。
 >
-> 每一个独立正式结果、Finding、字段修改、代码语义、数值判断、模拟结论、数据结论、Meta判断、装备/Itemization结论、经济结论、成长方案、技能判断或关卡方案之前，都必须先显示：
+> 每一个独立正式结果、Finding、字段修改、代码语义、数值判断、模拟结论、数据结论、Meta判断、装备/Itemization结论、外部装备Benchmark结论、经济结论、成长方案、技能判断或关卡方案之前，都必须先显示：
 >
 > ```text
 > 【本次专业视角】
@@ -41,6 +41,7 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 10. Direct Specialist Entry 也必须执行共享 Header 规则。
 11. 用户从不需要重复提醒 Header。
 12. 私有项目资料只能用于当前项目分析和抽象方法验证，不得复制到公开通用 Skill、reference 或 eval。
+13. 外部商业游戏资料只作为参考事实/模式，不能自动成为当前项目标准。
 
 ## Professional Judgment Guard
 
@@ -62,7 +63,8 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 - 模拟1000次均值稳定 ≠ 玩家体验已验证；
 - Telemetry相关性 ≠ 因果关系；
 - 装备词条很多 ≠ Build一定丰富；
-- 橙装掉率高 ≠ 实际Upgrade Rate高。
+- 橙装掉率高 ≠ 实际Upgrade Rate高；
+- 三个成熟游戏都这么做 ≠ 当前项目应该照搬。
 
 ## Symptom-to-Root-Cause Rule
 
@@ -76,14 +78,15 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 
 ## Missing Evidence Guard
 
-当任务需要配置、代码、Telemetry、Playtest、地图、文档或其他证据但当前不可访问：
+当任务需要配置、代码、Telemetry、Playtest、地图、文档、外部详情页或其他证据但当前不可访问：
 
 1. 只做一次必要可用性检查；
 2. 依赖缺失证据的结论标 `unverified` / `externally-blocked`；
 3. 列出最小缺失材料；
 4. 继续所有不依赖缺失证据的工作；
 5. 不从字段名、旧版本、相似游戏或公开资料补成当前项目事实；
-6. 用户明确“不猜”时严格停在证据边界。
+6. 外部详情页不可访问时，不从记忆补精确等级/强化值；
+7. 用户明确“不猜”时严格停在证据边界。
 
 ## 路由
 
@@ -114,8 +117,11 @@ Monte Carlo、离散事件、Rotation/Timeline、参数扫描、策略代理、1
 ### `meta-balance`
 多角色/Build/队伍/内容生态、Matchup/Synergy/Counter矩阵、Pick/Win/Presence、Mastery、Power Creep、版本风险与多样性。
 
+### `itemization-benchmark`
+公开商业游戏的装备、武器、遗器、圣遗物、声骸等参考数据抽取、等级/强化曲线、结构归一化、跨游戏 Benchmark、可迁移模式与迁移边界。首批参考覆盖崩坏：星穹铁道、原神、鸣潮。只负责外部参考，不替代当前项目最终设计。
+
 ### `itemization-design`
-装备/Itemization系统、槽位、品质、基础/主/副词条、词条池与权重、随机Roll、强化、套装、唯一特效、Loot可用率、替换/毕业、分解回收、Best-in-Slot与Build生态。
+当前项目装备/Itemization系统、槽位、品质、基础/主/副词条、词条池与权重、随机Roll、强化、套装、唯一特效、Loot可用率、替换/毕业、分解回收、Best-in-Slot与Build生态。
 
 ### `economy-design`
 资源Role、Sources/Sinks、库存、流速、价值锚、兑换、通胀、产销闭环。
@@ -154,8 +160,23 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 
 定稿：`+ design-review`
 
+### 外部装备对标
+`itemization-benchmark + itemization-design`
+
+比较具体属性/特效强度：`+ balance-design`
+
+比较等级/突破/强化曲线：`+ progression-design`
+
+比较毕业概率与随机层：`+ simulation-design`
+
+比较套装/专武生态：`+ meta-balance`
+
+外部来源精确值缺失时执行 `externally-blocked`，不从记忆补值。
+
 ### 装备 / Itemization
 `itemization-design + balance-design + progression-design`
+
+涉及外部商业游戏参考：`+ itemization-benchmark`
 
 涉及掉落、强化材料、分解、商店：`+ economy-design`
 
@@ -212,14 +233,13 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 
 复杂数值任务优先按需要形成：
 
-`Design Intent -> Itemization/Build Rules -> Formula -> Config/Code -> Simulation -> Runtime -> Telemetry -> Meta -> Playtest`
+`Design Intent -> External Benchmark(optional) -> Itemization/Build Rules -> Formula -> Config/Code -> Simulation -> Runtime -> Telemetry -> Meta -> Playtest`
 
-其中 Itemization/Build Rules 只在装备/物品化相关任务出现，不是所有数值任务的强制层。
+其中：
 
-各层职责：
-
+- External Benchmark：只在用户需要外部游戏参考/对标时出现；
+- Itemization/Build Rules：只在装备/物品化相关任务出现；
 - Design Intent：为什么存在；
-- Itemization/Build Rules：装备结构、词条池、套装、随机性、替换与Build目标；
 - Formula：数学结构是否正确；
 - Config/Code：项目实际怎么执行；
 - Simulation：预期分布、极端值、敏感性；
@@ -227,6 +247,8 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 - Telemetry：真实玩家行为与结果；
 - Meta：整个选择生态是否健康；
 - Playtest：体验、可读性、挫败、乐趣。
+
+外部商业游戏的 `verified-data` 只能证明参考来源事实，不能自动升级为当前项目 verified。
 
 低层证据不能冒充高层结论。
 
@@ -263,11 +285,14 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 7. 地图与内容；
 8. 当前制作和技术约束。
 
+外部参考只能进入“参考层”，不能覆盖以上项目真源。
+
 关键证据缺失时继续完成独立可做部分，并明确未知项。
 
 ## 边界
 
 - 不替专业 Skill 完成详细设计。
 - 不把模拟、Spreadsheet、Telemetry相关性或理论分析描述成“已验证好玩”。
-- 不把外部游戏的阈值、公式、装备掉率、词条数量、套装倍率或实验结果直接复制成本项目标准。
+- 不把外部游戏的阈值、公式、装备掉率、词条数量、套装倍率、强化曲线或精炼/谐振参数直接复制成本项目标准。
+- 不因为三款成熟游戏都使用某结构，就自动把它标为当前项目最佳实践。
 - 不保存无意义中间状态。
