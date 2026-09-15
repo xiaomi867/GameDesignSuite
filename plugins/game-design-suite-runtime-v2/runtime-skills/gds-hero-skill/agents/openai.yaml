@@ -1,0 +1,6 @@
+interface:
+  display_name: "Hero & Skill Design"
+  short_description: "Hero identity, kits, stat progression, skill mechanics, and value curves."
+  default_prompt: "Use Hero & Skill Design for this hero or skill-system request."
+policy:
+  allow_implicit_invocation: true
