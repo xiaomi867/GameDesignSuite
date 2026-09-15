@@ -1,0 +1,6 @@
+interface:
+  display_name: "Formula Verification"
+  short_description: "公式还原、单位、乘区、Clamp/Round、定义域、边界、配置/代码一致性与计算验证。"
+  default_prompt: "Use $gds-formula-verification to derive and verify this formula, including units, order of operations, clamps, rounding, and edge cases."
+policy:
+  allow_implicit_invocation: true

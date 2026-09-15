@@ -1,0 +1,6 @@
+interface:
+  display_name: "Progression Design"
+  short_description: "账号/角色/装备/技能的等级、星级、突破、解锁、成长成本、阶段节奏、追赶与长期上限。"
+  default_prompt: "Use $gds-progression-design to build a progression structure with milestones, costs, power deltas, pacing, and catch-up rules."
+policy:
+  allow_implicit_invocation: true

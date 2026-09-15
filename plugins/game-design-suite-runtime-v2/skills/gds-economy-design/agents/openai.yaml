@@ -1,0 +1,6 @@
+interface:
+  display_name: "Economy Design"
+  short_description: "资源角色、Sources/Sinks、库存、产出、消耗、兑换、商店、奖励、通胀与生命周期。"
+  default_prompt: "Use $gds-economy-design to design or audit this resource economy without adding sinks just to consume surplus."
+policy:
+  allow_implicit_invocation: true

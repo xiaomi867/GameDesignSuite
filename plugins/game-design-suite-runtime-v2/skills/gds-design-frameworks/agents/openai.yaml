@@ -1,0 +1,6 @@
+interface:
+  display_name: "Design Frameworks"
+  short_description: "MDA、Core Loop、Flow、玩家动机、设计张力、Depth vs Complexity、Pattern 与问题拆解。"
+  default_prompt: "Use $gds-design-frameworks to analyze this design problem with the smallest useful framework set and turn it into testable hypotheses."
+policy:
+  allow_implicit_invocation: true
