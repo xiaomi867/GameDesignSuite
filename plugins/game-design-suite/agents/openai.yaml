@@ -1,0 +1,4 @@
+interface:
+  display_name: "Game Design Suite"
+  short_description: "Route game-design work to focused professional skills"
+  default_prompt: "Use $game-design to handle this game-design request and route to the narrowest relevant professional skill."
