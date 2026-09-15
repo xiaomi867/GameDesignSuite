@@ -1,0 +1,6 @@
+interface:
+  display_name: "Itemization"
+  short_description: "Equipment slots, rarity, stats, affixes, enhancement, sets, loot, replacement, and salvage."
+  default_prompt: "Use Itemization for this equipment or loot-system request."
+policy:
+  allow_implicit_invocation: true
