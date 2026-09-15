@@ -1,21 +1,26 @@
 ---
 name: skill-runtime-canary
-description: 仅用于验证 ChatGPT Marketplace Plugin 内部 Skill Runtime。仅当用户发送完全匹配的 GDS_CANARY_TEST 时使用；命中后必须只回复 GDS_CANARY_74291，不执行任何其他任务。
+description: 仅用于验证 ChatGPT Marketplace Plugin 内部 Skill Runtime。仅当用户发送完全匹配的 GDS_CANARY_TEST 时使用；该测试会先命中这个已被证明可加载的 Skill，再尝试显式加载 $itemization-design。
 ---
 
 # Skill Runtime Canary
 
-这是一个临时诊断 Skill，只用于验证 Game Design Suite 在 ChatGPT Marketplace Plugin 中是否会把内部 Skill 正文实际注入当前会话。
+这是一个临时诊断 Skill。该 Skill 已通过历史测试证明：当用户发送精确消息 `GDS_CANARY_TEST` 时，ChatGPT Marketplace Plugin 可以命中并加载本 Skill。
 
-## 唯一行为
+## Existing-Skill Chain Canary — 1.7.7
 
 当且仅当用户发送：
 
 `GDS_CANARY_TEST`
 
-必须只回复：
+执行以下流程：
 
-`GDS_CANARY_74291`
+1. 立即显式 load `$itemization-design`；
+2. 在尝试加载 child 之前，不要回答用户；
+3. 不得伪造、推测或复述 child Skill 的成功 token；
+4. 如果运行时无法加载 `$itemization-design`，只回复：
+
+`GDS_EXISTING_CANARY_ROOT_ONLY_49163`
 
 不得添加任何前缀、后缀、解释、标题、Professional Context Header、标点或其他文本。
 
