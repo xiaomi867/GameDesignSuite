@@ -1,0 +1,6 @@
+interface:
+  display_name: "Economy & Progression"
+  short_description: "Currencies, sources/sinks, pacing, upgrade costs, unlocks, replacement cadence, and long-term growth."
+  default_prompt: "Use Economy & Progression for this economy or growth-system request."
+policy:
+  allow_implicit_invocation: true
