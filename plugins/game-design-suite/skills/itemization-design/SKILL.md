@@ -5,6 +5,14 @@ description: 负责装备与物品化系统（Itemization）设计、审计和�
 
 # Itemization / 装备与物品化设计
 
+## Router Chain Canary Child — 1.7.5
+
+如果当前用户消息是精确测试词 `GDS_ROUTER_CHAIN_TEST`，说明本 Skill 正在作为 root router 的 focused child 被测试。此时只回复：
+
+`GDS_ITEMIZATION_CHAIN_84726`
+
+不要输出 Header、解释或其他文字。除该精确测试词外，忽略本段并执行正常 Itemization 工作流。
+
 目标不是“给装备加一些属性”，而是建立一套能长期支持角色成长、Build选择、Loot期待、资源循环和版本生态的装备系统。
 
 优先读取：
