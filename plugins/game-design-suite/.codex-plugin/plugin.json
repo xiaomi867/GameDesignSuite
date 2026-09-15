@@ -1,7 +1,7 @@
 {
   "name": "game-design-suite",
-  "version": "1.2.1",
-  "description": "Professional game design suite covering systems, gameplay, combat, skills, balance, economy, progression, level design, UX, configuration auditing, code verification, design review, and GDD workflows.",
+  "version": "1.3.0",
+  "description": "Professional game design suite covering systems, gameplay, combat, skills, balance, formula verification, economy, progression, level design, UX, configuration auditing, code verification, design review, and GDD workflows.",
   "author": {
     "name": "xiaomi867",
     "url": "https://github.com/xiaomi867"
@@ -15,6 +15,7 @@
     "combat-design",
     "skill-design",
     "balance-design",
+    "formula-verification",
     "economy-design",
     "progression-design",
     "level-design"
@@ -22,8 +23,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Game Design Suite",
-    "shortDescription": "Professional game design and balancing workflows",
-    "longDescription": "A multi-skill suite for gameplay and systems design, combat and skill design, numerical balancing, economy and progression, level design, game UX, configuration auditing, code verification, design review, and formal GDD production.",
+    "shortDescription": "Professional game design, balancing, and formula verification workflows",
+    "longDescription": "A multi-skill suite for gameplay and systems design, combat and skill design, numerical balancing, formula reconstruction and verification, economy and progression, level design, game UX, configuration auditing, code verification, design review, and formal GDD production.",
     "developerName": "xiaomi867",
     "category": "Developer Tools",
     "capabilities": [
@@ -35,6 +36,7 @@
     "defaultPrompt": [
       "Analyze this game system and propose a production-ready design.",
       "Review this hero skill, its balance, configuration, and implementation.",
+      "Verify this combat formula against configuration, code, and reference models.",
       "Audit this game economy and progression loop for balance risks."
     ],
     "brandColor": "#111111",
