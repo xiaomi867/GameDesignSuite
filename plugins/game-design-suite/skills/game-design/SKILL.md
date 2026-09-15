@@ -1,15 +1,15 @@
 ---
 name: game-design
-description: 游戏设计通用入口。用户提出玩法、系统、体验、规则、平衡、技能、战斗、经济、成长、关卡、UI、配置、实现验证、评审或 GDD 等游戏设计问题时使用。负责自动选择并协调最小充分的专业 Skill，不要求用户预先判断专业边界。无论用户是否提醒，每个独立正式结果前都必须显示【本次专业视角】并标出主责/协同。
+description: 游戏设计通用入口。用户提出玩法、系统、体验、规则、平衡、公式、模拟、Telemetry、A/B实验、Meta生态、技能、战斗、经济、成长、关卡、UI、配置、实现验证、评审或 GDD 等游戏设计问题时使用。负责自动选择并协调最小充分的专业 Skill，不要求用户预先判断专业边界。无论用户是否提醒，每个独立正式结果前都必须显示【本次专业视角】并标出主责/协同。
 ---
 
 # 游戏设计总入口
 
 > **强制用户可见输出协议（MUST / DEFAULT）**
 >
-> 只要本套件正在回答游戏设计/策划相关任务，**用户不需要在 Prompt 里额外写任何“显示专业视角”的要求。**
+> 只要本套件正在回答游戏设计/策划相关任务，用户不需要在 Prompt 里额外要求“显示专业视角”。
 >
-> 每一个独立正式结果、Finding、字段修改、代码语义、数值判断、经济结论、成长方案、技能判断或关卡方案之前，都必须先显示：
+> 每一个独立正式结果、Finding、字段修改、代码语义、数值判断、模拟结论、数据结论、Meta判断、经济结论、成长方案、技能判断或关卡方案之前，都必须先显示：
 >
 > ```text
 > 【本次专业视角】
@@ -17,7 +17,7 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 > 协同：...
 > ```
 >
-> 相邻结果即使主责/协同相同也重复显示；如果 Decision Object 变化，则重新路由并显示新的主责/协同。
+> 相邻结果即使主责/协同相同也重复显示；Decision Object 变化则重新路由。
 >
 > **禁止把“用户是否显式要求 Header”作为是否显示 Header 的触发条件。**
 
@@ -25,224 +25,222 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 
 涉及多来源证据、`candidate / verified` 冲突或新证据推翻旧结论时，读取 [Evidence Standard](references/evidence-standard.md)。
 
-所有正式结果按 [Professional Context Header](references/professional-context-header.md) 暴露**当前结果**的真实专业路由。
+所有正式结果按 [Professional Context Header](references/professional-context-header.md) 暴露当前结果的真实专业路由。
 
 ## 基础原则
 
 1. 用户描述问题，AI 判断专业边界。
-2. 使用最小充分 Skill 集，不为了显得全面而全部加载。
+2. 使用最小充分 Skill 集，不机械全开。
 3. 已有项目先理解现状，不把项目当白纸。
 4. 用户明确要求保持不变的机制、范围或规则视为硬约束。
 5. 多 Skill 参与时形成统一结论，不机械拼接。
-6. 区分 `confirmed / supported-inference / candidate / assumed / unknown / verified / not-yet-playtested / externally-blocked`。
+6. 区分 `confirmed / supported-inference / candidate / assumed / unknown / verified-config / verified-code / verified-runtime / verified-data / not-yet-playtested / externally-blocked`。
 7. 路由不是最终答案；继续把任务做完。
 8. 专业身份来自实际路由，不来自角色扮演。
-9. **路由粒度是“独立结果块”，不是整篇答案。** 每个新的正式结果出现前重新判断主责/协同。
-10. 宿主若直接进入某个专业 Skill 而跳过本 Router，该专业 Skill 仍必须按共享规则自行输出结果级 Header。
-11. **用户从不需要重复提醒 Header。** 缺少显式 Header 指令不是省略 Header 的理由。
-
-## Result-Level Professional Context Header
-
-不要只在答案最前面显示一次“本次专业视角”。
-
-### 强制规则
-
-每一个独立正式结果、Finding、字段修改、设计判断或验证结论之前，都先输出：
-
-```text
-【本次专业视角】
-主责：...
-协同：...
-```
-
-存在会改变该结果的 Fixed Rule 或 Evidence Boundary 时，再加对应行。
-
-### 即使专业组合没变，也重复
-
-用户需要逐项确认 Skill 是否代入正确专业。因此相邻两个结果即使都是：
-
-```text
-主责：配置审计（config-audit）
-协同：代码 / 实现验证（code-verification）
-```
-
-也必须在两个结果前分别显示，不因“上一段已经写过”而省略。
-
-### 专业变化时同步变化
-
-如果下一个结果从“配置事实”切换到“代码语义”“数值强度”“经济根因”等不同 Decision Object，重新路由并显示新的主责/协同。
-
-例如：
-
-```text
-【本次专业视角】
-主责：配置审计（config-audit）
-协同：代码 / 实现验证（code-verification）
-
-结果：BUF_bear_def_pct 基础行 CoverCheckType=3，lv2~lv5=2，存在配置不一致。
-```
-
-如果下一结果只是解释 `CoverCheckType=2` 的代码含义：
-
-```text
-【本次专业视角】
-主责：代码 / 实现验证（code-verification）
-协同：配置审计（config-audit）
-```
-
-只有当下一结果开始评估“这个差异导致多少强度变化”时，才应切换为：
-
-```text
-【本次专业视角】
-主责：数值策划（balance-design）
-协同：技能 / 英雄策划（skill-design） / 配置审计（config-audit）
-```
-
-**“发现配置不一致”本身不是数值策划结果。** 不因为字段中有数字或最终影响强度，就把 `balance-design` 错设为主责。
-
-### 输出顺序
-
-必须是：
-
-`Header -> Result -> Evidence/Reasoning -> Recommendation/Validation`
-
-不能先输出一大段结论，再补 Header。
-
-主责专业选择、Skill 映射、Direct Specialist Entry、混合结果拆分等细则见 [Professional Context Header](references/professional-context-header.md)。
+9. 路由粒度是独立结果块，不是整篇答案。
+10. Direct Specialist Entry 也必须执行共享 Header 规则。
+11. 用户从不需要重复提醒 Header。
+12. 私有项目资料只能用于当前项目分析和抽象方法验证，不得复制到公开通用 Skill、reference 或 eval。
 
 ## Professional Judgment Guard
 
-用户提供的信息必须先区分为：
+用户输入先区分：
 
-- **事实**：项目当前真实规则、数据、配置、代码或已确认约束；
-- **症状**：例如“资源后期很多”“治疗卡没人拿”“升级没感觉”；
-- **偏好/约束**：例如“不改技能机制”；
+- **事实**：真实规则、数据、配置、代码、运行时或已确认约束；
+- **症状**：资源很多、治疗卡没人拿、升级没感觉等；
+- **偏好/约束**：不改技能机制等；
 - **候选方案**：用户或历史方案提出的做法；
-- **假设**：尚未被项目证据验证的解释。
+- **假设**：尚未被证据验证的解释。
 
-不得把“症状”直接翻译成用户已经认可的解决方案。
+不得把症状直接翻译成方案。
 
 例如：
 
-- “资源后期很多”不等于“必须新增 Sink”；
-- “英雄升级没有消耗”不等于“应该把现有资源塞进 HeroLvUp”；
-- “某卡没人拿”不等于“只要加数值”；
-- “某系统参与度低”不等于“必须强制绑定其他系统”。
-
-先诊断根因，再决定是否需要改规则、数值、产出、消耗、内容生命周期、信息表达或根本不改。
-
-若用户建议本身会破坏系统语义、玩家认知或长期结构，应明确指出，不为了顺从输入而把它包装成专业方案。
+- 资源后期很多 ≠ 必须新增 Sink；
+- 某卡没人拿 ≠ 只要加数值；
+- 某角色总体胜率50% ≠ Meta一定健康；
+- 模拟1000次均值稳定 ≠ 玩家体验已验证；
+- Telemetry相关性 ≠ 因果关系。
 
 ## Symptom-to-Root-Cause Rule
 
-遇到局部症状时至少检查三层：
+遇到局部症状至少检查：
 
-1. **Local**：字段、倍率、奖励、单个 Sink/Source、单关卡等局部问题；
-2. **System**：对应战斗/经济/成长/内容循环本身是否成立；
-3. **Cross-system**：是否由上下游系统、生命周期、解锁节奏或内容断层造成。
+1. **Local**：字段、倍率、奖励、单个对象；
+2. **System**：战斗、经济、成长、内容、公式或数据链本身；
+3. **Cross-system**：上下游系统、生命周期、内容环境、玩家分层、版本生态。
 
-只有局部根因成立时才做局部补丁。不要用“增加一个消耗”“增加一个奖励”“再加一个系统”掩盖结构性问题。
+只有局部根因成立时才做局部补丁。
 
 ## Missing Evidence Guard
 
-当任务需要配置表、代码、Telemetry、Playtest、地图、文档或其他项目证据，但当前会话和可访问项目资料中没有对应材料时：
+当任务需要配置、代码、Telemetry、Playtest、地图、文档或其他证据但当前不可访问：
 
-1. 只做一次必要的可用性检查；不要反复搜索不存在的文件、插件、网页或无关来源。
-2. 立即把依赖该证据的结论标记为 `unverified` 或 `externally-blocked`，不得从命名、经验或相似项目补成事实。
-3. 列出继续验证所需的最小材料，例如具体文件、表、目录、代码模块或数据范围。
-4. 继续完成所有不依赖缺失证据的独立工作，例如设计风险、候选数值框架、检查清单、验证方案和可执行下一步。
-5. 不因为一个专业分支缺证据而中止整项任务。
-6. 如果用户当前只是测试 Skill 路由或询问“需要哪些专业能力”，只说明路由、职责、证据缺口和下一步，不进入文件检索。
-7. 若用户明确要求“不猜”，缺证据部分必须停在证据边界上，不用外部公开资料替代其私有项目事实。
-
-推荐状态表达：
-
-- `verified`：已有直接实现、运行时或项目证据支持；
-- `candidate`：设计或数值候选，可继续推演但尚未实证；
-- `unverified`：理论上可检查，但当前缺少对应项目证据；
-- `externally-blocked`：必须由当前不可访问的外部材料或运行环境才能继续。
+1. 只做一次必要可用性检查；
+2. 依赖缺失证据的结论标 `unverified` / `externally-blocked`；
+3. 列出最小缺失材料；
+4. 继续所有不依赖缺失证据的工作；
+5. 不从字段名、旧版本、相似游戏或公开资料补成当前项目事实；
+6. 用户明确“不猜”时严格停在证据边界。
 
 ## 路由
 
 ### `game-production`
-核心体验、玩法循环、系统规则、产品节奏、教程、奖励框架、制作约束、范围与风险。
+核心体验、玩法循环、系统规则、产品节奏、教程、奖励框架、制作约束、范围与跨系统设计。
 
 ### `design-frameworks`
-需要 MDA、Core Loop、Flow、设计张力、Pattern、Depth vs Complexity 等方法论判断。
+MDA、Core Loop、Flow、设计张力、Pattern、Depth vs Complexity 等方法论。
 
 ### `combat-design`
-战斗规则、攻击/受击、目标、状态、AI、资源、战斗节奏、遭遇结构。
+战斗规则、攻击/受击、Target、状态、AI、资源、战斗节奏、遭遇结构。
 
 ### `skill-design`
-英雄/角色技能机制、Target、Buff/Debuff、触发、持续、升级、构筑关系。
+英雄/角色技能机制、Target、Buff/Debuff、触发、状态机、升级与构筑关系。
 
 ### `balance-design`
-倍率、属性、DPS/HPS、控制覆盖率、曲线、横向强度、参数区间、数值验证。
+倍率、属性、DPS/HPS/EHP、控制覆盖、Power Budget、成长强度、参数区间、横向强度。
+
+### `formula-verification`
+伤害/治疗/护盾/防御/抗性/暴击/命中/攻速/行动/概率等公式还原、单位、乘区、Clamp/Round、定义域、边界与代码交叉验证。
+
+### `simulation-design`
+Monte Carlo、离散事件、Rotation/Timeline、参数扫描、策略代理、100/1000/10000次分布、敏感性、长周期状态模拟。
+
+### `telemetry-experiment-design`
+埋点、事件Schema、指标、玩家分群、漏斗、A/B测试、SRM、显著性、因果边界与线上验证。
+
+### `meta-balance`
+多角色/Build/队伍/内容生态、Matchup/Synergy/Counter矩阵、Pick/Win/Presence、Mastery、Power Creep、版本风险与多样性。
 
 ### `economy-design`
-资源 Sources/Sinks、库存、流速、价值锚点、兑换、通胀、囤积、产销闭环。
+资源Role、Sources/Sinks、库存、流速、价值锚、兑换、通胀、产销闭环。
 
 ### `progression-design`
-等级、星级、突破、解锁、成长节奏、追赶、卡点、长期上限。
+等级、星级、突破、技能树、解锁、成长节奏、追赶、长期上限。
 
 ### `level-design`
-地图、关卡、布局、路径、导航、空间教学、Encounter、节奏、视线、Metrics。
+地图、关卡、布局、导航、空间教学、Encounter、波次、Boss、节奏与Metrics。
 
 ### `game-interface-design`
 HUD、菜单、信息层级、引导、反馈、输入提示、Accessibility。
 
 ### `config-audit`
-Excel/配置表、字段、Row/Key/ID、引用、漏配、重复、Group/Stack/Target 一致性。
+Excel/配置字段、Row/Key/ID、引用、漏配、重复、Group/Stack/Target一致性。
 
 ### `code-verification`
-客户端/服务器读取逻辑、字段解析、默认值、运行时目标、实际生效链路。
+客户端/服务器读取、Parser、默认值、运行时目标、实际生效链路。
 
 ### `design-review`
-已有方案评审、比较、风险、矛盾、主导策略、False Choice、下一步验证实验。
+已有方案评审、比较、风险、矛盾、反模式、下一步验证实验。
 
 ### `game-design-doc`
-GDD、System Spec、Pitch Design Doc 等正式文档整理。
+GDD、System Spec、Pitch Design Doc等正式文档。
 
 ## 常见组合
 
 ### 英雄技能
 `skill-design + balance-design`
 
-若涉及现有表：
-`+ config-audit`
+已有表：`+ config-audit`
 
-若需确认实现：
-`+ code-verification`
+需确认实现：`+ code-verification`
 
-定稿：
-`+ design-review`
+复杂公式：`+ formula-verification`
+
+定稿：`+ design-review`
+
+### 公式审计
+`formula-verification + config-audit + code-verification`
+
+若还要判断强度：`+ balance-design`
+
+### 批量战斗模拟
+`simulation-design + formula-verification + balance-design`
+
+若需要真实生产逻辑：`+ code-verification + config-audit`
+
+### 上线后平衡验证
+`telemetry-experiment-design + balance-design`
+
+角色池/组合生态：`+ meta-balance`
+
+### 版本 / Roster 平衡
+`meta-balance + balance-design + telemetry-experiment-design`
+
+上线前预演：`+ simulation-design`
 
 ### 奖励与经济
 `game-production + economy-design + progression-design + balance-design`
 
-### Boss 关卡
+长期库存/成长模拟：`+ simulation-design`
+
+线上验证：`+ telemetry-experiment-design`
+
+### Boss / 关卡
 `game-production + combat-design + level-design`
+
+若比较角色适配覆盖：`+ meta-balance`
 
 ### GDD
 `game-production + 必要专业 Skill + design-review + game-design-doc`
+
+## 数值生产证据链
+
+复杂数值任务优先按需要形成：
+
+`Design Intent -> Formula -> Config/Code -> Simulation -> Runtime -> Telemetry -> Meta -> Playtest`
+
+各层职责：
+
+- Design Intent：为什么存在；
+- Formula：数学结构是否正确；
+- Config/Code：项目实际怎么执行；
+- Simulation：预期分布、极端值、敏感性；
+- Runtime：真实实现是否一致；
+- Telemetry：真实玩家行为与结果；
+- Meta：整个选择生态是否健康；
+- Playtest：体验、可读性、挫败、乐趣。
+
+低层证据不能冒充高层结论。
+
+## Private Project Isolation
+
+用户提供真实项目代码、表、日志可以用于：
+
+- 验证通用 Skill 是否覆盖真实生产问题；
+- 提取不含业务细节的方法，例如 deterministic seed、Golden Test、Schema Guard、Runtime parity；
+- 发现通用反模式与缺失能力。
+
+不得写入公开通用 Skill：
+
+- 私有项目名；
+- 私有角色/技能/表名；
+- 私有ID；
+- 私有代码路径；
+- 私有真实公式；
+- 私有经济数据；
+- 未公开业务规则。
+
+若需要项目专属适配，应单独保存在用户项目私有 workspace，不污染通用 Skill。
 
 ## 已有项目规则
 
 根据任务需要优先检查：
 
-1. 用户确认的现有规则；
+1. 用户确认规则；
 2. 设计文档；
 3. 配置表；
-4. 数据、Telemetry、Playtest；
-5. 地图与内容；
-6. 必要客户端/服务器代码；
-7. 当前制作和技术约束。
+4. 代码与测试；
+5. Runtime / 日志；
+6. Telemetry / 实验；
+7. 地图与内容；
+8. 当前制作和技术约束。
 
-关键证据缺失时继续完成独立可做部分，并明确未知项，不补成事实。
+关键证据缺失时继续完成独立可做部分，并明确未知项。
 
 ## 边界
 
 - 不替专业 Skill 完成详细设计。
-- 不强制输出大型文档或图。
+- 不把模拟、Spreadsheet、Telemetry相关性或理论分析描述成“已验证好玩”。
+- 不把外部游戏的阈值、公式、实验结果直接复制成本项目标准。
 - 不保存无意义中间状态。
-- 不把模拟、Spreadsheet 或理论分析描述成“已验证好玩”。
