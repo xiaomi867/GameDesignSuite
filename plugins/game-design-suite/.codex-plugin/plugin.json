@@ -1,7 +1,7 @@
 {
   "name": "game-design-suite",
-  "version": "1.6.0",
-  "description": "Professional game design suite covering systems, gameplay, combat, skills, balance, formula verification, simulation, telemetry experiments, meta balance, itemization design, external itemization benchmarking, economy, progression, level design, UX, configuration auditing, code verification, design review, and GDD workflows. Every independent formal result uses a visible Professional Context Header by default.",
+  "version": "1.7.0",
+  "description": "Professional game design suite covering systems, hero concept, hero kit architecture, hero stat progression, skill value design, combat, balance, formula verification, simulation, telemetry experiments, meta balance, itemization design and benchmarking, economy, progression, level design, UX, configuration auditing, code verification, design review, and GDD workflows. Every independent formal result uses a visible Professional Context Header by default.",
   "author": {
     "name": "xiaomi867",
     "url": "https://github.com/xiaomi867"
@@ -12,8 +12,12 @@
   "keywords": [
     "game-design",
     "systems-design",
-    "combat-design",
+    "hero-concept-design",
+    "hero-kit-design",
+    "hero-stat-progression",
+    "skill-value-design",
     "skill-design",
+    "combat-design",
     "balance-design",
     "formula-verification",
     "simulation-design",
@@ -28,8 +32,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Game Design Suite",
-    "shortDescription": "Professional game design, itemization benchmarking, simulation, telemetry, and balance workflows",
-    "longDescription": "A multi-skill suite for gameplay and systems design, whole-project numerical architecture, combat and skill design, itemization/equipment systems, cross-game itemization benchmarking, numerical balancing, formula reconstruction and verification, Monte Carlo and discrete-event simulation, telemetry and experiments, meta/roster balance, economy and progression, level design, game UX, configuration auditing, code verification, design review, and formal GDD production. Professional routing is exposed with a mandatory per-result Professional Context Header, including a first-visible-line gate and pre-send header lint.",
+    "shortDescription": "Professional hero, itemization, simulation, telemetry, and balance workflows",
+    "longDescription": "A multi-skill suite for gameplay and systems design; hero concept and identity; hero kit architecture; character-level stat progression; skill-level value curves; combat and skill design; itemization/equipment systems and cross-game benchmarking; numerical balancing and formula verification; Monte Carlo and discrete-event simulation; telemetry and experiments; meta/roster balance; economy and progression; level design; game UX; configuration auditing; code verification; design review; and formal GDD production. Professional routing is exposed with a mandatory per-result Professional Context Header, including a first-visible-line gate and pre-send header lint.",
     "developerName": "xiaomi867",
     "category": "Developer Tools",
     "capabilities": [
@@ -39,11 +43,11 @@
     ],
     "websiteURL": "https://github.com/xiaomi867/GameDesignSuite",
     "defaultPrompt": [
+      "Design a hero from concept through kit, level-stat progression, skill-value curves, and cross-validation without collapsing these into one discipline.",
+      "Audit whether this hero's narrative identity, combat loop, stat growth, and skill-level scaling reinforce the same role.",
       "Design a whole-project numerical architecture from experience targets through combat, progression, economy, and content difficulty.",
       "Design an itemization system with slot budgets, rarity, main/substats, affix pools, enhancement, set bonuses, loot targeting, replacement cadence, and build-ecology validation.",
       "Benchmark this equipment system against Honkai: Star Rail, Genshin Impact, and Wuthering Waves without copying their numbers directly.",
-      "Analyze this game system and propose a production-ready design.",
-      "Review this hero skill, its balance, configuration, and implementation.",
       "Verify this combat formula against configuration, code, and reference models.",
       "Simulate this build 1000 times and report the distribution, tail risk, and sensitive parameters.",
       "Design telemetry and an experiment to validate whether this balance change works.",
