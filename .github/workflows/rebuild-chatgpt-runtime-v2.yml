@@ -1,0 +1,48 @@
+name: Rebuild ChatGPT Runtime V2
+
+on:
+  push:
+    branches:
+      - runtime-rebuild-v2
+    paths:
+      - scripts/rebuild_chatgpt_runtime.py
+      - plugins/game-design-suite/skills/**
+      - .github/workflows/rebuild-chatgpt-runtime-v2.yml
+      - validate_runtime_v2.py
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: runtime-rebuild-v2
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate rebuilt runtime
+        run: python scripts/rebuild_chatgpt_runtime.py
+
+      - name: Validate rebuilt runtime
+        run: python validate_runtime_v2.py
+
+      - name: Commit generated runtime
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .agents/plugins/marketplace.json plugins/game-design-suite-runtime-v2 docs/RUNTIME_REBUILD_V2.md
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+            exit 0
+          fi
+          git commit -m "Generate clean Game Design Suite runtime v2"
+          git push origin HEAD:runtime-rebuild-v2

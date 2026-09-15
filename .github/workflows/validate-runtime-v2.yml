@@ -1,0 +1,25 @@
+name: Validate ChatGPT Runtime V2
+
+on:
+  push:
+    branches:
+      - runtime-rebuild-v2
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-runtime-v2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate rebuilt runtime package
+        run: python validate_runtime_v2.py
