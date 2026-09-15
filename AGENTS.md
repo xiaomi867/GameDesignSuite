@@ -34,40 +34,86 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 6. 已有项目先检查真实规则、文件、配置、代码、数据、Runtime/日志，再设计。
 7. 缺证据执行 Missing Evidence Guard，不猜。
 8. 配置任务执行 Field Attribution Guard。
-9. 装备/Itemization 任务先明确 Itemization Job、Slot/Budget/Affix/Acquisition/Replacement，再做具体数值。
-10. 用户要求参考崩铁/原神/鸣潮等外部装备系统、对比等级曲线或验证本项目与成熟产品差异时，加载 `itemization-benchmark`；外部数值不得直接成为项目标准。
-11. 模拟任务记录 seed/model/config/agent version，不把 Simulation 冒充 Playtest。
-12. Telemetry/实验任务先定义 Decision/Hypothesis/Metric/Segment，检查 SRM 和数据质量，不把相关性冒充因果。
-13. Meta平衡按 Skill/Mastery/Composition/Content 分层，不只看总体胜率。
-14. 继续执行并交付结果。
+9. 英雄任务按需要拆分：Concept -> Kit -> Stat Progression -> Skill Values，不让 `skill-design` 一项包办所有结论。
+10. 用户要求参考崩铁/原神/鸣潮角色Wiki时，以总页建立完整Index；二级页/等级滑杆/技能等级表必须记录Coverage和阻塞项。
+11. 装备/Itemization 任务先明确 Itemization Job、Slot/Budget/Affix/Acquisition/Replacement，再做具体数值。
+12. 用户要求外部装备Benchmark时加载 `itemization-benchmark`；外部数值不得直接成为项目标准。
+13. 模拟任务记录 seed/model/config/agent version，不把 Simulation 冒充 Playtest。
+14. Telemetry/实验先定义 Decision/Hypothesis/Metric/Segment，检查 SRM 和数据质量，不把相关性冒充因果。
+15. Meta平衡按 Skill/Mastery/Composition/Content 分层，不只看总体胜率。
+16. 继续执行并交付结果。
 
 ## Professional Context Header Decision Map
 
+- 角色身份/Core Fantasy/阵营/标签/Combat Promise/角色池差异 -> `hero-concept-design`
+- Hero Kit槽位/状态机/资源图/Trigger/循环/Team Hook -> `hero-kit-design`
+- 英雄Lv1~Cap基础属性/突破Delta/Bonus Stat/固定速度与能量 -> `hero-stat-progression`
+- 技能Lv1~Max倍率/Buff/Debuff/概率/持续/CD/资源/层数 -> `skill-value-design`
+- 综合技能改造/Target/Buff/升星与已有机制保护 -> `skill-design`
 - 配置字段事实 -> `config-audit`
 - Parser/枚举/Runtime Consumer -> `code-verification`
 - 公式乘区/单位/Clamp/Round/Snapshot -> `formula-verification`
-- 倍率/DPS/EHP/TTK/Power Budget -> `balance-design`
-- Monte Carlo/离散事件/参数扫描/分布/敏感性 -> `simulation-design`
+- 角色总体DPS/EHP/TTK/Power Budget -> `balance-design`
+- Monte Carlo/离散事件/Rotation/参数扫描/分布/敏感性 -> `simulation-design`
 - 埋点/KPI/分群/A-B/SRM/统计分析 -> `telemetry-experiment-design`
 - Roster/Composition/Matchup/Synergy/Counter/Power Creep -> `meta-balance`
 - 外部装备/武器/遗器/圣遗物/声骸参考数据、等级曲线、跨游戏结构对标 -> `itemization-benchmark`
-- 当前项目装备槽位/品质/主副词条/词条池/Roll/套装/唯一特效/Loot可用率/BiS结构 -> `itemization-design`
+- 当前项目装备槽位/品质/主副词条/词条池/Roll/套装/Loot可用率/BiS -> `itemization-design`
 - Resource Role/Source/Sink/库存 -> `economy-design`
-- 等级/星级/突破/成长成本 -> `progression-design`
-- 技能机制/Target/状态机 -> `skill-design`
+- 账号/系统级等级/星级/突破/成长成本 -> `progression-design`
 - 战斗规则/AI/资源窗口 -> `combat-design`
 - 关卡/空间/波次/Encounter -> `level-design`
 - 玩法循环/系统结构 -> `game-production`
 
-配置里出现数字不等于数值策划主责；出现装备不等于 `itemization-design` 可以包办代码、经济、模拟或Meta结论；外部游戏这么做不等于当前项目应该这么做；有1000次模拟也不等于体验已验证；总体50%胜率也不等于Meta健康。
+“英雄”不是一个单一Decision Object；“出现数字”也不等于 `balance-design` 主责。
 
 统一 Header 规则见：
 
 `plugins/game-design-suite/skills/game-design/references/professional-context-header.md`
 
-## Numerical Production Chain
+## Hero Design Chain
 
-复杂数值任务按需要组合：
+复杂英雄任务按需要组合：
+
+```text
+Design Intent
+-> hero-concept-design
+-> hero-kit-design
+-> hero-stat-progression
+-> skill-value-design
+-> formula-verification
+-> config-audit / code-verification
+-> simulation-design
+-> verified-runtime
+-> telemetry-experiment-design
+-> meta-balance
+-> Playtest
+```
+
+四个Hero专业Skill互相验证，但责任不同：
+
+- `hero-concept-design`：角色是谁、承诺什么体验；
+- `hero-kit-design`：技能机制如何兑现；
+- `hero-stat-progression`：等级属性如何支撑体质/Scaling Source；
+- `skill-value-design`：技能等级如何分配具体参数成长。
+
+## External Hero Corpus
+
+当用户要求参考公开商业游戏“所有英雄”时：
+
+- 先读取角色总页建立完整Index；
+- 按角色/形态/Detail URL唯一键遍历；
+- 记录成功/总数/blocked/duplicate-variant Coverage；
+- 等级滑杆和技能等级切换不可只看默认值；
+- 外部精确值标 `reference-data`；
+- 页面不可访问标 `externally-blocked`；
+- 不把外部倍率、等级上限或成长模板直接迁移成本项目标准。
+
+共享语料规范：
+
+`plugins/game-design-suite/skills/hero-concept-design/references/hero-reference-corpus.md`
+
+## Itemization / Numerical Production Chain
 
 ```text
 Design Intent
@@ -82,8 +128,6 @@ Design Intent
 -> Playtest
 ```
 
-`itemization-benchmark` 只提供外部参考事实、归一化和迁移候选，不替代项目内设计与验证。
-
 低层证据不能替代高层结论。
 
 ## Private Project Isolation
@@ -92,6 +136,10 @@ Design Intent
 
 允许抽象：
 
+- Hero Contract；
+- Hero Loop / State / Resource Graph；
+- Stat Curve Guard；
+- Skill Scaling Family；
 - deterministic seed；
 - Golden Test；
 - Formula/Runtime parity；
@@ -107,7 +155,7 @@ Design Intent
 - 私有角色/技能/装备/表名；
 - 私有ID/路径；
 - 私有真实公式；
-- 私有装备数值/掉率/经济/运营数据；
+- 私有英雄基础属性/技能倍率/装备数值/掉率/经济/运营数据；
 - 未公开业务规则。
 
 项目专属适配应留在项目私有 workspace，不污染通用 Game Design Suite。
@@ -142,6 +190,7 @@ Deep Code adapter 必须继续读取 canonical Skill。
 - `verified-code`
 - `verified-runtime`
 - `verified-data`
+- `reference-data`
 - `confirmed`
 - `supported-inference`
 - `candidate`
@@ -151,7 +200,7 @@ Deep Code adapter 必须继续读取 canonical Skill。
 - `not-yet-playtested`
 - `externally-blocked`
 
-不要用笼统 `verified` 混淆层级。外部商业游戏页面的 `verified-data` 只表示参考来源事实，不自动升级为当前项目 `verified-*`。
+不要用笼统 `verified` 混淆层级。外部商业游戏页面的 `reference-data` 只表示参考来源事实，不自动升级为当前项目 `verified-*`。
 
 ## Human Gate
 
@@ -165,8 +214,8 @@ Deep Code adapter 必须继续读取 canonical Skill。
 - 不虚构 Telemetry、Playtest、市场数据或代码行为。
 - 不为模板制造数值、功能或商业化方案。
 - 不把 Spreadsheet / Simulation / observational telemetry 冒充更高层证据。
-- 外部游戏的公式、阈值、装备词条、掉率和案例只做方法参考，不是项目真值。
-- 外部参考页面不可访问时，不从记忆补精确等级值；标 `externally-blocked` 并继续结构分析。
+- 外部游戏的角色等级、技能倍率、公式、装备词条、掉率和案例只做方法参考，不是项目真值。
+- 外部参考页面不可访问时，不从记忆补精确等级值；标 `externally-blocked` 并继续独立可做部分。
 
 ## 维护
 
