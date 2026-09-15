@@ -1,7 +1,7 @@
 {
   "name": "game-design-suite-runtime-v2",
-  "version": "2.0.0-preview.1",
-  "description": "Clean-room ChatGPT/Codex runtime package for Game Design Suite. Preserves all 24 professional capabilities with compact trigger surfaces, progressive disclosure, and independent specialist invocation.",
+  "version": "2.0.0-preview.2",
+  "description": "Clean-room ChatGPT/Codex runtime package for Game Design Suite. Preserves all 24 professional capabilities with compact trigger surfaces, progressive disclosure, independent specialist invocation, and plugin-level OpenAI metadata.",
   "author": {
     "name": "xiaomi867",
     "url": "https://github.com/xiaomi867"
