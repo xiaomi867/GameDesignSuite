@@ -1,0 +1,6 @@
+interface:
+  display_name: "Game Design Doc"
+  short_description: "GDD、System Spec、Feature Spec、Pitch、规则文档、实现需求、验收标准与决策记录。"
+  default_prompt: "Use $gds-game-design-doc to turn this design into a production-ready GDD or system specification."
+policy:
+  allow_implicit_invocation: true

@@ -1,7 +1,7 @@
 {
-  "name": "game-design-suite-marketplace",
+  "name": "game-design-suite-runtime-v2-marketplace",
   "interface": {
-    "displayName": "Game Design Suite"
+    "displayName": "Game Design Suite Rebuilt V2 Marketplace"
   },
   "plugins": [
     {
@@ -17,34 +17,10 @@
       "category": "Developer Tools"
     },
     {
-      "name": "game-design-suite-core-v2",
+      "name": "game-design-suite-runtime-v2",
       "source": {
         "source": "local",
-        "path": "./plugins/game-design-suite-core-v2"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Developer Tools"
-    },
-    {
-      "name": "gds-itemization-v2",
-      "source": {
-        "source": "local",
-        "path": "./plugins/gds-itemization-v2"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Developer Tools"
-    },
-    {
-      "name": "game-design-suite-v3-runtime",
-      "source": {
-        "source": "local",
-        "path": "./plugins/game-design-suite-v3-runtime"
+        "path": "./plugins/game-design-suite-runtime-v2"
       },
       "policy": {
         "installation": "AVAILABLE",

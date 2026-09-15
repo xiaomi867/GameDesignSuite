@@ -1,0 +1,6 @@
+interface:
+  display_name: "Code Verification"
+  short_description: "客户端/服务器读取、Parser、Enum、默认值、字段语义、Target、Buff、随机、继承与真实运行链路。"
+  default_prompt: "Use $gds-code-verification to trace how this config or rule is actually read and executed in code."
+policy:
+  allow_implicit_invocation: true

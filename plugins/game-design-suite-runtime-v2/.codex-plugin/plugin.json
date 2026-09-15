@@ -1,0 +1,44 @@
+{
+  "name": "game-design-suite-runtime-v2",
+  "version": "2.0.0-preview.2",
+  "description": "Clean-room ChatGPT/Codex runtime package for Game Design Suite. Preserves all 24 professional capabilities with compact trigger surfaces, progressive disclosure, independent specialist invocation, and plugin-level OpenAI metadata.",
+  "author": {
+    "name": "xiaomi867",
+    "url": "https://github.com/xiaomi867"
+  },
+  "homepage": "https://github.com/xiaomi867/GameDesignSuite",
+  "repository": "https://github.com/xiaomi867/GameDesignSuite",
+  "license": "MIT",
+  "keywords": [
+    "game-design",
+    "systems-design",
+    "balance-design",
+    "itemization",
+    "hero-design",
+    "combat-design",
+    "economy-design",
+    "progression-design"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Game Design Suite Rebuilt (V2)",
+    "shortDescription": "24 focused game-design skills rebuilt for reliable runtime selection",
+    "longDescription": "A clean runtime rebuild of Game Design Suite. Each professional discipline is independently invocable, uses a concise Use-when trigger, exposes OpenAI skill metadata, and progressively loads preserved canonical guidance rather than relying on parent-to-child routing.",
+    "developerName": "xiaomi867",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/xiaomi867/GameDesignSuite",
+    "defaultPrompt": [
+      "Design a complete RPG equipment system with slots, rarity, stats, affixes, enhancement, sets, loot, replacement, and salvage.",
+      "Design a hero from concept through kit, stat progression, and skill value curves.",
+      "Audit this balance problem with benchmarks, formulas, simulation, and evidence boundaries.",
+      "Review this game system and identify local, system, and cross-system root causes."
+    ],
+    "brandColor": "#111111",
+    "screenshots": []
+  }
+}

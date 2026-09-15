@@ -1,0 +1,6 @@
+interface:
+  display_name: "Balance Design"
+  short_description: "数值目标、Benchmark、Power Budget、DPS/HPS/EHP、概率、成长曲线、阈值、难度与参数区间。"
+  default_prompt: "Use $gds-balance-design to define benchmarks, formulas, candidate values, and validation for this balance problem."
+policy:
+  allow_implicit_invocation: true

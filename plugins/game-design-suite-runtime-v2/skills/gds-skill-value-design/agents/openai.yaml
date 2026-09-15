@@ -1,0 +1,6 @@
+interface:
+  display_name: "Skill Value Design"
+  short_description: "技能Lv1~上限的倍率、治疗/护盾、Buff/Debuff、概率、持续、资源、CD、层数与等级收益。"
+  default_prompt: "Use $gds-skill-value-design to design or audit this skill's Lv1-to-max numerical curve without changing its mechanics."
+policy:
+  allow_implicit_invocation: true

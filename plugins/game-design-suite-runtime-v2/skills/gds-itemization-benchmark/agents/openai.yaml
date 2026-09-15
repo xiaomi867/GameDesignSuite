@@ -1,0 +1,6 @@
+interface:
+  display_name: "Itemization Benchmark"
+  short_description: "公开商业游戏装备结构、强化/等级曲线、词条、套装、获取、替换与跨游戏归一化 Benchmark。"
+  default_prompt: "Use $gds-itemization-benchmark to benchmark these public itemization systems with normalized fields and explicit transfer limits."
+policy:
+  allow_implicit_invocation: true

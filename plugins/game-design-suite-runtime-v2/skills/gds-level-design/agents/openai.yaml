@@ -1,0 +1,6 @@
+interface:
+  display_name: "Level Design"
+  short_description: "地图、布局、导航、空间教学、Encounter、波次、Boss、检查点、Metrics 与关卡节奏。"
+  default_prompt: "Use $gds-level-design to design or audit this level's layout, encounter pacing, teaching, metrics, and boss structure."
+policy:
+  allow_implicit_invocation: true

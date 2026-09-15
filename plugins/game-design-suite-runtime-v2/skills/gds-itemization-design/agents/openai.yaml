@@ -1,0 +1,6 @@
+interface:
+  display_name: "Itemization Design"
+  short_description: "装备槽位、品质、基础/主/副词条、Affix、Roll、强化、套装、唯一特效、掉落、替换、毕业、分解与Build生态。"
+  default_prompt: "Use $gds-itemization-design to design this equipment system from itemization job through loot, replacement, salvage, and build ecology."
+policy:
+  allow_implicit_invocation: true

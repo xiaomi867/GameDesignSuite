@@ -1,0 +1,6 @@
+interface:
+  display_name: "Hero Kit Design"
+  short_description: "技能槽位职责、状态机、资源图、Trigger Graph、循环、Target、Field/Action Time、Team Hook 与失败恢复。"
+  default_prompt: "Use $gds-hero-kit-design to build or audit this hero's kit loop, states, resources, triggers, targeting, and team hooks."
+policy:
+  allow_implicit_invocation: true

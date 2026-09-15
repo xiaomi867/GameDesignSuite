@@ -1,0 +1,6 @@
+interface:
+  display_name: "Combat Design"
+  short_description: "攻击/受击、Target、资源、状态、AI、行动经济、控制、阵容职责、遭遇规则与战斗节奏。"
+  default_prompt: "Use $gds-combat-design to design or audit these combat rules, action economy, targeting, states, and encounter interactions."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Design Review"
+  short_description: "已有方案评审、比较、矛盾、反模式、隐含假设、跨系统风险、证据缺口与下一步验证。"
+  default_prompt: "Use $gds-design-review to review this design, separate evidence from assumptions, identify root causes, and recommend validation."
+policy:
+  allow_implicit_invocation: true
