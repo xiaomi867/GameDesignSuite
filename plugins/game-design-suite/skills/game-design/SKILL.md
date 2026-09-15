@@ -1,9 +1,19 @@
 ---
 name: game-design
-description: 游戏设计通用入口。用户提出玩法、系统、体验、规则、英雄设定、英雄技能架构、英雄等级属性成长、技能数值、平衡、公式、模拟、Telemetry、A/B实验、Meta生态、战斗、装备/Itemization、外部装备Benchmark、经济、成长、关卡、UI、配置、实现验证、评审或 GDD 等游戏设计问题时使用。负责自动选择并协调最小充分的专业 Skill，不要求用户预先判断专业边界。无论用户是否提醒，每个独立正式结果前都必须显示【本次专业视角】并标出主责/协同。
+description: "Use when Game Design Suite is explicitly invoked or at-mentioned, or when the user's main goal is game design: gameplay, systems, experience, rules, hero concept, hero kit architecture, hero stat progression, skill values, balance, formulas, simulation, telemetry, experiments, meta, combat, equipment/itemization, economy, progression, level design, UI, config/code verification, review, or GDD. This is the primary router and should load the narrowest relevant focused Skill rather than doing focused specialist work itself."
 ---
 
 # 游戏设计总入口
+
+## OpenAI Runtime Routing Contract — 1.7.4 Invocation Test
+
+本 Skill 是 Game Design Suite 的 root/index router。它负责选择 focused Skill，不替 focused Skill 完成其专业工作。
+
+- 当用户显式 `@Game Design Suite` / at-mention 本插件时，把它视为调用本入口的强意图。
+- 当用户任务明确属于装备 / Itemization（装备槽位、品质、基础属性、主/副词条、Affix、Roll、强化、套装、掉落、替换、毕业、分解、回收、BiS、Build 生态）时，**必须先 load `$itemization-design` directly，并按该 Skill 执行后再回答。**
+- 本 1.7.4 测试为了隔离变量，装备任务不要预先加载 `$balance-design`、`$progression-design` 或其他协同 Skill；只有 `$itemization-design` 正文实际加载后，且任务确实需要时，才继续请求其他 focused Skill。
+- 如果运行时无法加载 `$itemization-design`，明确说明 focused Skill 未能加载；**不要由本 router 用通用知识代写装备方案**。这条仅用于确认 Plugin 内 `$skill-name` 级联是否真实工作。
+- 如果用户显式点名某个 focused Skill，优先 load 该 `$skill-name`，不要用相邻专业替代。
 
 > **强制用户可见输出协议（MUST / DEFAULT）**
 >
@@ -134,8 +144,8 @@ Monte Carlo、离散事件、Rotation/Timeline、参数扫描、策略代理、1
 ### `itemization-benchmark`
 公开商业游戏的装备、武器、遗器、圣遗物、声骸等参考数据抽取、等级/强化曲线、结构归一化、跨游戏 Benchmark、可迁移模式与迁移边界。
 
-### `itemization-design`
-当前项目装备/Itemization系统、槽位、品质、基础/主/副词条、词条池与权重、随机Roll、强化、套装、唯一特效、Loot可用率、替换/毕业、分解回收、Best-in-Slot与Build生态。
+### `$itemization-design`
+当前项目装备/Itemization系统、槽位、品质、基础/主/副词条、词条池与权重、随机Roll、强化、套装、唯一特效、Loot可用率、替换/毕业、分解回收、Best-in-Slot与Build生态。装备任务命中本专业时，必须先 load `$itemization-design` directly。
 
 ### `economy-design`
 资源Role、Sources/Sinks、库存、流速、价值锚、兑换、通胀、产销闭环。
@@ -213,17 +223,7 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 比较套装/专武生态：`+ meta-balance`
 
 ### 装备 / Itemization
-`itemization-design + balance-design + progression-design`
-
-涉及外部商业游戏参考：`+ itemization-benchmark`
-
-涉及掉落、强化材料、分解、商店：`+ economy-design`
-
-复杂随机词条/毕业时间：`+ simulation-design`
-
-多角色BiS、Build集中、版本生态：`+ meta-balance`
-
-已有表/代码：`+ config-audit + code-verification`
+本 1.7.4 invocation 测试中：先 load `$itemization-design` directly，并由它完成装备设计。不要在 root router 中预先并行调用其他专业；需要交叉验证时，等 `$itemization-design` 成功加载后再追加 focused Skill。
 
 ### 公式审计
 `formula-verification + config-audit + code-verification`
