@@ -1,9 +1,20 @@
 ---
 name: game-design
-description: "Use when Game Design Suite is explicitly invoked or at-mentioned, or when the user's main goal is game design: gameplay, systems, experience, rules, hero concept, hero kit architecture, hero stat progression, skill values, balance, formulas, simulation, telemetry, experiments, meta, combat, equipment/itemization, economy, progression, level design, UI, config/code verification, review, or GDD. This is the primary router and should load the narrowest relevant focused Skill rather than doing focused specialist work itself."
+description: "Use when Game Design Suite is explicitly invoked or at-mentioned, or when the user's main goal is game design: gameplay, systems, experience, rules, hero concept, hero kit architecture, hero stat progression, skill values, balance, formulas, simulation, telemetry, experiments, meta, combat, equipment/itemization, economy, progression, level design, UI, config/code verification, review, or GDD. This is the primary router and should load the narrowest relevant focused Skill rather than doing focused specialist work itself. Also use this exact root router when the user sends GDS_ROUTER_CHAIN_TEST."
 ---
 
 # 游戏设计总入口
+
+## Router Chain Canary — 1.7.5
+
+当用户消息为精确测试词 `GDS_ROUTER_CHAIN_TEST` 时：
+
+1. 立即 load `$itemization-design` directly；
+2. 本 root 不自行完成任何游戏设计工作，也不要输出正常 Header；
+3. 本 root 不得自行伪造或输出 child success token；
+4. 如果运行时无法加载 `$itemization-design`，只回复 `GDS_ROUTER_ROOT_ONLY_56314`，不要添加其他文字。
+
+该测试只用于区分 `Plugin -> game-design root` 与 `game-design root -> $itemization-design` 两段 invocation。除精确测试词外，不应用本段测试协议。
 
 ## OpenAI Runtime Routing Contract — 1.7.4 Invocation Test
 
