@@ -20,11 +20,11 @@ Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮
 
 - “先给结论”；
 - “下一个处理……”；
-- 英雄/系统名称介绍；
+- 英雄/系统/装备名称介绍；
 - 摘要；
 - 风险判断；
 - “我重新检查了……”；
-- 任何配置、代码、数值、技能或设计结论。
+- 任何配置、代码、数值、装备、技能或设计结论。
 
 也就是说，不能出现：
 
@@ -56,6 +56,7 @@ Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮
 - 新的配置错误；
 - 新的代码语义；
 - 新的数值判断；
+- 新的装备/词条/掉落/强化判断；
 - 新的经济/成长/技能/关卡方案。
 
 如果不确定是否算新的独立结果，**宁可重复 Header，也不要省略。**
@@ -68,6 +69,12 @@ Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮
 
 必须是三个 Result Blocks，不能用一个 Header 覆盖。
 
+装备任务常见：
+
+`装备结构 -> 属性强度 -> 随机分布 -> 经济生命周期 -> Meta生态`
+
+也必须按 Decision Object 拆块。
+
 ### Pre-Send Header Lint
 
 在发送答案前，对草稿做一次结构自检：
@@ -77,7 +84,7 @@ Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮
 3. 每个“必须修改 / 建议 / 保持 / Bug / 风险 / Verified / Candidate”结论是否属于某个明确 Header 块；
 4. Decision Object 改变时主责/协同是否同步改变；
 5. 是否出现了 Header 之后跨越多个不同专业结果的情况；
-6. 是否用了非标准、模糊职业名替代真实 Skill，例如只写“战斗程序”“技能数值”而不对应 Skill。
+6. 是否用了非标准、模糊职业名替代真实 Skill，例如只写“战斗程序”“技能数值”“装备数值”而不对应 Skill。
 
 任一项不通过，先修正格式再输出。
 
@@ -110,7 +117,7 @@ Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮
 简单结果：
 
 ```text
-【本次专业视角】主责：关卡策划（level-design）｜协同：战斗策划（combat-design）
+【本次专业视角】主责：装备 / Itemization 策划（itemization-design）｜协同：数值策划（balance-design）
 ```
 
 不存在协同时可以只显示主责。
@@ -128,6 +135,7 @@ Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮
 | `simulation-design` | 数值模拟 / 仿真 |
 | `telemetry-experiment-design` | 数据分析 / 实验设计 |
 | `meta-balance` | Meta / 版本平衡 |
+| `itemization-design` | 装备 / Itemization 策划 |
 | `economy-design` | 经济策划 |
 | `progression-design` | 成长策划 |
 | `level-design` | 关卡策划 |
@@ -139,7 +147,7 @@ Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮
 
 `game-design` 是路由器，通常不作为主责职业显示；只有当前任务本身是在检查路由/Skill 架构时，才可显示“游戏设计总控 / 路由（game-design）”。
 
-用户可见称谓优先使用上表，不临时发明“技能数值”“战斗程序”“品质基准设计”等无法直接映射到 Skill 的称谓。需要表达更细职责时，放到正文，不替换 Header 中的标准专业名。
+用户可见称谓优先使用上表，不临时发明“技能数值”“战斗程序”“品质基准设计”“装备数值”等无法直接映射到 Skill 的称谓。需要表达更细职责时，放到正文，不替换 Header 中的标准专业名。
 
 ## 按 Decision Object 选主责
 
@@ -170,6 +178,12 @@ Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮
 ### Meta / 版本生态
 
 Roster、Composition、Matchup、Synergy、Counter、Pick/Win、Mastery、Power Creep -> `meta-balance`。
+
+### 装备 / Itemization
+
+槽位、品质、主/副词条、词条池、Roll、套装、唯一装备、Loot可用率、替换曲线、BiS结构 -> `itemization-design`。
+
+如果核心问题变成“某个词条/特效到底强多少”，切换 `balance-design`；如果变成“掉落/毕业概率分布”，切换 `simulation-design`；如果变成“强化材料/分解/通胀”，切换 `economy-design`；如果变成“版本装备使用集中和生态”，切换 `meta-balance`。
 
 ### 经济与成长
 
@@ -221,7 +235,33 @@ Roster、Composition、Matchup、Synergy、Counter、Pick/Win、Mastery、Power 
 
 最后才评估生态影响。
 
-不要用一个 Header 覆盖四种责任。
+装备任务例如“设计词条池、算单词条强度、模拟毕业时间、判断BiS集中”时，至少拆为：
+
+```text
+【本次专业视角】
+主责：装备 / Itemization 策划（itemization-design）
+协同：数值策划（balance-design）
+```
+
+```text
+【本次专业视角】
+主责：数值策划（balance-design）
+协同：装备 / Itemization 策划（itemization-design）
+```
+
+```text
+【本次专业视角】
+主责：数值模拟 / 仿真（simulation-design）
+协同：装备 / Itemization 策划（itemization-design）
+```
+
+```text
+【本次专业视角】
+主责：Meta / 版本平衡（meta-balance）
+协同：装备 / Itemization 策划（itemization-design）
+```
+
+不要用一个 Header 覆盖多种责任。
 
 ## 证据边界
 
@@ -242,7 +282,8 @@ Roster、Composition、Matchup、Synergy、Counter、Pick/Win、Mastery、Power 
 - Simulation 不能自动写 `verified-runtime`；
 - Telemetry 观察相关性不能自动写“因果已验证”；
 - 外部游戏公开案例不能写成本项目 `verified`；
-- Meta小样本结论应显示样本/不确定性边界。
+- Meta小样本结论应显示样本/不确定性边界；
+- Itemization预算或外部装备模板不能自动写成本项目标准，除非经过本项目Benchmark/公式/验证。
 
 ## Direct Specialist Entry
 
@@ -265,6 +306,7 @@ Roster、Composition、Matchup、Synergy、Counter、Pick/Win、Mastery、Power 
 - 不得只说“我是资深XX策划”；
 - 不得使用无法映射到 Skill 的临时职业名称替代标准主责/协同；
 - 不得因为出现数字就默认 `balance-design` 主责；
+- 不得因为出现装备就让 `itemization-design` 包办公式、代码、经济、模拟和Meta结论；
 - 不得因为跑了模拟就默认 `simulation-design` 能证明体验；
 - 不得因为有线上数据就默认 `telemetry-experiment-design` 能证明因果；
 - 不得因为总体50%胜率就跳过 `meta-balance` 的分群与矩阵检查。
@@ -275,7 +317,7 @@ Roster、Composition、Matchup、Synergy、Counter、Pick/Win、Mastery、Power 
 
 - 谁对这个结果负责；
 - 谁只提供协同证据；
-- 当前结论属于配置、代码、公式、模拟、线上数据、Meta、设计候选还是玩家体验证据；
+- 当前结论属于配置、代码、公式、装备结构、模拟、线上数据、Meta、设计候选还是玩家体验证据；
 - 哪些硬约束或证据边界限制了结论。
 
 最终发送前必须通过 Pre-Send Header Lint；未通过时视为格式回归失败。
