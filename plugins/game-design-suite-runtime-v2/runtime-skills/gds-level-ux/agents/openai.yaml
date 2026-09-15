@@ -1,0 +1,6 @@
+interface:
+  display_name: "Level & UX"
+  short_description: "Level structure, encounter pacing, stage progression, UI hierarchy, flows, feedback, and interaction design."
+  default_prompt: "Use Level & UX for this level-design or game-interface request."
+policy:
+  allow_implicit_invocation: true
