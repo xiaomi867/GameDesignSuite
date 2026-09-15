@@ -1,0 +1,36 @@
+{
+  "name": "game-design-suite-v3-runtime",
+  "version": "3.0.0-preview.1",
+  "description": "V3 runtime prototype for Game Design Suite. Uses one ChatGPT runtime Skill with modular professional references instead of relying on parent-to-child Skill invocation.",
+  "author": {
+    "name": "xiaomi867",
+    "url": "https://github.com/xiaomi867"
+  },
+  "homepage": "https://github.com/xiaomi867/GameDesignSuite",
+  "repository": "https://github.com/xiaomi867/GameDesignSuite",
+  "license": "MIT",
+  "keywords": [
+    "game-design",
+    "itemization",
+    "balance",
+    "hero-progression",
+    "runtime-routing"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Game Design Suite (V3 Runtime Preview)",
+    "shortDescription": "Single-runtime game-design Skill with modular Itemization, Balance and Hero Stat references",
+    "longDescription": "A V3 architecture prototype that keeps one runtime Skill active and routes internally to modular professional references. The first prototype covers Itemization, Balance and Hero Stat Progression while preserving evidence boundaries and explicit runtime reporting.",
+    "developerName": "xiaomi867",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "websiteURL": "https://github.com/xiaomi867/GameDesignSuite",
+    "defaultPrompt": [
+      "Design an RPG equipment system and show which professional modules were loaded.",
+      "Design Lv1-Lv80 hero stat progression with breakthroughs and validate the curve.",
+      "Build a numerical benchmark and power-budget model for this system."
+    ],
+    "brandColor": "#111111",
+    "screenshots": []
+  }
+}
