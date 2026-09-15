@@ -1,7 +1,7 @@
 {
   "name": "game-design-suite",
-  "version": "1.4.1",
-  "description": "Professional game design suite covering systems, gameplay, combat, skills, balance, formula verification, simulation, telemetry experiments, meta balance, economy, progression, level design, UX, configuration auditing, code verification, design review, and GDD workflows.",
+  "version": "1.4.2",
+  "description": "Professional game design suite covering systems, gameplay, combat, skills, balance, formula verification, simulation, telemetry experiments, meta balance, economy, progression, level design, UX, configuration auditing, code verification, design review, and GDD workflows. Every independent formal result uses a visible Professional Context Header by default.",
   "author": {
     "name": "xiaomi867",
     "url": "https://github.com/xiaomi867"
@@ -27,7 +27,7 @@
   "interface": {
     "displayName": "Game Design Suite",
     "shortDescription": "Professional game design, numerical simulation, telemetry, and balance workflows",
-    "longDescription": "A multi-skill suite for gameplay and systems design, whole-project numerical architecture, combat and skill design, numerical balancing, formula reconstruction and verification, Monte Carlo and discrete-event simulation, telemetry and experiments, meta/roster balance, economy and progression, level design, game UX, configuration auditing, code verification, design review, and formal GDD production.",
+    "longDescription": "A multi-skill suite for gameplay and systems design, whole-project numerical architecture, combat and skill design, numerical balancing, formula reconstruction and verification, Monte Carlo and discrete-event simulation, telemetry and experiments, meta/roster balance, economy and progression, level design, game UX, configuration auditing, code verification, design review, and formal GDD production. Professional routing is exposed with a mandatory per-result Professional Context Header, including a first-visible-line gate and pre-send header lint.",
     "developerName": "xiaomi867",
     "category": "Developer Tools",
     "capabilities": [
