@@ -1,4 +1,4 @@
 interface:
-  display_name: "Game Design Suite Rebuilt (V2)"
-  short_description: "Game-design specialists for systems, balance, itemization, heroes, combat, economy, progression, levels, UX, and verification."
-  default_prompt: "Use Game Design Suite Rebuilt (V2) to handle this game-design request with the most relevant bundled specialist skill and its preserved professional workflow."
+  display_name: "Game Design Suite Consolidated (V3 Preview)"
+  short_description: "Eight game-design runtime entries backed by 24 preserved specialist knowledge modules."
+  default_prompt: "Use Game Design Suite Consolidated for this request and select the narrowest relevant runtime entry."
