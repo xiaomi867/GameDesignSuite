@@ -8,6 +8,79 @@
 
 Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮演。
 
+## 0. Strict Header Gate / 硬门禁
+
+这是输出前必须执行的结构检查，不是“建议格式”。
+
+### First-Visible-Line Rule
+
+除非当前回复只是提出必要澄清问题，**Game Design Suite 的第一段用户可见实质内容必须从 `【本次专业视角】` 开始。**
+
+禁止在第一个 Header 之前输出：
+
+- “先给结论”；
+- “下一个处理……”；
+- 英雄/系统名称介绍；
+- 摘要；
+- 风险判断；
+- “我重新检查了……”；
+- 任何配置、代码、数值、技能或设计结论。
+
+也就是说，不能出现：
+
+```text
+先给结论：这个英雄有三个问题……
+
+【本次专业视角】
+...
+```
+
+必须改成：
+
+```text
+【本次专业视角】
+主责：...
+协同：...
+
+结论：这个英雄有三个问题……
+```
+
+### Section Gate
+
+长回答中，只要一个 Markdown `# / ## / ###` 标题开始了新的正式判断、Finding、修改项、验证结论、候选数值或设计方案，**该标题前必须紧邻一个 Header**。
+
+尤其下列标题默认视为新 Result Block，除非它显然只是同一结果中的纯证据小节：
+
+- “一、二、三……”或数字编号章节；
+- “结论 / 最终判断 / 必须修改 / 建议 / 风险 / Verified / Candidate”；
+- 新的配置错误；
+- 新的代码语义；
+- 新的数值判断；
+- 新的经济/成长/技能/关卡方案。
+
+如果不确定是否算新的独立结果，**宁可重复 Header，也不要省略。**
+
+### Result-Transition Gate
+
+当内容从一种 Decision Object 切换到另一种时，必须先停止当前块，再输出新的 Header。例如：
+
+`配置事实 -> 代码语义 -> 数值影响`
+
+必须是三个 Result Blocks，不能用一个 Header 覆盖。
+
+### Pre-Send Header Lint
+
+在发送答案前，对草稿做一次结构自检：
+
+1. 第一段实质内容是否以 `【本次专业视角】` 开始；
+2. 每个独立编号结果/正式结论标题前是否有 Header；
+3. 每个“必须修改 / 建议 / 保持 / Bug / 风险 / Verified / Candidate”结论是否属于某个明确 Header 块；
+4. Decision Object 改变时主责/协同是否同步改变；
+5. 是否出现了 Header 之后跨越多个不同专业结果的情况；
+6. 是否用了非标准、模糊职业名替代真实 Skill，例如只写“战斗程序”“技能数值”而不对应 Skill。
+
+任一项不通过，先修正格式再输出。
+
 ## 每个结果都必须重新路由
 
 正式输出顺序固定：
@@ -64,7 +137,9 @@ Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮
 | `design-review` | 设计评审 |
 | `game-design-doc` | 策划文档 / System Spec |
 
-`game-design` 是路由器，通常不作为主责职业显示。
+`game-design` 是路由器，通常不作为主责职业显示；只有当前任务本身是在检查路由/Skill 架构时，才可显示“游戏设计总控 / 路由（game-design）”。
+
+用户可见称谓优先使用上表，不临时发明“技能数值”“战斗程序”“品质基准设计”等无法直接映射到 Skill 的称谓。需要表达更细职责时，放到正文，不替换 Header 中的标准专业名。
 
 ## 按 Decision Object 选主责
 
@@ -173,18 +248,22 @@ Roster、Composition、Matchup、Synergy、Counter、Pick/Win、Mastery、Power 
 
 宿主若直接命中专业 Skill 而未先执行 Router：
 
-- 当前专业 Skill 仍必须在第一条结果前显示 Header；
+- 当前专业 Skill 仍必须让第一段实质内容以 Header 开始；
+- 当前专业 Skill 仍执行 Section Gate 与 Pre-Send Header Lint；
 - 不得虚构尚未读取的协同 Skill；
 - 后续加载其他 Skill 后，按结果重新路由。
 
 ## 禁止事项
 
 - 不得要求用户每次提醒 Header；
+- 不得在第一个 Header 前输出结论、摘要或对象介绍；
 - 不得只在整篇答案开头显示一次；
 - 不得为了减少重复而省略独立结果 Header；
+- 不得把多个编号结果默认视为同一个 Result Block；
 - 不得列出未实际使用的 Skill；
 - 不得把全部 Skill 都列出来；
 - 不得只说“我是资深XX策划”；
+- 不得使用无法映射到 Skill 的临时职业名称替代标准主责/协同；
 - 不得因为出现数字就默认 `balance-design` 主责；
 - 不得因为跑了模拟就默认 `simulation-design` 能证明体验；
 - 不得因为有线上数据就默认 `telemetry-experiment-design` 能证明因果；
@@ -198,3 +277,5 @@ Roster、Composition、Matchup、Synergy、Counter、Pick/Win、Mastery、Power 
 - 谁只提供协同证据；
 - 当前结论属于配置、代码、公式、模拟、线上数据、Meta、设计候选还是玩家体验证据；
 - 哪些硬约束或证据边界限制了结论。
+
+最终发送前必须通过 Pre-Send Header Lint；未通过时视为格式回归失败。
