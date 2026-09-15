@@ -1,6 +1,6 @@
 ---
 name: game-design
-description: 游戏设计通用入口。用户提出玩法、系统、体验、规则、平衡、公式、模拟、Telemetry、A/B实验、Meta生态、技能、战斗、装备/Itemization、外部装备Benchmark、经济、成长、关卡、UI、配置、实现验证、评审或 GDD 等游戏设计问题时使用。负责自动选择并协调最小充分的专业 Skill，不要求用户预先判断专业边界。无论用户是否提醒，每个独立正式结果前都必须显示【本次专业视角】并标出主责/协同。
+description: 游戏设计通用入口。用户提出玩法、系统、体验、规则、英雄设定、英雄技能架构、英雄等级属性成长、技能数值、平衡、公式、模拟、Telemetry、A/B实验、Meta生态、战斗、装备/Itemization、外部装备Benchmark、经济、成长、关卡、UI、配置、实现验证、评审或 GDD 等游戏设计问题时使用。负责自动选择并协调最小充分的专业 Skill，不要求用户预先判断专业边界。无论用户是否提醒，每个独立正式结果前都必须显示【本次专业视角】并标出主责/协同。
 ---
 
 # 游戏设计总入口
@@ -9,7 +9,7 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 >
 > 只要本套件正在回答游戏设计/策划相关任务，用户不需要在 Prompt 里额外要求“显示专业视角”。
 >
-> 每一个独立正式结果、Finding、字段修改、代码语义、数值判断、模拟结论、数据结论、Meta判断、装备/Itemization结论、外部装备Benchmark结论、经济结论、成长方案、技能判断或关卡方案之前，都必须先显示：
+> 每一个独立正式结果、Finding、字段修改、代码语义、角色设定、Hero Kit、等级属性、技能数值、数值判断、模拟结论、数据结论、Meta判断、装备/Itemization结论、外部Benchmark、经济结论、成长方案或关卡方案之前，都必须先显示：
 >
 > ```text
 > 【本次专业视角】
@@ -42,6 +42,7 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 11. 用户从不需要重复提醒 Header。
 12. 私有项目资料只能用于当前项目分析和抽象方法验证，不得复制到公开通用 Skill、reference 或 eval。
 13. 外部商业游戏资料只作为参考事实/模式，不能自动成为当前项目标准。
+14. 英雄相关任务不再默认全部塞给 `skill-design`；按设定、Kit、等级属性、技能数值拆责。
 
 ## Professional Judgment Guard
 
@@ -62,8 +63,9 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 - 某角色总体胜率50% ≠ Meta一定健康；
 - 模拟1000次均值稳定 ≠ 玩家体验已验证；
 - Telemetry相关性 ≠ 因果关系；
-- 装备词条很多 ≠ Build一定丰富；
-- 橙装掉率高 ≠ 实际Upgrade Rate高；
+- 角色设定“高速” ≠ 只要基础速度高；
+- 技能Lv10看起来顺 ≠ Lv1~10整条曲线合理；
+- 外部角色Lv10约为Lv1两倍 ≠ 当前项目也应该两倍；
 - 三个成熟游戏都这么做 ≠ 当前项目应该照搬。
 
 ## Symptom-to-Root-Cause Rule
@@ -71,7 +73,7 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 遇到局部症状至少检查：
 
 1. **Local**：字段、倍率、奖励、单个对象；
-2. **System**：战斗、装备、经济、成长、内容、公式或数据链本身；
+2. **System**：Hero Contract、Kit、属性成长、技能数值、战斗、装备、经济、成长、公式或数据链；
 3. **Cross-system**：上下游系统、生命周期、内容环境、玩家分层、版本生态。
 
 只有局部根因成立时才做局部补丁。
@@ -85,7 +87,7 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 3. 列出最小缺失材料；
 4. 继续所有不依赖缺失证据的工作；
 5. 不从字段名、旧版本、相似游戏或公开资料补成当前项目事实；
-6. 外部详情页不可访问时，不从记忆补精确等级/强化值；
+6. 外部详情页、等级滑杆、技能等级表不可访问时，不从记忆补精确值；
 7. 用户明确“不猜”时严格停在证据边界。
 
 ## 路由
@@ -96,14 +98,26 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 ### `design-frameworks`
 MDA、Core Loop、Flow、设计张力、Pattern、Depth vs Complexity 等方法论。
 
+### `hero-concept-design`
+英雄/角色设定、Core Fantasy、阵营/元素/武器/职业标签、叙事身份、Combat Promise、角色池差异化、设定-玩法一致性。
+
+### `hero-kit-design`
+Hero Kit机制架构、技能槽位职责、状态机、资源图、Trigger Graph、循环、Target结构、Field/Action Time、Team Hook与失败恢复。
+
+### `hero-stat-progression`
+英雄Lv1~上限的HP/ATK/DEF等基础属性成长、突破/晋阶Delta、成长副属性、固定属性、职业/稀有度模板与阶段Power Curve。
+
+### `skill-value-design`
+技能Lv1~上限的伤害/治疗/护盾倍率、Buff/Debuff、概率、持续、资源、CD、层数、Fixed vs Scaled字段、技能等级收益与Extended Level。
+
+### `skill-design`
+已有项目中的综合技能设计、诊断和改造，尤其涉及Target、Buff/Debuff、配置映射、升星技能改动或用户明确要求“不要改机制”的任务。若Decision Object足够细，优先让四个Hero专业Skill主责。
+
 ### `combat-design`
 战斗规则、攻击/受击、Target、状态、AI、资源、战斗节奏、遭遇结构。
 
-### `skill-design`
-英雄/角色技能机制、Target、Buff/Debuff、触发、状态机、升级与构筑关系。
-
 ### `balance-design`
-倍率、属性、DPS/HPS/EHP、控制覆盖、Power Budget、成长强度、参数区间、横向强度。
+角色总体倍率、DPS/HPS/EHP、控制覆盖、Power Budget、横向强度、参数区间、敌我Benchmark。
 
 ### `formula-verification`
 伤害/治疗/护盾/防御/抗性/暴击/命中/攻速/行动/概率等公式还原、单位、乘区、Clamp/Round、定义域、边界与代码交叉验证。
@@ -118,7 +132,7 @@ Monte Carlo、离散事件、Rotation/Timeline、参数扫描、策略代理、1
 多角色/Build/队伍/内容生态、Matchup/Synergy/Counter矩阵、Pick/Win/Presence、Mastery、Power Creep、版本风险与多样性。
 
 ### `itemization-benchmark`
-公开商业游戏的装备、武器、遗器、圣遗物、声骸等参考数据抽取、等级/强化曲线、结构归一化、跨游戏 Benchmark、可迁移模式与迁移边界。首批参考覆盖崩坏：星穹铁道、原神、鸣潮。只负责外部参考，不替代当前项目最终设计。
+公开商业游戏的装备、武器、遗器、圣遗物、声骸等参考数据抽取、等级/强化曲线、结构归一化、跨游戏 Benchmark、可迁移模式与迁移边界。
 
 ### `itemization-design`
 当前项目装备/Itemization系统、槽位、品质、基础/主/副词条、词条池与权重、随机Roll、强化、套装、唯一特效、Loot可用率、替换/毕业、分解回收、Best-in-Slot与Build生态。
@@ -127,7 +141,7 @@ Monte Carlo、离散事件、Rotation/Timeline、参数扫描、策略代理、1
 资源Role、Sources/Sinks、库存、流速、价值锚、兑换、通胀、产销闭环。
 
 ### `progression-design`
-等级、星级、突破、技能树、解锁、成长节奏、追赶、长期上限。
+账号/角色/装备/技能整体等级、星级、突破、技能树、解锁、成长节奏、追赶、长期上限与成长成本。若只讨论英雄基础属性随等级怎么变，转 `hero-stat-progression`；若只讨论技能等级倍率怎么变，转 `skill-value-design`。
 
 ### `level-design`
 地图、关卡、布局、导航、空间教学、Encounter、波次、Boss、节奏与Metrics。
@@ -149,16 +163,43 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 
 ## 常见组合
 
-### 英雄技能
-`skill-design + balance-design`
+### 新英雄完整设计
+按Decision Object依次使用：
 
-已有表：`+ config-audit`
+`hero-concept-design -> hero-kit-design -> hero-stat-progression -> skill-value-design -> balance-design`
 
-需确认实现：`+ code-verification`
+若涉及真实项目：`+ config-audit + code-verification`
 
-复杂公式：`+ formula-verification`
+若需要公式：`+ formula-verification`
 
-定稿：`+ design-review`
+若需要Rotation/极值：`+ simulation-design`
+
+若判断角色池生态：`+ meta-balance`
+
+### 已有英雄技能审计
+先按问题拆：
+
+- 设定与玩法是否一致 -> `hero-concept-design`
+- 技能循环/状态/资源 -> `hero-kit-design`
+- Lv1~LvMax基础属性 -> `hero-stat-progression`
+- 技能Lv1~Max数值 -> `skill-value-design`
+- 当前配置/代码 -> `config-audit + code-verification`
+- 总体强度 -> `balance-design`
+
+综合配置改造仍可由 `skill-design` 协调，但不能吞掉以上独立结果责任。
+
+### 外部英雄参考 / 全量角色Wiki
+当用户要求参考崩铁/原神/鸣潮等角色Wiki：
+
+1. 先用总页建立完整角色Index；
+2. 二级详情按角色/形态唯一键遍历；
+3. 等级滑杆、技能等级切换必须记录Coverage；
+4. 角色身份字段 -> `hero-concept-design`；
+5. 技能槽位/循环 -> `hero-kit-design`；
+6. 等级属性曲线 -> `hero-stat-progression`；
+7. 技能等级参数 -> `skill-value-design`。
+
+外部事实只能标 `reference-data`；详情页失败标 `externally-blocked`，不能静默补值。
 
 ### 外部装备对标
 `itemization-benchmark + itemization-design`
@@ -170,8 +211,6 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 比较毕业概率与随机层：`+ simulation-design`
 
 比较套装/专武生态：`+ meta-balance`
-
-外部来源精确值缺失时执行 `externally-blocked`，不从记忆补值。
 
 ### 装备 / Itemization
 `itemization-design + balance-design + progression-design`
@@ -229,35 +268,41 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 ### GDD
 `game-production + 必要专业 Skill + design-review + game-design-doc`
 
-## 数值生产证据链
+## 英雄设计证据链
 
-复杂数值任务优先按需要形成：
+复杂英雄任务优先按需要形成：
+
+`Design Intent -> Hero Concept -> Hero Kit -> Stat Progression -> Skill Values -> Formula -> Config/Code -> Simulation -> Runtime -> Telemetry -> Meta -> Playtest`
+
+各层职责：
+
+- Design Intent：为什么要有这个角色；
+- Hero Concept：角色是谁、承诺什么体验；
+- Hero Kit：机制怎么兑现；
+- Stat Progression：等级成长如何支撑体质和Scaling Source；
+- Skill Values：技能等级如何分配数值预算；
+- Formula：乘区与数学结构；
+- Config/Code：项目实际怎么执行；
+- Simulation：Rotation、极端值、敏感性与分布；
+- Runtime：真实实现是否一致；
+- Telemetry：真实玩家行为；
+- Meta：角色池与队伍生态；
+- Playtest：理解、反馈、节奏、乐趣。
+
+任何前一层都不能替代后一层证据。
+
+## 装备/数值生产证据链
 
 `Design Intent -> External Benchmark(optional) -> Itemization/Build Rules -> Formula -> Config/Code -> Simulation -> Runtime -> Telemetry -> Meta -> Playtest`
 
-其中：
-
-- External Benchmark：只在用户需要外部游戏参考/对标时出现；
-- Itemization/Build Rules：只在装备/物品化相关任务出现；
-- Design Intent：为什么存在；
-- Formula：数学结构是否正确；
-- Config/Code：项目实际怎么执行；
-- Simulation：预期分布、极端值、敏感性；
-- Runtime：真实实现是否一致；
-- Telemetry：真实玩家行为与结果；
-- Meta：整个选择生态是否健康；
-- Playtest：体验、可读性、挫败、乐趣。
-
-外部商业游戏的 `verified-data` 只能证明参考来源事实，不能自动升级为当前项目 verified。
-
-低层证据不能冒充高层结论。
+外部商业游戏的 `reference-data` 只能证明参考来源事实，不能自动升级为当前项目 verified。
 
 ## Private Project Isolation
 
 用户提供真实项目代码、表、日志可以用于：
 
 - 验证通用 Skill 是否覆盖真实生产问题；
-- 提取不含业务细节的方法，例如 deterministic seed、Golden Test、Schema Guard、Runtime parity、Loot funnel、Dead-affix guard；
+- 提取不含业务细节的方法，例如 deterministic seed、Golden Test、Schema Guard、Runtime parity、Hero Contract、Stat Curve Guard、Skill Curve Guard、Loot funnel；
 - 发现通用反模式与缺失能力。
 
 不得写入公开通用 Skill：
@@ -267,7 +312,7 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 - 私有ID；
 - 私有代码路径；
 - 私有真实公式；
-- 私有装备数值、掉率、经济数据；
+- 私有英雄基础属性、技能倍率、装备数值、掉率、经济数据；
 - 未公开业务规则。
 
 若需要项目专属适配，应单独保存在用户项目私有 workspace，不污染通用 Skill。
@@ -293,6 +338,6 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 
 - 不替专业 Skill 完成详细设计。
 - 不把模拟、Spreadsheet、Telemetry相关性或理论分析描述成“已验证好玩”。
-- 不把外部游戏的阈值、公式、装备掉率、词条数量、套装倍率、强化曲线或精炼/谐振参数直接复制成本项目标准。
+- 不把外部游戏的角色等级上限、技能等级倍率、属性成长、公式、装备掉率、词条数量、套装倍率或实验结果直接复制成本项目标准。
 - 不因为三款成熟游戏都使用某结构，就自动把它标为当前项目最佳实践。
 - 不保存无意义中间状态。
