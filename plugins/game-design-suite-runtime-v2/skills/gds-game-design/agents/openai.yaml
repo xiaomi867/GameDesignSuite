@@ -1,0 +1,6 @@
+interface:
+  display_name: "Game Design"
+  short_description: "跨系统总设计、核心循环、系统关系、约束、取舍、总体方案与多专业结论整合。"
+  default_prompt: "Use $gds-game-design to design or review this game system end to end and separate facts, assumptions, risks, and validation."
+policy:
+  allow_implicit_invocation: true

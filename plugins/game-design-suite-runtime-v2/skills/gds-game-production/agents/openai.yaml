@@ -1,0 +1,6 @@
+interface:
+  display_name: "Game Production"
+  short_description: "玩法循环、系统规则、功能范围、节奏、教程、奖励框架、制作约束与落地方案。"
+  default_prompt: "Use $gds-game-production to turn this gameplay idea into a production-ready system design with scope, rules, risks, and validation."
+policy:
+  allow_implicit_invocation: true

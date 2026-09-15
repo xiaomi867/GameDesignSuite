@@ -1,0 +1,6 @@
+interface:
+  display_name: "Telemetry Experiment Design"
+  short_description: "埋点、事件Schema、指标、分群、漏斗、A/B、SRM、显著性、Guardrail、因果边界与线上验证。"
+  default_prompt: "Use $gds-telemetry-experiment-design to design the telemetry and experiment needed to validate this game-design change."
+policy:
+  allow_implicit_invocation: true

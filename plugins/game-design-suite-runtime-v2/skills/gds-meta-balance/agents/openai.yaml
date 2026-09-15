@@ -1,0 +1,6 @@
+interface:
+  display_name: "Meta Balance"
+  short_description: "角色/Build/队伍生态、Pick/Win/Presence、Synergy/Counter、Pair Lock、BiS集中、Power Creep 与多样性。"
+  default_prompt: "Use $gds-meta-balance to audit roster, team, and build ecology for dominance, pair locks, diversity, and power creep."
+policy:
+  allow_implicit_invocation: true

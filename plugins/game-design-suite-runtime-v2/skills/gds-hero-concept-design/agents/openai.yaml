@@ -1,0 +1,6 @@
+interface:
+  display_name: "Hero Concept Design"
+  short_description: "Core Fantasy、角色身份、阵营/元素/武器/职业标签、Combat Promise 与角色池差异化。"
+  default_prompt: "Use $gds-hero-concept-design to define this hero's fantasy, identity, combat promise, and roster differentiation."
+policy:
+  allow_implicit_invocation: true

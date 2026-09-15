@@ -1,0 +1,6 @@
+interface:
+  display_name: "Hero Stat Progression"
+  short_description: "Lv1~上限基础属性、突破/晋阶 Delta、稀有度/职业模板、成长曲线、Growth Density 与阶段强度。"
+  default_prompt: "Use $gds-hero-stat-progression to design Lv1-to-cap base stats, ascension deltas, growth curves, and validation."
+policy:
+  allow_implicit_invocation: true

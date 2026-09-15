@@ -1,0 +1,6 @@
+interface:
+  display_name: "Game Interface Design"
+  short_description: "HUD、菜单、信息层级、交互流程、引导、反馈、输入提示、Accessibility 与系统状态表达。"
+  default_prompt: "Use $gds-game-interface-design to design or audit this game UI flow, information hierarchy, feedback, and accessibility."
+policy:
+  allow_implicit_invocation: true

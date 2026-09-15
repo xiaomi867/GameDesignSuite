@@ -1,0 +1,4 @@
+interface:
+  display_name: "Game Design Suite Consolidated (V3 Preview)"
+  short_description: "Eight game-design runtime entries backed by 24 preserved specialist knowledge modules."
+  default_prompt: "Use Game Design Suite Consolidated for this request and select the narrowest relevant runtime entry."

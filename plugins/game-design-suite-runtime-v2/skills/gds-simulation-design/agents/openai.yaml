@@ -1,0 +1,6 @@
+interface:
+  display_name: "Simulation Design"
+  short_description: "Monte Carlo、离散事件、Rotation/Timeline、参数扫描、策略代理、分布、尾部风险与敏感性。"
+  default_prompt: "Use $gds-simulation-design to define a simulation model, distributions, runs, tail-risk metrics, and sensitivity analysis."
+policy:
+  allow_implicit_invocation: true

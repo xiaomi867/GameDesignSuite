@@ -1,0 +1,6 @@
+interface:
+  display_name: "Balance & Simulation"
+  short_description: "Balance targets, formulas, simulations, telemetry experiments, and meta analysis."
+  default_prompt: "Use Balance & Simulation for this numerical or balance-analysis request."
+policy:
+  allow_implicit_invocation: true

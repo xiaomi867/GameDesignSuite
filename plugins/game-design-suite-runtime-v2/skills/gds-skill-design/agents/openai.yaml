@@ -1,0 +1,6 @@
+interface:
+  display_name: "Skill Design"
+  short_description: "现有项目技能机制、Target、Buff/Debuff、触发、状态、资源、CD、升星与配置映射。"
+  default_prompt: "Use $gds-skill-design to audit or tune this existing skill without changing its fixed core mechanic."
+policy:
+  allow_implicit_invocation: true
