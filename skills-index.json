@@ -12,7 +12,7 @@
   {
     "name": "combat-design",
     "path": "plugins/game-design-suite/skills/combat-design/SKILL.md",
-    "description": "负责战斗系统与遭遇规则，包括攻击、受击、目标选择、资源、状态、AI、战斗节奏、敌我职责、Boss/小怪战斗行为和战斗可读性。具体技能机制交给 skill-design，具体参数交给 balance-design。"
+    "description": "负责战斗系统与遭遇规则，包括攻击、受击、目标选择、资源、状态、AI、战斗节奏、敌我职责、Boss/小怪战斗行为和战斗可读性。具体技能机制交给 skill-design/hero-kit-design，具体参数交给 balance-design/skill-value-design。"
   },
   {
     "name": "config-audit",
@@ -42,7 +42,7 @@
   {
     "name": "game-design",
     "path": "plugins/game-design-suite/skills/game-design/SKILL.md",
-    "description": "游戏设计通用入口。用户提出玩法、系统、体验、规则、平衡、技能、战斗、装备/Itemization、经济、成长、关卡、UI、配置、实现验证、模拟、Telemetry、Meta平衡、评审或GDD等问题时使用。负责自动选择并协调最小充分专业Skill。"
+    "description": "游戏设计通用入口。用户提出玩法、系统、英雄设定、英雄技能架构、英雄等级属性成长、技能数值、平衡、公式、模拟、Telemetry、Meta、装备、经济、成长、关卡、UI、配置、实现验证、评审或GDD等问题时使用。负责自动选择并协调最小充分专业Skill。"
   },
   {
     "name": "game-design-doc",
@@ -60,14 +60,29 @@
     "description": "负责游戏整体体验、玩法循环、系统规则、奖励框架、教程、产品节奏、制作范围、依赖和验证。适用于玩法策划、系统策划、现有系统诊断和跨系统方案设计；具体数值、经济、技能、关卡、配置或代码问题应与对应专业 Skill 协作。"
   },
   {
+    "name": "hero-concept-design",
+    "path": "plugins/game-design-suite/skills/hero-concept-design/SKILL.md",
+    "description": "负责英雄/角色的设定、身份、幻想、阵营/属性/武器/职业标签、叙事定位与玩法承诺，把人物设定转译成可验证的战斗与成长约束。用于新英雄立项、角色设定评审、设定与技能一致性检查、角色池差异化；不负责具体技能机制与倍率。"
+  },
+  {
+    "name": "hero-kit-design",
+    "path": "plugins/game-design-suite/skills/hero-kit-design/SKILL.md",
+    "description": "负责英雄技能组（Hero Kit）的机制架构与相互关系，包括普攻/主动/被动/大招等槽位、状态机、资源图、触发链、循环、目标结构、场上时间、团队Hook与失败恢复。用于新英雄技能设定、机制审计和角色循环验证。"
+  },
+  {
+    "name": "hero-stat-progression",
+    "path": "plugins/game-design-suite/skills/hero-stat-progression/SKILL.md",
+    "description": "负责英雄从Lv1到等级上限的基础属性成长、突破/晋阶跳变、成长副属性、职业/稀有度模板、属性曲线与阶段强度变化。用于建立或审计HP/ATK/DEF/速度/能量/暴击等等级成长，并与技能Scaling Source交叉验证。"
+  },
+  {
     "name": "itemization-benchmark",
     "path": "plugins/game-design-suite/skills/itemization-benchmark/SKILL.md",
-    "description": "负责把公开商业游戏的装备、武器、遗器、圣遗物、声骸等 Itemization 数据整理成可比较的参考模型，用于设计启发、数值曲线对标、结构验证和风险诊断。首批参考覆盖崩坏：星穹铁道、原神、鸣潮；不把外部游戏数值直接当成本项目标准，也不替代 itemization-design 对本项目做最终设计决策。"
+    "description": "负责把公开商业游戏的装备、武器、遗器、圣遗物、声骸等 Itemization 数据整理成可比较的参考模型，用于设计启发、数值曲线对标、结构验证和风险诊断。首批参考覆盖崩坏：星穹铁道、原神、鸣潮；不把外部游戏数值直接当成本项目标准。"
   },
   {
     "name": "itemization-design",
     "path": "plugins/game-design-suite/skills/itemization-design/SKILL.md",
-    "description": "负责装备与物品化系统（Itemization）设计、审计和数值结构，包括装备槽位、品质、基础属性、主/副词条、词条池、Roll范围、强化、套装、唯一特效、掉落、替换曲线、毕业周期、分解回收、Build生态与Best-in-Slot风险。用于武器、防具、饰品、遗物、符文、芯片、神器等可装备/可构筑物品；具体战斗价值与倍率协同 balance-design，长期成长协同 progression-design，资源与掉落经济协同 economy-design。"
+    "description": "负责装备与物品化系统（Itemization）设计、审计和数值结构，包括装备槽位、品质、基础属性、主/副词条、词条池、Roll范围、强化、套装、唯一特效、掉落、替换曲线、毕业周期、分解回收、Build生态与Best-in-Slot风险。"
   },
   {
     "name": "level-design",
@@ -92,7 +107,12 @@
   {
     "name": "skill-design",
     "path": "plugins/game-design-suite/skills/skill-design/SKILL.md",
-    "description": "负责角色/英雄技能设计、诊断和改造，包括普攻、主动、被动、大招、Target、触发、Buff/Debuff、持续、叠加、技能等级、升星影响和构筑关系。已有项目默认不改变用户要求保持的技能机制。"
+    "description": "负责角色/英雄技能设计、诊断和改造，包括普攻、主动、被动、大招、Target、触发、Buff/Debuff、持续、叠加、技能等级、升星影响和构筑关系。已有项目默认不改变用户要求保持的技能机制；细分设定/Kit/等级成长/技能数值任务可由新增Hero专业Skill主责。"
+  },
+  {
+    "name": "skill-value-design",
+    "path": "plugins/game-design-suite/skills/skill-value-design/SKILL.md",
+    "description": "负责技能等级对应的数值成长与参数预算，包括伤害/治疗/护盾倍率、Buff/Debuff数值、概率、持续、资源、冷却、层数、技能等级曲线、不同参数的升级策略与Lv1~上限增长。"
   },
   {
     "name": "telemetry-experiment-design",
