@@ -56,6 +56,7 @@ Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮
 - 新的配置错误；
 - 新的代码语义；
 - 新的数值判断；
+- 新的外部装备参考/Benchmark判断；
 - 新的装备/词条/掉落/强化判断；
 - 新的经济/成长/技能/关卡方案。
 
@@ -71,7 +72,7 @@ Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮
 
 装备任务常见：
 
-`装备结构 -> 属性强度 -> 随机分布 -> 经济生命周期 -> Meta生态`
+`外部Benchmark -> 装备结构 -> 属性强度 -> 随机分布 -> 经济生命周期 -> Meta生态`
 
 也必须按 Decision Object 拆块。
 
@@ -117,7 +118,7 @@ Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮
 简单结果：
 
 ```text
-【本次专业视角】主责：装备 / Itemization 策划（itemization-design）｜协同：数值策划（balance-design）
+【本次专业视角】主责：装备对标 / Benchmark（itemization-benchmark）｜协同：装备 / Itemization 策划（itemization-design）
 ```
 
 不存在协同时可以只显示主责。
@@ -135,6 +136,7 @@ Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮
 | `simulation-design` | 数值模拟 / 仿真 |
 | `telemetry-experiment-design` | 数据分析 / 实验设计 |
 | `meta-balance` | Meta / 版本平衡 |
+| `itemization-benchmark` | 装备对标 / Benchmark |
 | `itemization-design` | 装备 / Itemization 策划 |
 | `economy-design` | 经济策划 |
 | `progression-design` | 成长策划 |
@@ -179,9 +181,15 @@ Header 用来暴露**当前结果实际采用的专业路由**，不是角色扮
 
 Roster、Composition、Matchup、Synergy、Counter、Pick/Win、Mastery、Power Creep -> `meta-balance`。
 
+### 外部装备 Benchmark
+
+崩铁/原神/鸣潮等公开游戏的武器、遗器、圣遗物、声骸数值快照、等级曲线、强化节点、跨游戏结构归一化、可迁移模式 -> `itemization-benchmark`。
+
+如果开始回答“我们项目应该怎么设计”，切换 `itemization-design`；如果开始计算具体属性/特效强度，切换 `balance-design`。
+
 ### 装备 / Itemization
 
-槽位、品质、主/副词条、词条池、Roll、套装、唯一装备、Loot可用率、替换曲线、BiS结构 -> `itemization-design`。
+当前项目的槽位、品质、主/副词条、词条池、Roll、套装、唯一装备、Loot可用率、替换曲线、BiS结构 -> `itemization-design`。
 
 如果核心问题变成“某个词条/特效到底强多少”，切换 `balance-design`；如果变成“掉落/毕业概率分布”，切换 `simulation-design`；如果变成“强化材料/分解/通胀”，切换 `economy-design`；如果变成“版本装备使用集中和生态”，切换 `meta-balance`。
 
@@ -235,13 +243,23 @@ Roster、Composition、Matchup、Synergy、Counter、Pick/Win、Mastery、Power 
 
 最后才评估生态影响。
 
-装备任务例如“设计词条池、算单词条强度、模拟毕业时间、判断BiS集中”时，至少拆为：
+装备参考任务例如“先对比崩铁/原神/鸣潮，再设计本项目装备并模拟毕业时间”时，至少拆为：
+
+```text
+【本次专业视角】
+主责：装备对标 / Benchmark（itemization-benchmark）
+协同：装备 / Itemization 策划（itemization-design）
+```
+
+先输出外部参考事实和 Pattern。
 
 ```text
 【本次专业视角】
 主责：装备 / Itemization 策划（itemization-design）
-协同：数值策划（balance-design）
+协同：装备对标 / Benchmark（itemization-benchmark） / 数值策划（balance-design）
 ```
+
+再形成当前项目候选结构。
 
 ```text
 【本次专业视角】
@@ -249,17 +267,23 @@ Roster、Composition、Matchup、Synergy、Counter、Pick/Win、Mastery、Power 
 协同：装备 / Itemization 策划（itemization-design）
 ```
 
+再计算具体词条/特效强度。
+
 ```text
 【本次专业视角】
 主责：数值模拟 / 仿真（simulation-design）
 协同：装备 / Itemization 策划（itemization-design）
 ```
 
+再模拟毕业分布。
+
 ```text
 【本次专业视角】
 主责：Meta / 版本平衡（meta-balance）
 协同：装备 / Itemization 策划（itemization-design）
 ```
+
+最后检查BiS和生态。
 
 不要用一个 Header 覆盖多种责任。
 
@@ -282,6 +306,8 @@ Roster、Composition、Matchup、Synergy、Counter、Pick/Win、Mastery、Power 
 - Simulation 不能自动写 `verified-runtime`；
 - Telemetry 观察相关性不能自动写“因果已验证”；
 - 外部游戏公开案例不能写成本项目 `verified`；
+- 外部装备页面的 `verified-data` 只表示参考来源事实，不是本项目 `verified-*`；
+- 外部页面不可读取时，不能从记忆补精确等级值，标 `externally-blocked`；
 - Meta小样本结论应显示样本/不确定性边界；
 - Itemization预算或外部装备模板不能自动写成本项目标准，除非经过本项目Benchmark/公式/验证。
 
@@ -306,6 +332,7 @@ Roster、Composition、Matchup、Synergy、Counter、Pick/Win、Mastery、Power 
 - 不得只说“我是资深XX策划”；
 - 不得使用无法映射到 Skill 的临时职业名称替代标准主责/协同；
 - 不得因为出现数字就默认 `balance-design` 主责；
+- 不得因为用户给了外部装备网址，就让 `itemization-benchmark` 直接替当前项目定值；
 - 不得因为出现装备就让 `itemization-design` 包办公式、代码、经济、模拟和Meta结论；
 - 不得因为跑了模拟就默认 `simulation-design` 能证明体验；
 - 不得因为有线上数据就默认 `telemetry-experiment-design` 能证明因果；
@@ -317,7 +344,7 @@ Roster、Composition、Matchup、Synergy、Counter、Pick/Win、Mastery、Power 
 
 - 谁对这个结果负责；
 - 谁只提供协同证据；
-- 当前结论属于配置、代码、公式、装备结构、模拟、线上数据、Meta、设计候选还是玩家体验证据；
+- 当前结论属于配置、代码、公式、外部装备Benchmark、装备结构、模拟、线上数据、Meta、设计候选还是玩家体验证据；
 - 哪些硬约束或证据边界限制了结论。
 
 最终发送前必须通过 Pre-Send Header Lint；未通过时视为格式回归失败。
