@@ -1,6 +1,6 @@
 # GameDesignSuite
 
-一套面向生产项目的通用游戏策划 Skill Suite，覆盖：玩法/系统、战斗/技能、数值/公式、装备/Itemization、外部装备Benchmark、Simulation、Telemetry/A-B实验、Meta/版本平衡、经济/成长、关卡、UI/UX、配置审计、代码验证、设计评审和 GDD。
+一套面向生产项目的通用游戏策划 Skill Suite，覆盖：玩法/系统、英雄设定、Hero Kit、英雄等级属性、技能数值、战斗/数值/公式、装备/Itemization、外部Benchmark、Simulation、Telemetry/A-B实验、Meta/版本平衡、经济/成长、关卡、UI/UX、配置审计、代码验证、设计评审和 GDD。
 
 ## 多 Agent 架构
 
@@ -28,9 +28,9 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 
 `.deepcode/skills/` 只负责发现，执行时继续读取 canonical Skill。
 
-## ChatGPT / Codex：从 GitHub 安装
+## 安装
 
-在“添加插件市场”中填写：
+ChatGPT / Codex Marketplace：
 
 ```text
 来源：https://github.com/xiaomi867/GameDesignSuite.git
@@ -38,23 +38,17 @@ Git 引用：main
 稀疏路径：留空
 ```
 
-Marketplace manifest 位于仓库根目录的 `.agents/plugins/marketplace.json`。
+当前插件版本：**1.7.0**。
 
-当前插件版本：**1.6.0**。
+当前 canonical Skills：**24 个**。
 
-当前 canonical Skills：**20 个**。
-
-## DeepSeek Deep Code
+DeepSeek Deep Code：
 
 ```bash
 git clone https://github.com/xiaomi867/GameDesignSuite.git
 cd GameDesignSuite
 deepcode
 ```
-
-进入后可用 `/` 查看 Skill，或直接用自然语言让 Agent 自动路由。
-
-普通 DeepSeek 网页/App 不是本仓库的项目 Skill 安装入口；优先使用 Deep Code 或支持仓库级 Agent Skills / `AGENTS.md` 的宿主。
 
 ## Skill 清单
 
@@ -63,17 +57,21 @@ deepcode
 | `game-design` | 总入口、结果级路由、多 Skill 协调 |
 | `game-production` | 玩法、系统、产品、跨系统与制作约束 |
 | `design-frameworks` | MDA、Core Loop、Flow、Pattern |
-| `balance-design` | Power Budget、DPS/HPS/EHP、成长、参数平衡 |
+| `hero-concept-design` | 角色设定、Core Fantasy、身份标签、Combat Promise、角色池差异化 |
+| `hero-kit-design` | Hero Loop、技能槽位、状态机、资源图、Trigger、Target、Team Hook |
+| `hero-stat-progression` | Lv1~上限基础属性、突破Delta、Bonus Stat、成长曲线与Roster Envelope |
+| `skill-value-design` | 技能Lv1~上限倍率、治疗/护盾、Buff/Debuff、概率、持续、资源、CD与等级收益 |
+| `skill-design` | 已有项目综合技能设计/改造、Target/Buff/被动/升星与机制保护 |
+| `combat-design` | 战斗规则、行动/资源经济、状态、Gauge、AI、遭遇 |
+| `balance-design` | Power Budget、DPS/HPS/EHP、横向强度、参数平衡 |
 | `formula-verification` | 公式还原、乘区、单位、Clamp/Round、概率、边界、代码交叉验证 |
-| `simulation-design` | Monte Carlo、离散事件、参数扫描、策略代理、分布与敏感性 |
+| `simulation-design` | Monte Carlo、离散事件、Rotation、参数扫描、分布与敏感性 |
 | `telemetry-experiment-design` | 埋点、指标、分群、A/B、SRM、显著性、因果边界 |
 | `meta-balance` | Roster/Composition/Matchup/Synergy/Counter、Mastery、Power Creep、版本生态 |
-| `itemization-design` | 装备槽位、品质、主/副词条、词条池、Roll、强化、套装、唯一特效、掉落、替换、分解与BiS/Build生态 |
-| `itemization-benchmark` | 崩铁/原神/鸣潮等公开装备系统的数据抽取、等级曲线、结构归一化、跨游戏对标与迁移边界 |
+| `itemization-design` | 槽位、品质、主副词条、Roll、强化、套装、Unique、Loot、替换、BiS/Build生态 |
+| `itemization-benchmark` | 公开商业游戏装备数据、等级曲线、结构归一化、跨游戏对标与迁移边界 |
 | `economy-design` | Resource Role、Sources/Sinks、流速、库存、价值与产销 |
-| `progression-design` | 等级、星级、技能树、突破、解锁、成长节奏 |
-| `combat-design` | 战斗规则、行动/资源经济、状态、Gauge、AI、遭遇 |
-| `skill-design` | Hero Kit、状态机、Target、Buff/Debuff、升级与构筑 |
+| `progression-design` | 账号/系统级等级、星级、突破、技能树、解锁、成长节奏与成本 |
 | `level-design` | 关卡、地图、波次、Encounter、节奏、Boss |
 | `game-interface-design` | HUD、菜单、引导、反馈、Accessibility |
 | `config-audit` | Excel/配置字段、ID、引用、漏配、一致性 |
@@ -81,91 +79,139 @@ deepcode
 | `design-review` | 根因、反模式、矛盾、主导策略、验证实验 |
 | `game-design-doc` | GDD、System Spec、正式设计文档 |
 
-## 数值与Itemization生产链
+## Hero Specialist Suite
 
-复杂任务按需要组合：
+英雄设计不再默认由一个 `skill-design` 包办，而是按 Decision Object 拆成四个可相互验证的专业层：
 
 ```text
 Design Intent
--> itemization-benchmark (when external reference is requested)
--> itemization-design (装备/物品化任务)
+-> hero-concept-design
+-> hero-kit-design
+-> hero-stat-progression
+-> skill-value-design
+-> balance-design
 -> formula-verification
 -> config-audit / code-verification
 -> simulation-design
--> verified-runtime
+-> Runtime
 -> telemetry-experiment-design
 -> meta-balance
 -> Playtest
 ```
 
-其中：
+### `hero-concept-design`
 
-- `itemization-benchmark`：从外部商业游戏抽取公开装备事实、等级曲线和结构模式，做归一化对标，不直接给项目定值；
-- `itemization-design`：装备结构、Slot、品质、词条、Roll、套装、Loot、替换与Build目标；
-- `formula-verification`：公式数学结构是否正确；
-- `config-audit / code-verification`：项目实际输入和实现是什么；
-- `simulation-design`：上线前看分布、尾部、敏感性、毕业时间和极端组合；
-- `telemetry-experiment-design`：上线后看真实玩家数据并做受控实验；
-- `meta-balance`：判断角色/Build/装备/队伍/内容生态是否健康；
-- Playtest：验证理解、挫败、节奏与乐趣。
+负责“这个角色是谁、玩家应该感受到什么”：
 
-低层证据不能冒充高层证据。
+- Core Fantasy / Narrative Identity；
+- 阵营、属性、武器、职业与Role Tags；
+- Combat Promise；
+- Signature Verb；
+- Power Source / Risk / Cost；
+- Team Relationship；
+- Growth Fantasy；
+- 设定 -> 玩法约束；
+- 角色池差异化与Role Tag Mismatch。
 
-## `itemization-design`
+### `hero-kit-design`
 
-用于武器、防具、饰品、遗物、符文、芯片、神器等装备/物品化系统。
+负责“技能机制如何兑现角色设定”：
 
-核心能力：
+- Hero Loop；
+- Skill Slot Responsibility；
+- State Machine；
+- Resource Graph；
+- Trigger Graph；
+- Target Architecture；
+- Action / Field-Time Budget；
+- Team Hook；
+- Upgrade Topology；
+- Infinite Trigger / Permanent Burst / Mechanic Soup等风险。
 
-- Itemization Job / 装备系统职责；
-- Slot Architecture；
-- Item Power Budget；
-- Base/Main/Substat；
-- Affix Pool / Weight / Exclusion；
-- Roll Range / Affix Tier；
-- 品质/稀有度梯度；
-- 强化与继承；
-- Set Bonus / Unique Effect；
-- 专武 / Signature Tax；
-- Loot可用率与真实Upgrade Rate；
-- Replacement Curve；
-- P50/P90/P95毕业周期；
-- Salvage / Duplicate / Crafting；
-- Character × Item / Build × Item矩阵；
-- Best-in-Slot集中与Power Creep。
+### `hero-stat-progression`
 
-核心原则：
+负责“英雄等级对应的基础数值如何变化”：
+
+- Lv1~Cap HP/ATK/DEF；
+- 固定SPD/Energy/Crit等身份参数；
+- 突破/晋阶跳变；
+- Bonus Stat；
+- Linear / Piecewise / Multiplier / Hybrid曲线；
+- Normalized Growth；
+- Roster Stat Envelope；
+- Scaling Source Alignment；
+- Character Level × Skill Level联合放大检查。
+
+### `skill-value-design`
+
+负责“技能等级对应的参数如何变化”：
+
+- Damage / Heal / Shield；
+- Buff / Debuff；
+- 概率、持续、层数；
+- CD、Resource Cost/Gain；
+- Fixed vs Scaled Fields；
+- 不同Parameter Type的Scaling Family；
+- Normal Max / Extended Max；
+- Rotation Contribution；
+- Utility Breakpoint；
+- Upgrade Power Delta / Cost。
+
+## 四向相互验证
 
 ```text
-更多词条 != 更多Build
-更高橙装掉率 != 更高实际升级率
-固定属性比例 != 跨项目真理
-平均毕业时间 != 坏运气体验健康
-高品质 != 所有维度都必须同时膨胀
+hero-concept-design
+  ↓ 设定承诺
+hero-kit-design
+  ↓ 机制兑现
+hero-stat-progression
+  ↓ 体质/成长支持
+skill-value-design
+  ↓ 数值表达
+  ↘ 回看是否仍强化原始角色身份
 ```
 
-## `itemization-benchmark`
+典型冲突：
 
-这是与 `itemization-design` 分离的外部参考 Skill。
+- 设定是“高速猎手”，Kit却是超低频炮台；
+- Kit主伤害吃DEF，基础成长又把DEF推到极高，形成输出+生存Double Scaling；
+- 角色等级ATK涨3倍、技能倍率再涨2倍，两条曲线单看平滑但组合后约6倍放大；
+- Skill Value把辅助技能抬成主要输出，导致Role Drift；
+- 页面标签写“治疗”，实际Kit只存在偶发自疗，形成Role Tag Mismatch。
 
-首批参考：
+## 外部英雄参考语料
 
-- Honkai: Star Rail：遗器主/副属性、+15、每3级副词条事件、Roll档与槽位限制；
-- Genshin Impact：武器Lv1~90、突破、精炼1~5、圣遗物+20、每4级副词条事件、2/4件套装；
-- Wuthering Waves：武器Lv1~90、谐振1~5、声骸Cost 1/3/4、+25、每5级调谐、Sonata/合鸣。
-
-重点不是复制这些游戏的数字，而是对比：
+首批共享公开角色总页：
 
 ```text
-Level Curve
-Upgrade Event Density
-Slot/Cost Gating
-Base-vs-Secondary Budget
-Main/Substat RNG
-Set Threshold
-Signature Pressure
-Effective Upgrade Funnel
-Replacement Friction
+崩坏：星穹铁道  https://sr.appfeng.com/character
+原神            https://ys.appfeng.com/character
+鸣潮            https://mc.appfeng.com/avatar
+```
+
+共享规范：
+
+```text
+plugins/game-design-suite/skills/hero-concept-design/references/hero-reference-corpus.md
+```
+
+当任务要求研究“所有英雄”时，必须：
+
+1. 先从总页建立当时版本完整 Index；
+2. 按角色/形态/Detail URL建立唯一键；
+3. 逐个读取二级详情页；
+4. 等级滑杆不能只读默认等级；
+5. 技能等级表不能只读Lv1或满级；
+6. 记录Source Date / Version；
+7. 报告 `success / total / blocked / duplicate-variant` Coverage；
+8. 失败详情页标 `externally-blocked`，不从记忆补精确值。
+
+外部资料只允许三层：
+
+```text
+reference-data      # 页面直接支持
+supported-inference # 跨角色/跨游戏归纳
+candidate           # 准备迁移到当前项目的候选
 ```
 
 核心边界：
@@ -173,28 +219,62 @@ Replacement Friction
 ```text
 Reference Fact != Transfer Rule
 Reference Pattern != Project Standard
-外部 verified-data != 当前项目 verified
 ```
 
-当参考网站有等级滑杆时，要求采样起始值、突破前后、中间等级和满级，并用 `V(level)/V(max)` 等方法比较曲线形状，禁止只看满级截图。
+所以崩铁/原神/鸣潮的等级上限、基础属性、技能倍率、命座/星魂/共鸣链、技能槽位都不能自动成为当前项目标准。
+
+## Itemization Suite
+
+装备任务使用：
+
+```text
+External Benchmark(optional)
+-> itemization-design
+-> balance / progression / economy
+-> simulation
+-> meta-balance
+```
+
+`itemization-benchmark` 与 `itemization-design` 分离：前者研究外部成熟产品，后者对当前项目做最终设计。
+
+## Numerical Production Chain
+
+复杂数值任务按需要组合：
+
+```text
+Design Intent
+-> Formula
+-> Config/Code
+-> Simulation
+-> Runtime
+-> Telemetry
+-> Meta
+-> Playtest
+```
+
+低层证据不能冒充高层证据：
+
+- Spreadsheet/公式正确 != Runtime正确；
+- Simulation稳定 != 玩家体验已验证；
+- Telemetry相关 != 因果已验证；
+- 总体50%胜率 != Meta健康。
 
 ## Professional Context Header
 
 每一个独立正式结果前都必须显示实际专业路由，用户不需要额外提醒。
 
-例如装备任务可能依次切换：
+英雄完整任务会依次切换：
 
 ```text
-装备对标 / Benchmark
--> 装备 / Itemization 策划
--> 数值策划
+角色设定策划（hero-concept-design）
+-> 英雄技能架构（hero-kit-design）
+-> 英雄成长数值（hero-stat-progression）
+-> 技能数值策划（skill-value-design）
+-> 数值策划（balance-design）
 -> 配置审计 / 代码验证
--> 数值模拟 / 仿真
--> 经济策划
--> Meta / 版本平衡
 ```
 
-不能用一个 Header 覆盖不同 Decision Object。
+不能用一个“技能/英雄策划”Header覆盖全部Decision Objects。
 
 详细规则：
 
@@ -202,97 +282,59 @@ Reference Pattern != Project Standard
 plugins/game-design-suite/skills/game-design/references/professional-context-header.md
 ```
 
-## Simulation / Telemetry / Meta
-
-### `simulation-design`
-
-支持：
-
-- 100 / 1000 / 10000 次战斗或概率模拟；
-- Mean/Median/P90/P95/失败率等分布；
-- deterministic seed；
-- Monte Carlo；
-- Discrete Event Simulation；
-- Rotation/Timeline；
-- 参数扫描与Sensitivity；
-- Bot/Policy Persona；
-- 长周期经济、成长、装备掉落与毕业模拟。
-
-Simulation 不能冒充真实玩家体验。
-
-### `telemetry-experiment-design`
-
-支持：
-
-- Event Schema；
-- KPI/漏斗/留存/行为指标；
-- 玩家Skill/Mastery分群；
-- A/B与多变量实验；
-- Sample Ratio Mismatch；
-- Effect Size / Confidence Interval；
-- Guardrail；
-- 相关性与因果边界。
-
-### `meta-balance`
-
-支持：
-
-- Roster Matrix；
-- Matchup / Synergy / Counter Matrix；
-- Character × Item / Build × Item生态；
-- Composition；
-- Pick/Win/Presence；
-- Mastery Curve；
-- Diversity / Concentration；
-- Pair Lock；
-- Best-in-Slot Lock；
-- Power Creep；
-- 版本改动的二阶影响。
-
 ## 外部参考使用原则
 
-崩铁、原神、鸣潮、绝区零、Riot、Ubisoft、GDC、学术论文及其他公开资料只用于：
+崩铁、原神、鸣潮、绝区零、Riot、Ubisoft、GDC、Wiki与其他公开资料只用于：
 
-- 公式/模型结构参考；
-- Itemization结构与等级曲线Benchmark；
+- 公开事实；
+- 结构与公式参考；
+- 成长/技能/Itemization Benchmark；
 - 专业方法论；
-- 反模式与验证方法；
-- 测试场景与边界启发。
+- 反模式与验证方法。
 
-禁止把其他游戏的公式、53%胜率线、速度阈值、词条数量、掉率、套装倍率、强化曲线等直接复制为通用标准。
+禁止把外部游戏的：
+
+- 等级上限；
+- HP/ATK/DEF成长表；
+- 技能Lv1~Max倍率；
+- 速度/能量阈值；
+- 命座/星魂/共鸣链强度；
+- 装备词条/掉率/套装倍率；
+
+直接复制为当前项目标准。
 
 ## 私有项目隔离
 
 真实项目配置、源码和日志可以用来**验证通用 Skill 是否覆盖生产问题**，但不会写入公开通用 Skill。
 
-允许抽象：deterministic seed、Golden Test、Formula/Runtime parity、Schema/version guard、Tail distribution、Loot funnel、Dead-affix guard、Telemetry quality checks。
+允许抽象：Hero Contract、Hero Loop、State/Resource Graph、Stat Curve Guard、Skill Scaling Family、deterministic seed、Golden Test、Formula/Runtime parity、Schema/version guard、Tail distribution、Loot funnel、Dead-affix guard。
 
-禁止公开：私有项目名、角色/技能/装备/表名、ID、代码路径、真实公式、装备数值、掉率、经济数据、业务规则。
+禁止公开：私有项目名、角色/技能/装备/表名、ID、代码路径、真实公式、英雄基础属性、技能倍率、装备数值、掉率、经济数据、业务规则。
 
 ## 推荐测试 Prompt
 
-### Itemization Benchmark
+### Hero Cross Validation
 
 ```text
-把我们的装备系统和崩铁遗器、原神武器/圣遗物、鸣潮武器/声骸做结构对标。不要直接复制数值；分别比较等级曲线、强化事件密度、主副词条随机、套装门槛、专武压力和真实Upgrade Funnel，并区分 verified-data / supported-inference / candidate。
+设计/审计这个英雄，但不要把所有问题混成一个技能策划结论。分别检查角色设定、Hero Kit、Lv1~满级基础属性、技能Lv1~Max数值，再做总体Power Budget，并给每个Result Block显示实际主责。
 ```
 
-### Itemization
+### Stat Progression
 
 ```text
-给我设计一套装备系统：先定义Slot和每个槽位职责，再建立属性预算、品质、主副词条、词条权重、强化、套装、掉落、分解和毕业周期。不要套固定ATK:DEF:HP比例，并检查Best-in-Slot和Dead Affix风险。
+设计这个英雄Lv1~80的HP/ATK/DEF曲线，包含突破节点。先定义Growth Contract和曲线族，再检查Scaling Source、Roster Envelope和Character Level × Skill Level联合放大。
 ```
 
-### Loot Simulation
+### Skill Value
 
 ```text
-模拟目标装备的获取：正确槽位、正确套装、正确主属性、至少3条有效副词条，并在强化中至少3次命中有效词条。报告P50/P90/P95毕业时间，不要只给平均值。
+给这个技能设计Lv1~10完整数值表。区分Throughput、Utility、Reliability、Economy字段，不要把所有数字套同一倍率曲线，并检查每级Delta、Extended Level和Rotation Contribution。
 ```
 
-### Meta
+### External Hero Corpus
 
 ```text
-单件装备看起来都合理，但85%的输出角色使用同一饰品。检查Character×Item、Build×Item、BiS集中、替代品和Power Creep。
+以崩铁/原神/鸣潮角色总页为Index，逐个读取详情，分别统计角色设定、技能架构、等级属性曲线与技能等级曲线。必须报告Coverage和blocked页面，不允许用记忆补精确值。
 ```
 
 ## 证据原则
@@ -304,25 +346,13 @@ Simulation 不能冒充真实玩家体验。
 - `verified-code`
 - `verified-runtime`
 - `verified-data`
+- `reference-data`
 - `confirmed`
 - `supported-inference`
 - `candidate`
 - `unverified`
 - `not-yet-playtested`
 - `externally-blocked`
-
-核心规则：
-
-1. 已有项目先读现状，再设计。
-2. 症状不等于方案，先查根因。
-3. 配置存在不等于代码读取，代码读取不等于Runtime触发。
-4. Itemization必须区分结构、数值、经济、随机分布和Meta责任。
-5. External Benchmark必须区分参考事实、参考模式和迁移候选。
-6. Simulation 必须可复现并报告分布，不只报告均值。
-7. Telemetry 观察相关性不等于因果。
-8. Meta平衡不能只看一个总体胜率或单件装备理论值。
-9. Spreadsheet / Simulation / Telemetry 都不能冒充 Playtest。
-10. 新证据可以推翻旧 candidate。
 
 ## 维护与同步
 
