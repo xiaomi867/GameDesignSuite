@@ -1,7 +1,7 @@
 {
-  "name": "game-design-suite-marketplace",
+  "name": "game-design-suite-runtime-v2-marketplace",
   "interface": {
-    "displayName": "Game Design Suite"
+    "displayName": "Game Design Suite Rebuilt V2 Marketplace"
   },
   "plugins": [
     {
