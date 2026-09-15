@@ -1,0 +1,6 @@
+interface:
+  display_name: "Audit & Verification"
+  short_description: "Config audits, code verification, field attribution, reference tracing, and evidence-state discipline."
+  default_prompt: "Use Audit & Verification for this config/code audit or implementation-verification request."
+policy:
+  allow_implicit_invocation: true
