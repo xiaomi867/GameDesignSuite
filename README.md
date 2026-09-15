@@ -5,6 +5,7 @@
 - 玩法策划 / 核心循环 / 系统策划
 - 战斗策划 / 技能策划
 - 数值策划 / 平衡 / 成长曲线
+- 公式验证 / 乘区 / 概率 / 行动与代码交叉校验
 - 经济策划 / 产销闭环
 - 关卡与空间设计
 - 游戏 UI / UX / Onboarding
@@ -26,6 +27,7 @@ GameDesignSuite/
 │   └── skills/                       # DeepSeek Deep Code discovery adapters
 │       ├── game-design/
 │       ├── balance-design/
+│       ├── formula-verification/
 │       └── ...
 ├── plugins/
 │   └── game-design-suite/
@@ -35,6 +37,7 @@ GameDesignSuite/
 │       │   ├── game-design/
 │       │   ├── game-production/
 │       │   ├── balance-design/
+│       │   ├── formula-verification/
 │       │   └── ...
 │       └── evals/
 ├── scripts/
@@ -84,7 +87,7 @@ main
 
 - `.agents/plugins/marketplace.json`：插件市场入口；
 - `plugins/game-design-suite/.codex-plugin/plugin.json`：Game Design Suite 插件清单；
-- `plugins/game-design-suite/skills/*/SKILL.md`：14 个专业 Skill。
+- `plugins/game-design-suite/skills/*/SKILL.md`：15 个专业 Skill。
 
 ### 本地目录测试
 
@@ -100,7 +103,7 @@ Deep Code 使用项目级 Agent Skills 时，会从：
 .deepcode/skills/<skill-name>/SKILL.md
 ```
 
-发现 Skill。本仓库已经提供 14 个对应适配器。
+发现 Skill。本仓库已经提供 15 个对应适配器。
 
 ### 1. 获取仓库
 
@@ -126,6 +129,7 @@ deepcode
 ```text
 /game-design
 /balance-design
+/formula-verification
 /skill-design
 /level-design
 ```
@@ -146,6 +150,7 @@ deepcode
 | `game-production` | 玩法、系统、产品、制作约束 |
 | `design-frameworks` | MDA、Core Loop、Flow、设计 Pattern |
 | `balance-design` | 数值模型、Power Budget、成长、DPS/HPS、概率与参数验证 |
+| `formula-verification` | 公式还原、乘区、单位、Clamp/Round、概率、行动、边界、代码/配置交叉验证 |
 | `economy-design` | Resource Role、Sources/Sinks、流速、价值、通胀、产销 |
 | `progression-design` | 等级、星级、技能树、解锁、成长节奏 |
 | `combat-design` | 战斗规则、行动/资源经济、状态、Gauge、AI 与遭遇 |
@@ -159,12 +164,12 @@ deepcode
 
 ## Professional Context Header
 
-从 `v1.1.0` 开始，Game Design Suite 在正式回答游戏设计问题前，会先显示本次真实专业路由，让用户能直接判断是否“找对策划”。
+Game Design Suite 在正式回答游戏设计问题时，会显示当前独立结果的真实专业路由，让用户直接判断是否“找对策划”。
 
 简单任务示例：
 
 ```text
-专业视角：关卡策划（level-design）｜协同：战斗策划（combat-design）
+【本次专业视角】主责：关卡策划（level-design）｜协同：战斗策划（combat-design）
 ```
 
 复杂生产任务示例：
@@ -176,11 +181,19 @@ deepcode
 证据边界：当前只有真实配置，可验证到 verified-config；代码语义仍为 unverified
 ```
 
+公式结果示例：
+
+```text
+【本次专业视角】
+主责：公式 / 数值验证（formula-verification）
+协同：代码 / 实现验证（code-verification） / 配置审计（config-audit）
+```
+
 规则：
 
 - Header 来自实际 Skill Routing，不是角色扮演；
+- 每个独立正式结果前都显示；
 - 只显示最小充分专业集合；
-- 简单问题一行，复杂问题最多 3~4 行；
 - 不列未实际使用的 Skill；
 - 不用“我是资深 XX 策划”替代路由；
 - Header 后继续完成实际任务。
@@ -200,6 +213,23 @@ skill-design + balance-design
 + config-audit（已有配置）
 + code-verification（需要确认实现）
 + design-review（定稿前）
+```
+
+### 公式验证
+
+```text
+formula-verification
++ config-audit（确认输入/字段）
++ code-verification（确认实际实现）
++ balance-design（确认强度/边际收益）
+```
+
+典型任务：
+
+```text
+把我们的伤害、防御、暴击、减伤、攻速/攻击间隔公式从代码中还原出来，
+逐项验证单位、乘区、Clamp、Round、边界和极端组合；
+再与崩铁/绝区零公开公式只做结构对照，不直接照抄。
 ```
 
 ### 七日奖励 / 日常任务 / 资源循环
@@ -229,6 +259,14 @@ game-production + 必要专业 Skill + design-review + game-design-doc
 不要让我选择专业方向，你自己分析并给出验证方案。
 ```
 
+### Formula Skill 测试
+
+```text
+请验证我们的伤害公式是否正确：先还原代码中的真实公式，再检查百分比单位、乘区、Clamp、Round、边界值和极端组合。不要直接拿参考游戏公式替换我们的公式。
+```
+
+预期主责优先为 `公式 / 数值验证（formula-verification）`，涉及代码执行事实时由 `code-verification` 单独主责对应结果。
+
 ### Professional Context Header 测试
 
 ```text
@@ -249,6 +287,7 @@ game-production + 必要专业 Skill + design-review + game-design-doc
 
 重要结论尽量区分：
 
+- `verified-formula-design`
 - `verified-config`
 - `verified-code`
 - `verified-runtime`
@@ -269,7 +308,9 @@ game-production + 必要专业 Skill + design-review + game-design-doc
 5. 理论计算 / Spreadsheet / Simulation 不能冒充 Playtest。
 6. 配置问题必须落到表、Row/Key/ID、字段、引用和值。
 7. 代码验证必须追到 Parser / Runtime Consumer / Target / Result，而不是看到字段名就猜语义。
-8. 新证据可以推翻旧 candidate。
+8. 公式验证必须同时检查单位、定义域、乘区、Clamp/Round、边界和代码执行顺序。
+9. 外部游戏公式是 Pattern Comparator，不是本项目标准。
+10. 新证据可以推翻旧 candidate。
 
 ## 维护与同步
 
