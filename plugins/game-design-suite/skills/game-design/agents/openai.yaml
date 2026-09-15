@@ -1,0 +1,6 @@
+interface:
+  display_name: "Game Design"
+  short_description: "Primary router for Game Design Suite requests"
+  default_prompt: "Use $game-design to route this request to the narrowest relevant Game Design Suite skill."
+policy:
+  allow_implicit_invocation: true
