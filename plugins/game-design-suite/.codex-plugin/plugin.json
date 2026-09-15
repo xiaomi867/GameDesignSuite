@@ -1,6 +1,6 @@
 {
   "name": "game-design-suite",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Professional game design suite covering systems, gameplay, combat, skills, balance, formula verification, simulation, telemetry experiments, meta balance, economy, progression, level design, UX, configuration auditing, code verification, design review, and GDD workflows.",
   "author": {
     "name": "xiaomi867",
@@ -27,7 +27,7 @@
   "interface": {
     "displayName": "Game Design Suite",
     "shortDescription": "Professional game design, numerical simulation, telemetry, and balance workflows",
-    "longDescription": "A multi-skill suite for gameplay and systems design, combat and skill design, numerical balancing, formula reconstruction and verification, Monte Carlo and discrete-event simulation, telemetry and experiments, meta/roster balance, economy and progression, level design, game UX, configuration auditing, code verification, design review, and formal GDD production.",
+    "longDescription": "A multi-skill suite for gameplay and systems design, whole-project numerical architecture, combat and skill design, numerical balancing, formula reconstruction and verification, Monte Carlo and discrete-event simulation, telemetry and experiments, meta/roster balance, economy and progression, level design, game UX, configuration auditing, code verification, design review, and formal GDD production.",
     "developerName": "xiaomi867",
     "category": "Developer Tools",
     "capabilities": [
@@ -37,6 +37,7 @@
     ],
     "websiteURL": "https://github.com/xiaomi867/GameDesignSuite",
     "defaultPrompt": [
+      "Design a whole-project numerical architecture from experience targets through combat, progression, economy, and content difficulty.",
       "Analyze this game system and propose a production-ready design.",
       "Review this hero skill, its balance, configuration, and implementation.",
       "Verify this combat formula against configuration, code, and reference models.",
