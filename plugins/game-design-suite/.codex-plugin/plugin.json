@@ -1,6 +1,6 @@
 {
   "name": "game-design-suite",
-  "version": "1.7.6",
+  "version": "1.7.7",
   "description": "Professional game design suite covering systems, hero concept, hero kit architecture, hero stat progression, skill value design, combat, balance, formula verification, simulation, telemetry experiments, meta balance, itemization design and benchmarking, economy, progression, level design, UX, configuration auditing, code verification, design review, and GDD workflows. Every independent formal result uses a visible Professional Context Header by default.",
   "author": {
     "name": "xiaomi867",
