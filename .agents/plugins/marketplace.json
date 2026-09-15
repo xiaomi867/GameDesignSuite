@@ -1,11 +1,11 @@
 {
-  "name": "gds-rebuilt-v2-install-marketplace",
+  "name": "gds-consolidated-v3-marketplace",
   "interface": {
-    "displayName": "Game Design Suite Rebuilt V2 Install"
+    "displayName": "Game Design Suite Consolidated V3 Install"
   },
   "plugins": [
     {
-      "name": "game-design-suite-runtime-v2",
+      "name": "game-design-suite-consolidated-v3",
       "source": {
         "source": "local",
         "path": "./plugins/game-design-suite-runtime-v2"
