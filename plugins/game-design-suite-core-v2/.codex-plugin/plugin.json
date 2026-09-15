@@ -1,0 +1,35 @@
+{
+  "name": "game-design-suite-core-v2",
+  "version": "2.0.0-preview.1",
+  "description": "V2 preview of Game Design Suite Core. A single generalist runtime Skill for broad game-design work, cross-system reasoning, evidence discipline, and professional-domain identification without pretending to dynamically load specialist Skills.",
+  "author": {
+    "name": "xiaomi867",
+    "url": "https://github.com/xiaomi867"
+  },
+  "homepage": "https://github.com/xiaomi867/GameDesignSuite",
+  "repository": "https://github.com/xiaomi867/GameDesignSuite",
+  "license": "MIT",
+  "keywords": [
+    "game-design",
+    "systems-design",
+    "design-review",
+    "game-design-core"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Game Design Suite Core (V2 Preview)",
+    "shortDescription": "Generalist game-design core with explicit evidence and domain routing",
+    "longDescription": "A single-runtime-skill V2 preview of Game Design Suite. It remains useful as the one entry users can remember, handles broad and cross-system game-design tasks directly, identifies the relevant specialist domain, and never claims another specialist Skill was executed unless that specialist runtime actually ran.",
+    "developerName": "xiaomi867",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "websiteURL": "https://github.com/xiaomi867/GameDesignSuite",
+    "defaultPrompt": [
+      "Review this game-design problem and give me a complete answer without requiring me to know which specialist discipline owns it.",
+      "Design this system from goals through rules, metrics, risks, and validation.",
+      "Audit this cross-system design and separate facts, assumptions, candidate changes, and missing evidence."
+    ],
+    "brandColor": "#111111",
+    "screenshots": []
+  }
+}
