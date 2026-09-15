@@ -1,0 +1,6 @@
+interface:
+  display_name: "Itemization Design"
+  short_description: "Design and audit RPG equipment and itemization systems"
+  default_prompt: "Use $itemization-design to design or audit equipment slots, rarity, stats, affixes, enhancement, sets, loot, replacement, and salvage."
+policy:
+  allow_implicit_invocation: true
