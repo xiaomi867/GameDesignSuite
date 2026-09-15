@@ -35,10 +35,11 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 7. 缺证据执行 Missing Evidence Guard，不猜。
 8. 配置任务执行 Field Attribution Guard。
 9. 装备/Itemization 任务先明确 Itemization Job、Slot/Budget/Affix/Acquisition/Replacement，再做具体数值。
-10. 模拟任务记录 seed/model/config/agent version，不把 Simulation 冒充 Playtest。
-11. Telemetry/实验任务先定义 Decision/Hypothesis/Metric/Segment，检查 SRM 和数据质量，不把相关性冒充因果。
-12. Meta平衡按 Skill/Mastery/Composition/Content 分层，不只看总体胜率。
-13. 继续执行并交付结果。
+10. 用户要求参考崩铁/原神/鸣潮等外部装备系统、对比等级曲线或验证本项目与成熟产品差异时，加载 `itemization-benchmark`；外部数值不得直接成为项目标准。
+11. 模拟任务记录 seed/model/config/agent version，不把 Simulation 冒充 Playtest。
+12. Telemetry/实验任务先定义 Decision/Hypothesis/Metric/Segment，检查 SRM 和数据质量，不把相关性冒充因果。
+13. Meta平衡按 Skill/Mastery/Composition/Content 分层，不只看总体胜率。
+14. 继续执行并交付结果。
 
 ## Professional Context Header Decision Map
 
@@ -49,7 +50,8 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 - Monte Carlo/离散事件/参数扫描/分布/敏感性 -> `simulation-design`
 - 埋点/KPI/分群/A-B/SRM/统计分析 -> `telemetry-experiment-design`
 - Roster/Composition/Matchup/Synergy/Counter/Power Creep -> `meta-balance`
-- 装备槽位/品质/主副词条/词条池/Roll/套装/唯一特效/Loot可用率/BiS结构 -> `itemization-design`
+- 外部装备/武器/遗器/圣遗物/声骸参考数据、等级曲线、跨游戏结构对标 -> `itemization-benchmark`
+- 当前项目装备槽位/品质/主副词条/词条池/Roll/套装/唯一特效/Loot可用率/BiS结构 -> `itemization-design`
 - Resource Role/Source/Sink/库存 -> `economy-design`
 - 等级/星级/突破/成长成本 -> `progression-design`
 - 技能机制/Target/状态机 -> `skill-design`
@@ -57,7 +59,7 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 - 关卡/空间/波次/Encounter -> `level-design`
 - 玩法循环/系统结构 -> `game-production`
 
-配置里出现数字不等于数值策划主责；出现装备不等于 `itemization-design` 可以包办代码、经济、模拟或Meta结论；有1000次模拟也不等于体验已验证；总体50%胜率也不等于Meta健康。
+配置里出现数字不等于数值策划主责；出现装备不等于 `itemization-design` 可以包办代码、经济、模拟或Meta结论；外部游戏这么做不等于当前项目应该这么做；有1000次模拟也不等于体验已验证；总体50%胜率也不等于Meta健康。
 
 统一 Header 规则见：
 
@@ -69,6 +71,7 @@ plugins/game-design-suite/skills/<skill-name>/SKILL.md
 
 ```text
 Design Intent
+-> itemization-benchmark (when external reference is requested)
 -> itemization-design (when equipment/build rules matter)
 -> formula-verification
 -> config-audit / code-verification
@@ -78,6 +81,8 @@ Design Intent
 -> meta-balance
 -> Playtest
 ```
+
+`itemization-benchmark` 只提供外部参考事实、归一化和迁移候选，不替代项目内设计与验证。
 
 低层证据不能替代高层结论。
 
@@ -146,7 +151,7 @@ Deep Code adapter 必须继续读取 canonical Skill。
 - `not-yet-playtested`
 - `externally-blocked`
 
-不要用笼统 `verified` 混淆层级。
+不要用笼统 `verified` 混淆层级。外部商业游戏页面的 `verified-data` 只表示参考来源事实，不自动升级为当前项目 `verified-*`。
 
 ## Human Gate
 
@@ -161,6 +166,7 @@ Deep Code adapter 必须继续读取 canonical Skill。
 - 不为模板制造数值、功能或商业化方案。
 - 不把 Spreadsheet / Simulation / observational telemetry 冒充更高层证据。
 - 外部游戏的公式、阈值、装备词条、掉率和案例只做方法参考，不是项目真值。
+- 外部参考页面不可访问时，不从记忆补精确等级值；标 `externally-blocked` 并继续结构分析。
 
 ## 维护
 
