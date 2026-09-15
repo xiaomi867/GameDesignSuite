@@ -1,7 +1,7 @@
 {
-  "name": "game-design-suite-runtime-v2",
-  "version": "2.0.0-preview.2",
-  "description": "Clean-room ChatGPT/Codex runtime package for Game Design Suite. Preserves all 24 professional capabilities with compact trigger surfaces, progressive disclosure, independent specialist invocation, and plugin-level OpenAI metadata.",
+  "name": "game-design-suite-consolidated-v3",
+  "version": "3.0.0-preview.1",
+  "description": "Game Design Suite runtime with 8 low-overlap selector entries backed by 24 preserved professional knowledge modules. Built to reduce skill metadata load and selector competition without deleting specialist capability.",
   "author": {
     "name": "xiaomi867",
     "url": "https://github.com/xiaomi867"
@@ -19,11 +19,11 @@
     "economy-design",
     "progression-design"
   ],
-  "skills": "./skills/",
+  "skills": "./runtime-skills/",
   "interface": {
-    "displayName": "Game Design Suite Rebuilt (V2)",
-    "shortDescription": "24 focused game-design skills rebuilt for reliable runtime selection",
-    "longDescription": "A clean runtime rebuild of Game Design Suite. Each professional discipline is independently invocable, uses a concise Use-when trigger, exposes OpenAI skill metadata, and progressively loads preserved canonical guidance rather than relying on parent-to-child routing.",
+    "displayName": "Game Design Suite Consolidated (V3 Preview)",
+    "shortDescription": "8 runtime entries backed by 24 preserved game-design knowledge modules",
+    "longDescription": "A consolidated Game Design Suite runtime. Only eight broad professional entries participate in first-level selection; the original 24 specialist modules remain preserved inside the plugin as on-demand knowledge, reducing metadata budget and semantic competition while retaining full design depth.",
     "developerName": "xiaomi867",
     "category": "Developer Tools",
     "capabilities": [
