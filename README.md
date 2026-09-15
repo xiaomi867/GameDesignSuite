@@ -1,6 +1,6 @@
 # GameDesignSuite
 
-一套面向生产项目的通用游戏策划 Skill Suite，覆盖：玩法/系统、战斗/技能、数值/公式、装备/Itemization、Simulation、Telemetry/A-B实验、Meta/版本平衡、经济/成长、关卡、UI/UX、配置审计、代码验证、设计评审和 GDD。
+一套面向生产项目的通用游戏策划 Skill Suite，覆盖：玩法/系统、战斗/技能、数值/公式、装备/Itemization、外部装备Benchmark、Simulation、Telemetry/A-B实验、Meta/版本平衡、经济/成长、关卡、UI/UX、配置审计、代码验证、设计评审和 GDD。
 
 ## 多 Agent 架构
 
@@ -40,9 +40,9 @@ Git 引用：main
 
 Marketplace manifest 位于仓库根目录的 `.agents/plugins/marketplace.json`。
 
-当前插件版本：**1.5.0**。
+当前插件版本：**1.6.0**。
 
-当前 canonical Skills：**19 个**。
+当前 canonical Skills：**20 个**。
 
 ## DeepSeek Deep Code
 
@@ -69,6 +69,7 @@ deepcode
 | `telemetry-experiment-design` | 埋点、指标、分群、A/B、SRM、显著性、因果边界 |
 | `meta-balance` | Roster/Composition/Matchup/Synergy/Counter、Mastery、Power Creep、版本生态 |
 | `itemization-design` | 装备槽位、品质、主/副词条、词条池、Roll、强化、套装、唯一特效、掉落、替换、分解与BiS/Build生态 |
+| `itemization-benchmark` | 崩铁/原神/鸣潮等公开装备系统的数据抽取、等级曲线、结构归一化、跨游戏对标与迁移边界 |
 | `economy-design` | Resource Role、Sources/Sinks、流速、库存、价值与产销 |
 | `progression-design` | 等级、星级、技能树、突破、解锁、成长节奏 |
 | `combat-design` | 战斗规则、行动/资源经济、状态、Gauge、AI、遭遇 |
@@ -86,6 +87,7 @@ deepcode
 
 ```text
 Design Intent
+-> itemization-benchmark (when external reference is requested)
 -> itemization-design (装备/物品化任务)
 -> formula-verification
 -> config-audit / code-verification
@@ -98,6 +100,7 @@ Design Intent
 
 其中：
 
+- `itemization-benchmark`：从外部商业游戏抽取公开装备事实、等级曲线和结构模式，做归一化对标，不直接给项目定值；
 - `itemization-design`：装备结构、Slot、品质、词条、Roll、套装、Loot、替换与Build目标；
 - `formula-verification`：公式数学结构是否正确；
 - `config-audit / code-verification`：项目实际输入和实现是什么；
@@ -141,6 +144,40 @@ Design Intent
 高品质 != 所有维度都必须同时膨胀
 ```
 
+## `itemization-benchmark`
+
+这是与 `itemization-design` 分离的外部参考 Skill。
+
+首批参考：
+
+- Honkai: Star Rail：遗器主/副属性、+15、每3级副词条事件、Roll档与槽位限制；
+- Genshin Impact：武器Lv1~90、突破、精炼1~5、圣遗物+20、每4级副词条事件、2/4件套装；
+- Wuthering Waves：武器Lv1~90、谐振1~5、声骸Cost 1/3/4、+25、每5级调谐、Sonata/合鸣。
+
+重点不是复制这些游戏的数字，而是对比：
+
+```text
+Level Curve
+Upgrade Event Density
+Slot/Cost Gating
+Base-vs-Secondary Budget
+Main/Substat RNG
+Set Threshold
+Signature Pressure
+Effective Upgrade Funnel
+Replacement Friction
+```
+
+核心边界：
+
+```text
+Reference Fact != Transfer Rule
+Reference Pattern != Project Standard
+外部 verified-data != 当前项目 verified
+```
+
+当参考网站有等级滑杆时，要求采样起始值、突破前后、中间等级和满级，并用 `V(level)/V(max)` 等方法比较曲线形状，禁止只看满级截图。
+
 ## Professional Context Header
 
 每一个独立正式结果前都必须显示实际专业路由，用户不需要额外提醒。
@@ -148,7 +185,8 @@ Design Intent
 例如装备任务可能依次切换：
 
 ```text
-装备 / Itemization 策划
+装备对标 / Benchmark
+-> 装备 / Itemization 策划
 -> 数值策划
 -> 配置审计 / 代码验证
 -> 数值模拟 / 仿真
@@ -213,10 +251,10 @@ Simulation 不能冒充真实玩家体验。
 
 ## 外部参考使用原则
 
-崩铁、绝区零、Riot、Ubisoft、GDC、学术论文及其他公开资料只用于：
+崩铁、原神、鸣潮、绝区零、Riot、Ubisoft、GDC、学术论文及其他公开资料只用于：
 
 - 公式/模型结构参考；
-- Itemization方法；
+- Itemization结构与等级曲线Benchmark；
 - 专业方法论；
 - 反模式与验证方法；
 - 测试场景与边界启发。
@@ -232,6 +270,12 @@ Simulation 不能冒充真实玩家体验。
 禁止公开：私有项目名、角色/技能/装备/表名、ID、代码路径、真实公式、装备数值、掉率、经济数据、业务规则。
 
 ## 推荐测试 Prompt
+
+### Itemization Benchmark
+
+```text
+把我们的装备系统和崩铁遗器、原神武器/圣遗物、鸣潮武器/声骸做结构对标。不要直接复制数值；分别比较等级曲线、强化事件密度、主副词条随机、套装门槛、专武压力和真实Upgrade Funnel，并区分 verified-data / supported-inference / candidate。
+```
 
 ### Itemization
 
@@ -273,11 +317,12 @@ Simulation 不能冒充真实玩家体验。
 2. 症状不等于方案，先查根因。
 3. 配置存在不等于代码读取，代码读取不等于Runtime触发。
 4. Itemization必须区分结构、数值、经济、随机分布和Meta责任。
-5. Simulation 必须可复现并报告分布，不只报告均值。
-6. Telemetry 观察相关性不等于因果。
-7. Meta平衡不能只看一个总体胜率或单件装备理论值。
-8. Spreadsheet / Simulation / Telemetry 都不能冒充 Playtest。
-9. 新证据可以推翻旧 candidate。
+5. External Benchmark必须区分参考事实、参考模式和迁移候选。
+6. Simulation 必须可复现并报告分布，不只报告均值。
+7. Telemetry 观察相关性不等于因果。
+8. Meta平衡不能只看一个总体胜率或单件装备理论值。
+9. Spreadsheet / Simulation / Telemetry 都不能冒充 Playtest。
+10. 新证据可以推翻旧 candidate。
 
 ## 维护与同步
 
