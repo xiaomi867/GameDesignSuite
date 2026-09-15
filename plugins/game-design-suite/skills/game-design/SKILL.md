@@ -1,6 +1,6 @@
 ---
 name: game-design
-description: 游戏设计通用入口。用户提出玩法、系统、体验、规则、平衡、公式、模拟、Telemetry、A/B实验、Meta生态、技能、战斗、经济、成长、关卡、UI、配置、实现验证、评审或 GDD 等游戏设计问题时使用。负责自动选择并协调最小充分的专业 Skill，不要求用户预先判断专业边界。无论用户是否提醒，每个独立正式结果前都必须显示【本次专业视角】并标出主责/协同。
+description: 游戏设计通用入口。用户提出玩法、系统、体验、规则、平衡、公式、模拟、Telemetry、A/B实验、Meta生态、技能、战斗、装备/Itemization、经济、成长、关卡、UI、配置、实现验证、评审或 GDD 等游戏设计问题时使用。负责自动选择并协调最小充分的专业 Skill，不要求用户预先判断专业边界。无论用户是否提醒，每个独立正式结果前都必须显示【本次专业视角】并标出主责/协同。
 ---
 
 # 游戏设计总入口
@@ -9,7 +9,7 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 >
 > 只要本套件正在回答游戏设计/策划相关任务，用户不需要在 Prompt 里额外要求“显示专业视角”。
 >
-> 每一个独立正式结果、Finding、字段修改、代码语义、数值判断、模拟结论、数据结论、Meta判断、经济结论、成长方案、技能判断或关卡方案之前，都必须先显示：
+> 每一个独立正式结果、Finding、字段修改、代码语义、数值判断、模拟结论、数据结论、Meta判断、装备/Itemization结论、经济结论、成长方案、技能判断或关卡方案之前，都必须先显示：
 >
 > ```text
 > 【本次专业视角】
@@ -60,14 +60,16 @@ description: 游戏设计通用入口。用户提出玩法、系统、体验、�
 - 某卡没人拿 ≠ 只要加数值；
 - 某角色总体胜率50% ≠ Meta一定健康；
 - 模拟1000次均值稳定 ≠ 玩家体验已验证；
-- Telemetry相关性 ≠ 因果关系。
+- Telemetry相关性 ≠ 因果关系；
+- 装备词条很多 ≠ Build一定丰富；
+- 橙装掉率高 ≠ 实际Upgrade Rate高。
 
 ## Symptom-to-Root-Cause Rule
 
 遇到局部症状至少检查：
 
 1. **Local**：字段、倍率、奖励、单个对象；
-2. **System**：战斗、经济、成长、内容、公式或数据链本身；
+2. **System**：战斗、装备、经济、成长、内容、公式或数据链本身；
 3. **Cross-system**：上下游系统、生命周期、内容环境、玩家分层、版本生态。
 
 只有局部根因成立时才做局部补丁。
@@ -112,6 +114,9 @@ Monte Carlo、离散事件、Rotation/Timeline、参数扫描、策略代理、1
 ### `meta-balance`
 多角色/Build/队伍/内容生态、Matchup/Synergy/Counter矩阵、Pick/Win/Presence、Mastery、Power Creep、版本风险与多样性。
 
+### `itemization-design`
+装备/Itemization系统、槽位、品质、基础/主/副词条、词条池与权重、随机Roll、强化、套装、唯一特效、Loot可用率、替换/毕业、分解回收、Best-in-Slot与Build生态。
+
 ### `economy-design`
 资源Role、Sources/Sinks、库存、流速、价值锚、兑换、通胀、产销闭环。
 
@@ -149,6 +154,17 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 
 定稿：`+ design-review`
 
+### 装备 / Itemization
+`itemization-design + balance-design + progression-design`
+
+涉及掉落、强化材料、分解、商店：`+ economy-design`
+
+复杂随机词条/毕业时间：`+ simulation-design`
+
+多角色BiS、Build集中、版本生态：`+ meta-balance`
+
+已有表/代码：`+ config-audit + code-verification`
+
 ### 公式审计
 `formula-verification + config-audit + code-verification`
 
@@ -164,13 +180,19 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 
 角色池/组合生态：`+ meta-balance`
 
+装备生态：`+ itemization-design`
+
 ### 版本 / Roster 平衡
 `meta-balance + balance-design + telemetry-experiment-design`
 
 上线前预演：`+ simulation-design`
 
+装备/专武/套装造成的生态问题：`+ itemization-design`
+
 ### 奖励与经济
 `game-production + economy-design + progression-design + balance-design`
+
+装备掉落/分解/强化材料：`+ itemization-design`
 
 长期库存/成长模拟：`+ simulation-design`
 
@@ -181,6 +203,8 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 
 若比较角色适配覆盖：`+ meta-balance`
 
+若装备是核心Encounter应对轴：`+ itemization-design`
+
 ### GDD
 `game-production + 必要专业 Skill + design-review + game-design-doc`
 
@@ -188,11 +212,14 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 
 复杂数值任务优先按需要形成：
 
-`Design Intent -> Formula -> Config/Code -> Simulation -> Runtime -> Telemetry -> Meta -> Playtest`
+`Design Intent -> Itemization/Build Rules -> Formula -> Config/Code -> Simulation -> Runtime -> Telemetry -> Meta -> Playtest`
+
+其中 Itemization/Build Rules 只在装备/物品化相关任务出现，不是所有数值任务的强制层。
 
 各层职责：
 
 - Design Intent：为什么存在；
+- Itemization/Build Rules：装备结构、词条池、套装、随机性、替换与Build目标；
 - Formula：数学结构是否正确；
 - Config/Code：项目实际怎么执行；
 - Simulation：预期分布、极端值、敏感性；
@@ -208,17 +235,17 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 用户提供真实项目代码、表、日志可以用于：
 
 - 验证通用 Skill 是否覆盖真实生产问题；
-- 提取不含业务细节的方法，例如 deterministic seed、Golden Test、Schema Guard、Runtime parity；
+- 提取不含业务细节的方法，例如 deterministic seed、Golden Test、Schema Guard、Runtime parity、Loot funnel、Dead-affix guard；
 - 发现通用反模式与缺失能力。
 
 不得写入公开通用 Skill：
 
 - 私有项目名；
-- 私有角色/技能/表名；
+- 私有角色/技能/装备/表名；
 - 私有ID；
 - 私有代码路径；
 - 私有真实公式；
-- 私有经济数据；
+- 私有装备数值、掉率、经济数据；
 - 未公开业务规则。
 
 若需要项目专属适配，应单独保存在用户项目私有 workspace，不污染通用 Skill。
@@ -242,5 +269,5 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 
 - 不替专业 Skill 完成详细设计。
 - 不把模拟、Spreadsheet、Telemetry相关性或理论分析描述成“已验证好玩”。
-- 不把外部游戏的阈值、公式、实验结果直接复制成本项目标准。
+- 不把外部游戏的阈值、公式、装备掉率、词条数量、套装倍率或实验结果直接复制成本项目标准。
 - 不保存无意义中间状态。
