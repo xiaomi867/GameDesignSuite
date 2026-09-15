@@ -1,0 +1,36 @@
+{
+  "name": "gds-itemization-v2",
+  "version": "2.0.0-preview.1",
+  "description": "V2 preview specialist plugin for equipment and itemization design. It isolates one specialist runtime from the broader Game Design Suite so ChatGPT can select a focused professional workflow directly.",
+  "author": {
+    "name": "xiaomi867",
+    "url": "https://github.com/xiaomi867"
+  },
+  "homepage": "https://github.com/xiaomi867/GameDesignSuite",
+  "repository": "https://github.com/xiaomi867/GameDesignSuite",
+  "license": "MIT",
+  "keywords": [
+    "itemization",
+    "equipment-design",
+    "loot",
+    "affix",
+    "gear-progression"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "GDS Itemization (V2 Preview)",
+    "shortDescription": "Focused equipment, affix, enhancement, loot, replacement and salvage design",
+    "longDescription": "A single-specialist V2 preview for equipment and itemization. It covers slot architecture, rarity, base/main/substats, affix pools and rolls, enhancement, set and unique effects, acquisition funnels, replacement cadence, graduation, salvage, duplicate value, and build-ecology risks.",
+    "developerName": "xiaomi867",
+    "category": "Developer Tools",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "websiteURL": "https://github.com/xiaomi867/GameDesignSuite",
+    "defaultPrompt": [
+      "Design a complete RPG itemization system from slots through affixes, enhancement, loot targeting, replacement and salvage.",
+      "Audit this equipment system for dead affixes, upgrade probability, sunk-cost replacement friction and BiS lock.",
+      "Design the stat budget and random-roll model for this gear system."
+    ],
+    "brandColor": "#111111",
+    "screenshots": []
+  }
+}
