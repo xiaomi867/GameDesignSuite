@@ -1,0 +1,6 @@
+interface:
+  display_name: "Game Design Core"
+  short_description: "Broad and cross-system game design, reviews, production planning, and specs."
+  default_prompt: "Use Game Design Core for this broad or cross-system game-design request."
+policy:
+  allow_implicit_invocation: true
