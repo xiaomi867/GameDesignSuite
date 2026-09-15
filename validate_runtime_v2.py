@@ -5,32 +5,75 @@ import sys
 
 ROOT = Path(__file__).resolve().parent
 PLUGIN = ROOT / "plugins" / "game-design-suite-runtime-v2"
-SKILLS = PLUGIN / "skills"
+RUNTIME = PLUGIN / "runtime-skills"
+KNOWLEDGE = PLUGIN / "skills"
 MARKETPLACE = ROOT / ".agents" / "plugins" / "marketplace.json"
+
+EXPECTED_RUNTIME = {
+    "gds-core",
+    "gds-hero-skill",
+    "gds-balance-simulation",
+    "gds-itemization",
+    "gds-combat",
+    "gds-economy-progression",
+    "gds-level-ux",
+    "gds-audit-verification",
+}
+
+EXPECTED_KNOWLEDGE = {
+    "gds-game-design",
+    "gds-game-production",
+    "gds-design-frameworks",
+    "gds-design-review",
+    "gds-game-design-doc",
+    "gds-hero-concept-design",
+    "gds-hero-kit-design",
+    "gds-hero-stat-progression",
+    "gds-skill-design",
+    "gds-skill-value-design",
+    "gds-balance-design",
+    "gds-formula-verification",
+    "gds-simulation-design",
+    "gds-telemetry-experiment-design",
+    "gds-meta-balance",
+    "gds-itemization-design",
+    "gds-itemization-benchmark",
+    "gds-combat-design",
+    "gds-economy-design",
+    "gds-progression-design",
+    "gds-level-design",
+    "gds-game-interface-design",
+    "gds-config-audit",
+    "gds-code-verification",
+}
 
 errors = []
 
-if not PLUGIN.exists():
-    print("SKIP: rebuilt runtime plugin not generated yet")
-    sys.exit(0)
-
 manifest_path = PLUGIN / ".codex-plugin" / "plugin.json"
 if not manifest_path.exists():
-    errors.append("missing rebuilt plugin manifest")
+    errors.append("missing plugin manifest")
 else:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    if manifest.get("name") != "game-design-suite-runtime-v2":
-        errors.append("rebuilt plugin name mismatch")
-    if manifest.get("skills") != "./skills/":
-        errors.append("rebuilt plugin skills path must be ./skills/")
+    if manifest.get("name") != "game-design-suite-consolidated-v3":
+        errors.append("plugin name must be game-design-suite-consolidated-v3")
+    if manifest.get("skills") != "./runtime-skills/":
+        errors.append("manifest must expose only ./runtime-skills/")
+    if not str(manifest.get("version", "")).startswith("3.0.0-preview."):
+        errors.append("consolidated runtime must use 3.0.0-preview.x versioning")
 
-skill_files = sorted(SKILLS.glob("*/SKILL.md"))
-if len(skill_files) != 24:
-    errors.append(f"expected 24 rebuilt runtime skills, found {len(skill_files)}")
+plugin_agent = PLUGIN / "agents" / "openai.yaml"
+if not plugin_agent.exists():
+    errors.append("missing plugin-level agents/openai.yaml")
+
+runtime_files = sorted(RUNTIME.glob("*/SKILL.md"))
+runtime_names = {p.parent.name for p in runtime_files}
+if runtime_names != EXPECTED_RUNTIME:
+    errors.append(f"runtime skill set mismatch: {sorted(runtime_names)}")
 
 diagnostic_pattern = re.compile(r"GDS_(?:CANARY|ROUTER|DIRECT|REFRESH|ITEMIZATION_PROBE)", re.I)
+descriptions = []
 
-for skill_file in skill_files:
+for skill_file in runtime_files:
     text = skill_file.read_text(encoding="utf-8")
     rel = skill_file.relative_to(ROOT)
     if not text.startswith("---\n"):
@@ -42,67 +85,69 @@ for skill_file in skill_files:
         continue
     fm, body = parts
     name_match = re.search(r"^name:\s*(.+)$", fm, re.M)
-    desc_match = re.search(r"^description:\s*(.+)$", fm, re.M)
-    user_match = re.search(r"^user-invocable:\s*(.+)$", fm, re.M)
-    model_match = re.search(r"^disable-model-invocation:\s*(.+)$", fm, re.M)
-
-    if not name_match:
-        errors.append(f"{rel}: missing name")
-        continue
-    name = name_match.group(1).strip()
-    if name != skill_file.parent.name:
-        errors.append(f"{rel}: directory/name mismatch: {name}")
-    if not name.startswith("gds-"):
-        errors.append(f"{rel}: runtime skill name must start with gds-")
-
+    desc_match = re.search(r'^description:\s*["\']?(.*?)["\']?$', fm, re.M)
+    if not name_match or name_match.group(1).strip() != skill_file.parent.name:
+        errors.append(f"{rel}: name must match directory")
     if not desc_match:
         errors.append(f"{rel}: missing description")
     else:
         desc = desc_match.group(1).strip().strip('"').strip("'")
+        descriptions.append((skill_file.parent.name, desc))
         if not desc.lower().startswith("use when"):
             errors.append(f"{rel}: description must start with 'Use when'")
-        if len(desc) > 1024:
-            errors.append(f"{rel}: description too long ({len(desc)})")
-
-    if not user_match or user_match.group(1).strip().lower() != "true":
-        errors.append(f"{rel}: user-invocable must be true")
-    if not model_match or model_match.group(1).strip().lower() != "false":
-        errors.append(f"{rel}: disable-model-invocation must be false")
-
-    if len(text.splitlines()) > 220:
-        errors.append(f"{rel}: runtime SKILL.md too large; use progressive disclosure")
-
-    agents = skill_file.parent / "agents" / "openai.yaml"
-    if not agents.exists():
+        if len(desc) > 240:
+            errors.append(f"{rel}: description too long ({len(desc)} > 240)")
+        if len(desc) < 70:
+            errors.append(f"{rel}: description too short to disambiguate ({len(desc)} < 70)")
+    if "user-invocable:" in fm or "disable-model-invocation:" in fm:
+        errors.append(f"{rel}: remove cross-harness invocation fields; use agents/openai.yaml policy")
+    if len(text.splitlines()) > 140:
+        errors.append(f"{rel}: runtime wrapper too large; move detail to preserved knowledge")
+    agent = skill_file.parent / "agents" / "openai.yaml"
+    if not agent.exists():
         errors.append(f"{rel}: missing agents/openai.yaml")
     else:
-        agent_text = agents.read_text(encoding="utf-8")
+        agent_text = agent.read_text(encoding="utf-8")
         if "allow_implicit_invocation: true" not in agent_text:
             errors.append(f"{rel}: implicit invocation must be true")
         if "default_prompt:" not in agent_text:
-            errors.append(f"{rel}: missing default_prompt in agents/openai.yaml")
-
-    canonical = skill_file.parent / "references" / "canonical-guidance.md"
-    if not canonical.exists():
-        errors.append(f"{rel}: missing references/canonical-guidance.md")
-    elif canonical.stat().st_size < 300:
-        errors.append(f"{rel}: canonical guidance unexpectedly small")
-
+            errors.append(f"{rel}: missing default_prompt")
     if diagnostic_pattern.search(text):
-        errors.append(f"{rel}: diagnostic token leaked into rebuilt runtime wrapper")
+        errors.append(f"{rel}: diagnostic token leaked into production runtime")
+
+TOTAL_DESCRIPTION_BUDGET = 1800
+total_desc = sum(len(desc) for _, desc in descriptions)
+if total_desc > TOTAL_DESCRIPTION_BUDGET:
+    errors.append(f"aggregate runtime description budget exceeded: {total_desc} > {TOTAL_DESCRIPTION_BUDGET}")
+
+knowledge_dirs = {p.name for p in KNOWLEDGE.iterdir() if p.is_dir()} if KNOWLEDGE.exists() else set()
+missing_knowledge = EXPECTED_KNOWLEDGE - knowledge_dirs
+if missing_knowledge:
+    errors.append(f"missing preserved knowledge modules: {sorted(missing_knowledge)}")
+
+for name in EXPECTED_KNOWLEDGE:
+    canonical = KNOWLEDGE / name / "references" / "canonical-guidance.md"
+    if not canonical.exists():
+        errors.append(f"{name}: missing preserved canonical-guidance.md")
+    elif canonical.stat().st_size < 300:
+        errors.append(f"{name}: canonical guidance unexpectedly small")
+
+knowledge_map = PLUGIN / "references" / "runtime-knowledge-map.md"
+if not knowledge_map.exists():
+    errors.append("missing runtime knowledge map")
 
 if MARKETPLACE.exists():
     market = json.loads(MARKETPLACE.read_text(encoding="utf-8"))
     entries = {row.get("name"): row for row in market.get("plugins", [])}
-    if "game-design-suite-runtime-v2" not in entries:
-        errors.append("marketplace missing game-design-suite-runtime-v2")
+    if "game-design-suite-consolidated-v3" not in entries:
+        errors.append("marketplace missing game-design-suite-consolidated-v3")
 else:
     errors.append("missing marketplace")
 
 if errors:
-    print("FAILED: rebuilt runtime validation")
+    print("FAILED: consolidated runtime validation")
     for error in errors:
         print("-", error)
     sys.exit(1)
 
-print(f"OK: rebuilt runtime validated ({len(skill_files)} skills)")
+print(f"OK: consolidated runtime validated ({len(runtime_files)} runtime entries, 24 preserved modules, {total_desc} description chars)")
