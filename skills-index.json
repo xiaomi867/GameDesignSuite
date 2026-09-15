@@ -60,6 +60,11 @@
     "description": "负责游戏整体体验、玩法循环、系统规则、奖励框架、教程、产品节奏、制作范围、依赖和验证。适用于玩法策划、系统策划、现有系统诊断和跨系统方案设计；具体数值、经济、技能、关卡、配置或代码问题应与对应专业 Skill 协作。"
   },
   {
+    "name": "itemization-benchmark",
+    "path": "plugins/game-design-suite/skills/itemization-benchmark/SKILL.md",
+    "description": "负责把公开商业游戏的装备、武器、遗器、圣遗物、声骸等 Itemization 数据整理成可比较的参考模型，用于设计启发、数值曲线对标、结构验证和风险诊断。首批参考覆盖崩坏：星穹铁道、原神、鸣潮；不把外部游戏数值直接当成本项目标准，也不替代 itemization-design 对本项目做最终设计决策。"
+  },
+  {
     "name": "itemization-design",
     "path": "plugins/game-design-suite/skills/itemization-design/SKILL.md",
     "description": "负责装备与物品化系统（Itemization）设计、审计和数值结构，包括装备槽位、品质、基础属性、主/副词条、词条池、Roll范围、强化、套装、唯一特效、掉落、替换曲线、毕业周期、分解回收、Build生态与Best-in-Slot风险。用于武器、防具、饰品、遗物、符文、芯片、神器等可装备/可构筑物品；具体战斗价值与倍率协同 balance-design，长期成长协同 progression-design，资源与掉落经济协同 economy-design。"
