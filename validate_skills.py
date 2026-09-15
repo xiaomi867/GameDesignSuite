@@ -15,7 +15,8 @@ if not market_path.exists():
 else:
     try:
         market = json.loads(market_path.read_text(encoding="utf-8"))
-        if market.get("name") != "xiaomi867-game-design-suite":
+        # Keep validator aligned with the actual public marketplace identifier.
+        if market.get("name") != "game-design-suite-marketplace":
             errors.append("marketplace name mismatch")
         entries = market.get("plugins", [])
         entry = next((x for x in entries if x.get("name") == "game-design-suite"), None)
