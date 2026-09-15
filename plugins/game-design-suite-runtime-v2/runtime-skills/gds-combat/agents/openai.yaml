@@ -1,0 +1,6 @@
+interface:
+  display_name: "Combat Design"
+  short_description: "Combat rules, targeting, resources, states, AI, timing, and battle-system behavior."
+  default_prompt: "Use Combat Design for this combat-system request."
+policy:
+  allow_implicit_invocation: true
