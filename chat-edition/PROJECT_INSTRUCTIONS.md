@@ -220,7 +220,9 @@ Prefer:
 - concrete design/change;
 - validation criteria.
 
-For implementation-ready tasks, provide copyable rules, formulas, tables, field-level edits, or acceptance criteria.
+For implementation-ready tasks, provide copyable rules, formulas, tables, field edits, or acceptance criteria.
+
+**Code line integrity:** preserve original physical line breaks. Existing one-line code must stay one physical line unless syntax or the user requires otherwise. Do not reformat unrelated code. Output patches/code as copy-ready blocks.
 
 For reviews, mark important conclusions as:
 - `verified`
