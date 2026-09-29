@@ -177,3 +177,103 @@ Useful columns:
 - failure/tail behavior.
 
 The purpose is to expand solution space and improve reasoning, not to clone a commercial game.
+
+
+# 2026-09-30 Coverage Audit & Source Expansion
+
+## A. What is already preserved
+
+The Chat Edition currently preserves the user's known public benchmark families for:
+
+- Honkai: Star Rail character/stat/skill/progression;
+- HSR relic/itemization;
+- HSR formula/theorycraft topics including SPD/action value, DEF/RES, effect hit/resistance, break/toughness and mitigation;
+- Genshin character/weapon/reliquary structure;
+- Wuthering Waves avatar/weapon/echo structure;
+- Zenless Zone Zero formula/system-analysis leads, including the five user-provided MiHoYo-community URLs already listed above.
+
+These sources support thinking about:
+- character stat curves;
+- skill level curves;
+- ascension/breakpoints;
+- combat formula decomposition;
+- action economy;
+- energy/resource loops;
+- itemization;
+- build structure;
+- role/roster patterns.
+
+They remain reference-data.
+
+## B. Current public source availability
+
+When this audit was performed, the following public index families were accessible and suitable as source leads:
+
+- `https://sr.appfeng.com/character`
+- `https://sr.appfeng.com/relic`
+- `https://ys.appfeng.com/character`
+- `https://mc.appfeng.com/avatar`
+- `https://mc.appfeng.com/weapon`
+- `https://mc.appfeng.com/echo`
+
+Individual pages can expose stateful level/skill/progression information. Re-check exact page state when extracting a value.
+
+Some dynamic pages may fail in a particular browser/tool session. Failure to fetch is not evidence that the source or data does not exist.
+
+## C. System / Level / Production References
+
+Commercial-game numerical pages alone are not enough to improve level/system reasoning. Also use stable design/production references such as:
+
+### HoYoverse / related
+- GDC Vault: `Honkai: Star Rail — Reimagining RPGs for Mass Audiences and Broad Appeal`
+  - https://gdcvault.com/play/1035480/-Honkai-Star-Rail-Reimagining
+  - use for design principles, accessibility/depth framing, universe/content expansion.
+- GDC 2021: `Genshin Impact: Building a Scalable AI System`
+  - https://media.gdcvault.com/GDC%2B2021/20210528_%2BGDC21_shuo_presentation%2B_Final.pdf
+  - use for AI/system/level-scripted behavior and production architecture context.
+
+### Level design
+- GDC: `Ten Principles for Good Level Design`
+  - https://www.gdcvault.com/play/1019023/Ten-Principles-for-Good-Level
+- GDC: `Level Design Fundamentals & Techniques`
+  - https://www.gdcvault.com/play/1022453/Level-Design-Fundamentals
+- GDC: `Level Design in a Day — Decisions That Matter`
+  - https://www.gdcvault.com/play/1021073/Level-Design-in-a-Day
+- GDC: `A Narrative Approach to Level Design`
+  - https://gdcvault.com/play/1024302/
+- GDC: `An Approach to Holistic Level Design`
+  - https://www.gdcvault.com/play/1024301/Level-Design-Workshop-An-Approach
+
+Use these for process/pattern extraction, not as proof that a current project level is correct.
+
+### Character / Hero
+- GDC: `Character Design Across Multiple Game Genres`
+  - https://www.gdcvault.com/play/1020595/Character-Design-Across-Multiple-Game
+- GDC: `Characterization, Purpose and Action: Creating Strong Video Game Characters`
+  - https://www.gdcvault.com/play/1020440/Characterization-Purpose-and-Action-Creating
+- GDC: `Creating Compelling Characters`
+  - https://gdcvault.com/play/1024290/Creating-Compelling-Characters-Insights-from
+- GDC: `Fundamental Multiplayer RPG Math`
+  - https://gdcvault.com/play/1015037/Fundamental-Multiplayer-RPG
+
+Use these to enrich character purpose, genre fit, gameplay action, and data-driven RPG stat frameworks.
+
+## D. Benchmark Retrieval Contract V2
+
+For any precise external comparison record:
+
+`Game + Version/Date + Object + State(Level/Rank/Skill/Equipment) + Source + Observed Fact`
+
+Then derive separately:
+
+`System Job -> Dependency -> Player Consequence -> Pattern -> Transfer Risk -> Candidate Use -> Local Validation`
+
+If exact version/state is unknown, do not quote exact values as stable truth.
+
+## E. Historical-source honesty
+
+The current repository proves preservation only for sources actually listed in current files.
+
+If an older conversation contained additional URLs that are not present in the repository or current context, do not claim they were preserved. Recover them when available, then add them to this registry.
+
+The goal is a durable source map, not the appearance of complete memory.
