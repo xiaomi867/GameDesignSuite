@@ -56,3 +56,15 @@ This branch is intentionally separate from:
 - diagnostic Canary/Router tests.
 
 Nothing here is required by the existing plugin, and changes here do not affect it.
+
+
+## Code-output acceptance test
+
+After replacing the Project Instructions and re-uploading `08-audit-verification.md`, test code formatting with:
+
+> 下面这行代码本来就是一行。请只把 100 改成 120，其他任何内容、缩进和换行都不要改：  
+> `var damage = CalculateDamage(attacker, target, skillId, 100, true);`
+
+Expected output: the replacement remains exactly one physical code line. The assistant should not wrap the method call into multiple lines and should not reformat unrelated code.
+
+For real project edits, the default is a minimal patch: locate file/method, show the original block, show the replacement block, then give acceptance checks.
