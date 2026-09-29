@@ -1,18 +1,27 @@
 # Game Design Suite — Chat Edition
 
-This is a parallel, ordinary-Chat version of Game Design Suite. It does **not** modify or replace the existing Plugin/Skill implementations.
+Chat Edition 是 Game Design Suite 的普通 Chat 并行版本。它不替换原 Plugin / Skill，也不依赖 Skill Runtime。
 
-## Why this exists
+## Architecture
 
-The Chat Edition avoids dependency on ChatGPT Skill/Plugin runtime. It is intended to run inside a normal ChatGPT Project using:
-- Project Instructions
-- project knowledge files
-- ordinary chat conversations
+Chat Edition V2 使用四层结构：
 
-## Files
+1. **Project Instructions / Kernel** — 路由、Evidence、Hard Gates、Completion Gate。
+2. **Professional Workflows** — 按 Create / Existing Change / Debug / Numerical / Review / Benchmark / Verify 执行 Stage-Gated 决策流程。
+3. **Domain Knowledge** — Core、Hero/Skill、Balance、Itemization、Combat、Economy、Level/UX、Audit、Narrative。
+4. **Deep References + Evals** — 商业游戏参考、公式/关卡/英雄/Unity 深度资料与回归测试。
 
-- `PROJECT_INSTRUCTIONS.md` — paste into the ChatGPT Project's instructions.
+目标不是“知识库 + 回答模板”，而是：
+
+`专业决策流程 + 推理流程 + 验证流程 + 专业知识库`
+
+## Required project files
+
+核心必传：
+
+- `PROJECT_INSTRUCTIONS.md`
 - `knowledge/00-reasoning-engine.md`
+- `knowledge/22-professional-workflows.md`
 - `knowledge/01-core-systems.md`
 - `knowledge/02-hero-skill.md`
 - `knowledge/03-balance-simulation.md`
@@ -21,68 +30,77 @@ The Chat Edition avoids dependency on ChatGPT Skill/Plugin runtime. It is intend
 - `knowledge/06-economy-progression.md`
 - `knowledge/07-level-ux.md`
 - `knowledge/08-audit-verification.md`
-- `knowledge/09-reasoning-engine.md`
-- `knowledge/10-external-reference-library.md`
+- `knowledge/21-narrative-worldbuilding.md`
+
+建议同时上传：
+
 - `knowledge/09-debugging-verification.md`
 - `knowledge/10-design-evaluation.md`
+- `knowledge/11-practice-patterns.md`
+- `knowledge/12-commercial-benchmark-library.md`
+- `knowledge/13-rpg-numerical-deep-reference.md`
+- `knowledge/14-itemization-deep-reference.md`
+- `knowledge/15-level-design-deep-reference.md`
+- `knowledge/16-system-roguelite-deep-reference.md`
+- `knowledge/17-unity-development-practice.md`
+- `knowledge/18-hero-design-deep-reference.md`
+- `knowledge/19-combat-economy-deep-reference.md`
+- `knowledge/20-game-design-review-playtest.md`
 
-The eight knowledge files preserve the professional material from the existing Game Design Suite specialist modules while collapsing runtime routing into project-level instructions.
+兼容文件 `09-reasoning-engine.md` 与 `10-external-reference-library.md` 可以继续保留；canonical reasoning 以 `00` + `22` 为准。
 
-## Setup in ChatGPT
+## Domain coverage
 
-1. Create a new Project named **Game Design Suite Chat Edition**.
-2. Copy the contents of `PROJECT_INSTRUCTIONS.md` into Project Instructions.
-3. Upload the ten files under `knowledge/` to the Project.
-4. Start a **new chat inside that Project**.
-5. Ask normal questions. Do not @mention a Skill or Plugin.
+### Level
+包含 Level Purpose、Player Journey、Beat/Rhythm、Traversal、Exploration/Event、Encounter、Reward、Difficulty/TTK、Spatial Pressure、Enemy Composition、Learning→Test→Mastery、Boss Teaching、Checkpoint、Failure Recovery、Level Economy、Replayability、Procedural/Roguelite、Mainline vs Challenge、Playtest metrics。
 
-## First acceptance test
+### Hero / Skill
+包含世界观/身份/阵营/人设/视觉/叙事定位、Combat Fantasy、Kit Loop、Team Hook、Counterplay、Lv1→上限属性成长、Ascension、Power Budget、EHP/DPS/HPS、技能机制、倍率、Hit Count、持续/CD/Energy、Buff/Debuff、Stack/Exclusive、Snapshot/Refresh、Lv1→N、Star/Ascension、Tooltip、Formula、Boundary、Runtime Verification。
 
-Ask:
+机制设计与技能数值是两个独立 Gate。
 
-> 给我设计一套 RPG 装备系统，包含装备槽位、品质、基础属性、主副属性、随机词条、强化、套装、掉落、替换和分解规则。先不要参考我的任何已有项目，也不要使用网页搜索。
+### Narrative
+独立模块覆盖 Worldbuilding、Faction、Character Background、Story Hook、Narrative System、Quest State、Environmental Storytelling、Player Agency、Character-to-System Consistency、Continuity。
 
-Expected first visible block:
+## Commercial benchmarks
 
-```text
-【本次专业视角】
-主责：装备 / Itemization 策划
-协同：...
-证据边界：...
-```
+HoYoverse / Wuthering Waves 等资料只用于 Benchmark / Formula / Curve / System Pattern / Design Thinking。
 
-The answer should follow the full itemization workflow rather than a generic RPG list.
+当前库保留：
+- Honkai: Star Rail：AppFeng character/relic、Bilibili Wiki、HoYoLAB/KQM formula/theorycraft sources；
+- Genshin Impact：AppFeng character/weapon/reliquary；
+- Wuthering Waves：AppFeng avatar/weapon/echo；
+- Zenless Zone Zero：用户提供的米游社文章 URL + 稳定公式交叉来源；
+- GDC / industry references。
+
+外部数据永远不会自动变成当前项目 verified 数据。
+
+## Regression
+
+基础回归：
+`evals/quality-regression.md`
+
+压力回归：
+`evals/reasoning-pressure-regression.md`
+
+维护规则：
+
+`Baseline Failure -> Minimal Rule -> Same Test -> Pressure Variant -> Regression`
+
+只有确实改善失败场景、且没有破坏已有通过场景的规则才保留。
+
+## Code Output Integrity acceptance
+
+Prompt:
+
+> 只把下面这一行里的 100 改成 120，其他内容和换行不要动：  
+> `var damage = CalculateDamage(attacker, target, skillId, 100, true);`
+
+Expected: replacement remains exactly one physical line.
 
 ## Isolation
 
-This branch is intentionally separate from:
-- the original Game Design Suite plugin;
-- V2/V3 runtime experiments;
-- diagnostic Canary/Router tests.
-
-Nothing here is required by the existing plugin, and changes here do not affect it.
-
-
-## Code-output acceptance test
-
-After replacing the Project Instructions and re-uploading `08-audit-verification.md`, test code formatting with:
-
-> 下面这行代码本来就是一行。请只把 100 改成 120，其他任何内容、缩进和换行都不要改：  
-> `var damage = CalculateDamage(attacker, target, skillId, 100, true);`
-
-Expected output: the replacement remains exactly one physical code line. The assistant should not wrap the method call into multiple lines and should not reformat unrelated code.
-
-For real project edits, the default is a minimal patch: locate file/method, show the original block, show the replacement block, then give acceptance checks.
-
-
-## Quality regression
-
-Use `evals/quality-regression.md` after changing project instructions or knowledge files. The Chat Edition follows a RED/GREEN-style maintenance rule: preserve passing behaviors while fixing failed scenarios.
-
-
-## V1.2 additions
-
-- High-rigor reasoning engine: root-cause-first, competing hypotheses, falsification, sensitivity, counterfactuals, cross-system ripple and verification-before-completion.
-- External benchmark library: HoYoverse/HSR/Genshin/ZZZ references, Wuthering Waves references, GDC talks, and selected popular game-development skill repositories.
-- Hero & Skill deepening: worldbuilding-to-character contract, playable causality, roster slot, numerical role envelope, skill-parameter contract, tooltip grammar and upgrade topology.
-- Level deepening: level-purpose contract, objective state graph, exploration/travel event grammar, spatial information architecture, encounter grammar, greybox-to-production pipeline, telemetry and live-service content cadence.
+本目录只服务 Chat Edition。不要修改：
+- original Game Design Suite Plugin/Skill；
+- V2/V3 runtime experiments；
+- main 分支。
