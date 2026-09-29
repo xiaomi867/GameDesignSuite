@@ -21,6 +21,8 @@ The Chat Edition avoids dependency on ChatGPT Skill/Plugin runtime. It is intend
 - `knowledge/06-economy-progression.md`
 - `knowledge/07-level-ux.md`
 - `knowledge/08-audit-verification.md`
+- `knowledge/09-reasoning-engine.md`
+- `knowledge/10-external-reference-library.md`
 - `knowledge/09-debugging-verification.md`
 - `knowledge/10-design-evaluation.md`
 
@@ -30,7 +32,7 @@ The eight knowledge files preserve the professional material from the existing G
 
 1. Create a new Project named **Game Design Suite Chat Edition**.
 2. Copy the contents of `PROJECT_INSTRUCTIONS.md` into Project Instructions.
-3. Upload the eight files under `knowledge/` to the Project.
+3. Upload the ten files under `knowledge/` to the Project.
 4. Start a **new chat inside that Project**.
 5. Ask normal questions. Do not @mention a Skill or Plugin.
 
@@ -76,3 +78,11 @@ For real project edits, the default is a minimal patch: locate file/method, show
 ## Quality regression
 
 Use `evals/quality-regression.md` after changing project instructions or knowledge files. The Chat Edition follows a RED/GREEN-style maintenance rule: preserve passing behaviors while fixing failed scenarios.
+
+
+## V1.2 additions
+
+- High-rigor reasoning engine: root-cause-first, competing hypotheses, falsification, sensitivity, counterfactuals, cross-system ripple and verification-before-completion.
+- External benchmark library: HoYoverse/HSR/Genshin/ZZZ references, Wuthering Waves references, GDC talks, and selected popular game-development skill repositories.
+- Hero & Skill deepening: worldbuilding-to-character contract, playable causality, roster slot, numerical role envelope, skill-parameter contract, tooltip grammar and upgrade topology.
+- Level deepening: level-purpose contract, objective state graph, exploration/travel event grammar, spatial information architecture, encounter grammar, greybox-to-production pipeline, telemetry and live-service content cadence.
