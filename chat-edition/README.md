@@ -12,6 +12,7 @@ The Chat Edition avoids dependency on ChatGPT Skill/Plugin runtime. It is intend
 ## Files
 
 - `PROJECT_INSTRUCTIONS.md` — paste into the ChatGPT Project's instructions.
+- `knowledge/00-reasoning-engine.md`
 - `knowledge/01-core-systems.md`
 - `knowledge/02-hero-skill.md`
 - `knowledge/03-balance-simulation.md`
@@ -20,6 +21,8 @@ The Chat Edition avoids dependency on ChatGPT Skill/Plugin runtime. It is intend
 - `knowledge/06-economy-progression.md`
 - `knowledge/07-level-ux.md`
 - `knowledge/08-audit-verification.md`
+- `knowledge/09-debugging-verification.md`
+- `knowledge/10-design-evaluation.md`
 
 The eight knowledge files preserve the professional material from the existing Game Design Suite specialist modules while collapsing runtime routing into project-level instructions.
 
@@ -68,3 +71,8 @@ After replacing the Project Instructions and re-uploading `08-audit-verification
 Expected output: the replacement remains exactly one physical code line. The assistant should not wrap the method call into multiple lines and should not reformat unrelated code.
 
 For real project edits, the default is a minimal patch: locate file/method, show the original block, show the replacement block, then give acceptance checks.
+
+
+## Quality regression
+
+Use `evals/quality-regression.md` after changing project instructions or knowledge files. The Chat Edition follows a RED/GREEN-style maintenance rule: preserve passing behaviors while fixing failed scenarios.
