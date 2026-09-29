@@ -1742,3 +1742,212 @@ Utility值不能默认与Damage值使用同一成长倍率。
 - **Extended-Level Explosion**：加技能等级导致异常放大；
 - **Stat×Skill Blindness**：只看技能曲线，不看角色基础属性联合成长；
 - **External-Copy Curve**：直接抄成熟游戏技能等级倍率表。
+
+
+---
+
+# Chat Edition Deepening Layer — Hero / World / Skill / Value
+
+This section extends the preserved specialist modules with a stricter end-to-end character pipeline.
+
+## A. Worldbuilding -> Character Contract
+
+A hero should not begin from “element + weapon + role”. Build the chain:
+
+`World Rule -> Faction/Institution -> Social Role -> Personal Desire -> Internal Contradiction -> Power Source -> Visual Motif -> Combat Grammar -> Team Relationship -> Growth Arc`
+
+For each new hero define:
+
+- **World Rule**: which setting rule makes this character possible;
+- **Faction Function**: what job/status they have in the world;
+- **Personal Want**: immediate desire the player can understand;
+- **Deep Need**: what they actually need to change/accept;
+- **Contradiction**: tension that creates personality and dramatic pressure;
+- **Relationship Web**: ally/rival/debt/trust/power relations;
+- **Power Source**: why this character can perform the combat fantasy;
+- **Cost / Limitation**: why the power is not free;
+- **Visual Motif**: silhouette, prop, color/material language, animation verb;
+- **Combat Grammar**: the repeated verbs/states that embody identity;
+- **Growth Arc**: what becomes more complete mechanically and narratively.
+
+A hero is weak if the lore, visuals, kit and numbers can be independently swapped onto another character without contradiction.
+
+## B. Playable Causality
+
+Narrative identity must produce player causality, not only biography.
+
+Ask:
+
+- What does the player repeatedly do that expresses this character’s personality?
+- What decision does this hero make differently from others?
+- Does the player create the character’s fantasy through action, or merely watch it in text/animation?
+- Does the world react to the character’s identity/status?
+- Does a growth node represent a meaningful evolution, or only higher numbers?
+
+Use `Lore-only Hero` when story exists but cannot be felt in play.
+
+## C. Roster Slot / Release Contract
+
+Before approving a hero, map four slots:
+
+1. **Narrative Slot** — what relationship/world function is missing;
+2. **Gameplay Slot** — what new decision/loop is introduced;
+3. **Team Slot** — what compositions gain a new option;
+4. **Product Slot** — what audience/fantasy surface this hero serves.
+
+Do not accept a hero whose only differentiator is higher throughput.
+
+Check overlap against existing roster on:
+- role;
+- resource;
+- trigger;
+- target pattern;
+- damage/heal/shield profile;
+- team hook;
+- build dependency;
+- field time/action share;
+- mastery curve;
+- narrative function.
+
+## D. Hero Numerical Budget Contract
+
+Do not balance a hero from single-skill percentages.
+
+Build a role envelope:
+
+`Entry Power -> Practical Rotation -> Optimized Rotation -> Team Amplification -> Survival/Utility -> Mastery Ceiling`
+
+At minimum calculate or model:
+
+- Rotation Length;
+- Actions / Turn / Field Time;
+- Resource Net;
+- Core Payoff Frequency;
+- Contribution Share by skill;
+- Single-target / multi-target conversion;
+- Reliability;
+- Uptime;
+- Team amplification;
+- EHP / sustain where relevant;
+- failure/recovery loss;
+- novice vs ordinary vs optimized realization.
+
+Use the smallest number of synthetic “stat weights” possible. Prefer direct outcome metrics such as DPS/HPS/EHP/TTK, action count, uptime and clear-time delta.
+
+## E. Skill Parameter Contract
+
+For each skill define a parameter table:
+
+| Parameter | Meaning |
+|---|---|
+| Scaling Source | ATK / HP / DEF / fixed / hybrid / target stat |
+| Base Value | level-1 or baseline value |
+| Level Curve | Lv1->Max family |
+| Frequency | expected uses per rotation/minute |
+| Target Factor | single / blast / AoE / bounce / random |
+| Reliability | expected hit/trigger realization |
+| Duration/Uptime | for persistent effects |
+| Cap/ICD | stack/trigger/interval cap |
+| Resource Effect | generate/spend/refund |
+| Team Effect | personal or amplified team value |
+| Breakpoint Risk | action/turn/cap threshold |
+| Evidence | config/code/runtime/candidate |
+
+This table is mandatory before claiming a skill value is balanced.
+
+## F. Skill Text / Tooltip Contract
+
+Skill descriptions are part of system correctness.
+
+For an existing project, wording must be derived from verified behavior/config where possible.
+
+Recommended information order:
+
+`Trigger/Action -> Target -> Effect -> Value -> Duration -> Stack/Limit -> Special Rule/Exception`
+
+Example grammar:
+
+> 对【后排敌人】造成【攻击力X%】物理伤害；若目标生命低于【50%】，本次伤害提高【Y%】。每次施放最多触发【1次】。
+
+Rules:
+
+- one mechanic = one stable term;
+- one target concept = one stable target phrase;
+- do not alternate “后排 / 后方目标 / 最远敌人” unless semantics differ;
+- distinguish `全体敌人`, `所有敌人`, `敌方全体` only if the project intentionally defines different meanings;
+- state whether chance is base chance, final chance or conditional chance;
+- state stack cap, refresh behavior and duration semantics when they affect player decisions;
+- state “自身/目标/全队/前排/后排” explicitly; avoid ambiguous pronouns;
+- do not expose implementation jargon such as raw Buff keys unless the user asks;
+- display values must match the same level/star context shown in UI;
+- if a passive is not unlocked, wording/UI should not imply it is active;
+- if a skill changes at a breakpoint, describe the changed rule, not only “Lv+1”.
+
+### Description QA
+
+Check every skill text against:
+
+`Subject -> Trigger -> Target -> Effect -> Value -> Duration -> Limit -> Exception -> UI State`
+
+If any runtime-relevant semantic is absent, mark `Tooltip Semantic Gap`.
+
+## G. Upgrade / Star / Sequence Topology
+
+For each star/constellation/eidolon/sequence node classify:
+
+- Numerical;
+- Reliability;
+- Rotation;
+- QoL;
+- Rule Expansion;
+- Team Hook;
+- Capstone;
+- Mechanic Replacement.
+
+Then test:
+
+- early node value;
+- cumulative value;
+- node dependency;
+- whether a node repairs a deliberately crippled base kit;
+- whether one node creates mandatory ownership;
+- whether +skill-level nodes create hidden multiplier cliffs;
+- whether the final node changes identity rather than only doubling damage.
+
+## H. Character Reference Extraction
+
+When studying HSR / Genshin / Wuthering Waves / ZZZ, do not copy the character.
+
+Extract:
+
+- role taxonomy;
+- resource grammar;
+- trigger topology;
+- target architecture;
+- growth topology;
+- text grammar;
+- build dependency;
+- team dependency;
+- roster differentiation;
+- narrative-to-gameplay translation.
+
+Record the source as `reference-data` and transfer only the abstract pattern after checking current-project constraints.
+
+## I. Hero Acceptance Matrix
+
+A production-ready hero should pass:
+
+| Layer | Question |
+|---|---|
+| World | Why does this person exist in this setting? |
+| Character | What do they want, fear, value and contradict? |
+| Visual | Can the identity be read from silhouette/prop/animation verb? |
+| Combat | What is the unique loop/decision? |
+| Skill | Do slots form one coherent loop? |
+| Numbers | Does practical rotation land in the intended role envelope? |
+| Growth | Do levels/stars make the hero more themselves? |
+| Team | Are hooks useful without becoming a mandatory pair? |
+| Content | Do real encounters allow the loop to function? |
+| Text | Can players correctly predict behavior from tooltips? |
+| Roster | Is the hero meaningfully distinct without raw power creep? |
+| Validation | What is verified and what still needs simulation/playtest/runtime evidence? |
