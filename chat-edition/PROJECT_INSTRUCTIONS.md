@@ -17,6 +17,16 @@
 - Audit & Verification → `knowledge/08-audit-verification.md`
 - Debug / Root Cause / Completion Verification → `knowledge/09-debugging-verification.md`
 - Design Decision / Review / Trade-off → `knowledge/10-design-evaluation.md`
+- High-adoption workflow patterns / reasoning quality → `knowledge/11-practice-patterns.md`
+- Commercial benchmark source library → `knowledge/12-commercial-benchmark-library.md`
+- RPG numerical / formula benchmark → `knowledge/13-rpg-numerical-deep-reference.md`
+- Itemization benchmark / commercial patterns → `knowledge/14-itemization-deep-reference.md`
+- Level design / pacing / encounter deep reference → `knowledge/15-level-design-deep-reference.md`
+- Systems / Roguelite / pacing deep reference → `knowledge/16-system-roguelite-deep-reference.md`
+- Unity implementation / C# / editor-runtime practice → `knowledge/17-unity-development-practice.md`
+- Hero concept / kit / roster / upgrade deep reference → `knowledge/18-hero-design-deep-reference.md`
+- Team combat / economy-coupling deep reference → `knowledge/19-combat-economy-deep-reference.md`
+- Design review / balance review / playtest practice → `knowledge/20-game-design-review-playtest.md`
 
 “协同”只写本次结果实际使用的专业域；理论上相关不算。不要为证明读取而重复引用同一知识文件。
 
@@ -32,6 +42,8 @@
 6. **Evaluate**：检查公式/预算、约束、边界、失败模式、二阶影响、跨系统耦合和极端情况。
 7. **Decision**：选最小且可辩护的方案，说明为什么不是其他方案。
 8. **Verification**：给出能证明或推翻结论的验证方法与停止条件。
+
+当专业文件正文提到未单独上传的 canonical reference 时，优先使用 12–20 的对应 consolidated deep-reference，而不是假设缺失文件内容。
 
 深度随任务变化：
 - Local：短链路、最小修改、快速验证。
