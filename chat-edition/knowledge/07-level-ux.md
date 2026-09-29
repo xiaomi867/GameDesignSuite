@@ -518,3 +518,306 @@ UI 动画、品质展示、等待、结算和选择停留都要算。
 - 认知负荷。
 
 无障碍是可用性底线，不是纯附加功能。
+
+
+---
+
+# Chat Edition Deepening Layer — Level / Mission / Exploration
+
+This section extends the preserved level-design guidance with production, exploration, mission-state, and content-authoring depth.
+
+## A. Level Purpose Contract
+
+Before layout or enemy placement, classify what the level exists to do.
+
+Possible primary purposes:
+
+- Teach / Practice / Test / Mastery;
+- Narrative Delivery;
+- Exploration / Discovery;
+- Progression Gate;
+- Resource / Economy Delivery;
+- Character / Build Validation;
+- Spectacle / Emotional Peak;
+- Hub / Reorientation;
+- Recovery / Reward;
+- Replayable Challenge.
+
+A level may serve several purposes, but one must be primary.
+
+Write:
+
+`Primary Purpose -> Player Verb -> Decision -> Pressure -> Reward/Payoff -> Exit State`
+
+If the level’s purpose is traversal/discovery/unlock rather than combat challenge, do not let combat difficulty consume the entire design budget.
+
+## B. Mission / Objective State Graph
+
+For objective-driven content, define a state graph instead of a linear text list.
+
+`Available -> Accepted -> Active -> Subgoal A/B -> Escalation -> Completion -> Reward -> Post-State`
+
+For each node define:
+
+- entry trigger;
+- player-readable objective;
+- required action;
+- optional action;
+- failure/timeout;
+- save/resume state;
+- re-entry behavior;
+- dependency;
+- reward;
+- world-state change.
+
+Check soft-locks, impossible states, duplicated completion, skipped triggers and “objective says X while runtime expects Y”.
+
+## C. Critical Path / Optional Path / Discovery Layer
+
+Map three layers separately:
+
+- **Critical Path**: minimum sequence to progress;
+- **Optional Path**: deliberate choice with visible opportunity cost;
+- **Discovery Layer**: content found through curiosity, observation or experimentation.
+
+Optional content should not be disguised as mandatory, and discovery should not depend entirely on UI markers.
+
+Track:
+
+- visibility before commitment;
+- return cost;
+- reward type;
+- missed-content tolerance;
+- effect on pacing;
+- effect on player mental map.
+
+## D. Exploration / Travel Event Grammar
+
+For travel-driven levels or a single-map structure, “游历感” comes from what changes while moving, not from raw map size.
+
+Model travel as:
+
+`Orientation -> Anticipation -> Discovery -> Interaction -> Consequence -> Reorientation`
+
+Useful travel beats:
+
+- landmark reveal;
+- short environmental story;
+- NPC/character event;
+- optional combat;
+- resource discovery;
+- route choice;
+- risk/reward detour;
+- temporary world-state change;
+- foreshadowing;
+- post-combat aftermath;
+- safe recovery;
+- visual/audio spectacle.
+
+Track event density by **time and distance**, not only count.
+
+Avoid:
+- event every few steps;
+- events with identical structure but different text;
+- random events that interrupt important emotional beats;
+- rewards that make skipping exploration irrational;
+- travel that is only dead time between fights.
+
+## E. Spatial Information Architecture
+
+Treat level space as information.
+
+At every meaningful decision point, the player should have some combination of:
+
+- destination cue;
+- landmark;
+- route contrast;
+- threat preview;
+- reward hint;
+- safe fallback;
+- remembered reference point.
+
+Use:
+
+- landmark hierarchy: global / regional / local;
+- reveal and conceal;
+- framed sightlines;
+- contrast;
+- path width and curvature;
+- elevation;
+- sound/light/VFX;
+- enemy facing and placement;
+- prop density.
+
+Test the greybox with non-essential UI markers removed.
+
+## F. Encounter Grammar
+
+Do not design encounters as isolated enemy lists.
+
+Describe each encounter as:
+
+`Read -> Commit -> Contest -> Adapt -> Resolve -> Recover`
+
+Record:
+
+- information available before engagement;
+- commitment point;
+- primary threat;
+- secondary pressure;
+- terrain interaction;
+- target priority;
+- resource pressure;
+- counterplay;
+- fail reason;
+- recovery;
+- reward;
+- what is different from the previous encounter.
+
+Two encounters with different enemy IDs but the same positioning/decision pattern are functionally the same encounter.
+
+## G. Encounter Composition Matrix
+
+Across a chapter/session, vary at least some of:
+
+- target count/density;
+- attack frequency;
+- range;
+- mobility;
+- telegraph speed;
+- formation;
+- spawn direction;
+- elevation;
+- cover/chokepoint;
+- hazard;
+- resource availability;
+- add phase;
+- elite priority target;
+- objective type;
+- time pressure;
+- sustain pressure;
+- player movement requirement;
+- build/hero affordance.
+
+Use the matrix to prevent one composition from being universally optimal.
+
+## H. Narrative / World Integration
+
+For every major level area ask:
+
+- What world rule is visible here without exposition?
+- What happened here before the player arrived?
+- What is happening because the player arrived?
+- Which faction/character relationship is expressed through space?
+- Which environment detail changes a gameplay decision?
+- What does the player cause, not just observe?
+
+Narrative delivery channels can include:
+- spatial layout;
+- enemy composition;
+- NPC behavior;
+- route availability;
+- props;
+- rewards;
+- environmental change;
+- music/audio;
+- quest state;
+- combat rules.
+
+Avoid lore that can be removed without changing player understanding, decision or emotional framing.
+
+## I. Greybox -> Playable -> Production Pipeline
+
+A level should move through explicit stages:
+
+1. **Paper / Beat Plan**
+   - purpose, flow, metrics, encounters, objective graph.
+2. **Greybox / Blockout**
+   - route, scale, sightline, traversal, encounter footprint.
+3. **First Playable**
+   - real movement/combat/objective logic, minimal art.
+4. **Instrumented Playtest**
+   - path, death, time, wrong turn, idle, failure cause.
+5. **Content Pass**
+   - enemy/event/reward/narrative variety.
+6. **Art / Audio Integration**
+   - readability must survive visual production.
+7. **Polish**
+   - transitions, camera, feedback, checkpoints, edge cases.
+8. **Regression**
+   - verify later content/art/code changes did not break flow.
+
+Do not wait for final art before testing route readability and encounter geometry.
+
+## J. Level Metrics / Telemetry
+
+Useful measurements:
+
+- completion time P50/P90;
+- time per beat;
+- combat/travel/choice/reward ratio;
+- wrong-turn rate;
+- backtrack time;
+- death heatmap;
+- checkpoint retry time;
+- objective-stall time;
+- optional-route uptake;
+- discovery rate;
+- event skip rate;
+- resource state at encounter entry/exit;
+- build/hero completion rate;
+- quit/abort location;
+- replan frequency.
+
+Compare intended beat sheet against observed session timeline.
+
+## K. Content Budget / Reuse
+
+Track cost per content unit:
+
+- new geometry;
+- new script;
+- new enemy behavior;
+- new animation;
+- new narrative;
+- new VFX/audio;
+- QA surface;
+- localization;
+- unique reward.
+
+Prefer recombining proven verbs, enemies, spaces and events into new decisions over endlessly adding new mechanics.
+
+A reusable encounter grammar is valuable only if repeated use still creates different decisions.
+
+## L. Live-Service / Chapter Cadence
+
+For repeated chapter content, track:
+
+- new mechanic count;
+- returning mechanic count;
+- remix/combination count;
+- new enemy count;
+- new environment rule count;
+- narrative payoff;
+- build/roster coverage;
+- production cost;
+- replayability;
+- fatigue risk.
+
+Expansion should add possibility without making the game unreadable.
+
+## M. Level Acceptance Matrix
+
+| Layer | Acceptance question |
+|---|---|
+| Purpose | Can we state why this level exists? |
+| Route | Can players form a mental map? |
+| Objective | Can they predict what progress means? |
+| Encounter | Does space create a real decision? |
+| Kit | Can intended character loops actually function? |
+| Pacing | Do pressure and recovery alternate intentionally? |
+| Exploration | Is travel producing discovery or only delay? |
+| Narrative | Does the world/character context affect play? |
+| Metrics | Are scale/time/distance grounded in player capabilities? |
+| Production | Can the runtime and content budget express the design? |
+| Validation | Is there a greybox/playtest/telemetry plan? |
