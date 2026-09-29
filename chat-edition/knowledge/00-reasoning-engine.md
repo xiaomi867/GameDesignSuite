@@ -1,149 +1,239 @@
-# Game Design Suite Chat Edition — Reasoning Engine
+# Game Design Suite Chat Edition — Canonical Reasoning Engine
 
-> Universal process layer for non-trivial game-design, balancing, review, debugging, and implementation tasks.
-> This file is process guidance, not a domain encyclopedia.
+> Canonical universal process layer. Use with `22-professional-workflows.md`.
+> Domain knowledge supplies expertise; this file controls how a defensible decision is reached.
 
-## 1. Task Mode
+## 1. Classify Before Solving
 
-Classify the request before solving it:
+Task mode:
+- Create
+- Existing Project Change
+- Review
+- Debug
+- Verify
+- Tune
+- Benchmark
+- Explain
 
-- **Create** — design something new.
-- **Review** — assess an existing design/artifact.
-- **Debug** — explain unexpected behavior or a defect.
-- **Verify** — prove whether a claim/config/code path is correct.
-- **Tune** — adjust values without changing the fixed mechanic.
-- **Explain** — clarify a concept without changing the system.
+Scope:
+- Local
+- System
+- Cross-system
 
-Then classify scope:
-
-- **Local** — one field, one rule, one UI state, one code path.
-- **System** — one complete system with upstream/downstream dependencies.
-- **Cross-system** — multiple systems whose interaction creates the real outcome.
-
-Do not use a Cross-system process for a one-line fix, and do not use a Local process for economy loops or progression architecture.
+Use the lightest process that is still capable of catching the real failure. Do not apply a Cross-system ritual to a one-line edit, and do not treat an economy/roster/content problem as Local because the visible symptom is one number.
 
 ## 2. Decision Object
 
 State internally what is actually being decided.
 
 Examples:
-- “Is DamageCfgSec scaling from the correct source stat?”
-- “What should this equipment slot contribute to the total item budget?”
-- “Should this resource be a mandatory hero-upgrade sink?”
-- “Which progression curve reaches the target TTK without a power cliff?”
+- Is this config field bound to the correct runtime semantic?
+- What curve keeps TTK inside the intended band?
+- Does this mainline level create travel/discovery without turning into a challenge stage?
+- Which hero loop fills a real roster gap?
+- Is the proposed sink legitimate?
 
-If the prompt contains several independent decisions, split them and solve one at a time.
+If the prompt mixes several independent decisions, order them by dependency.
 
 ## 3. Success Bar
 
-A strong answer has a falsifiable completion condition.
+Before proposing the final answer, define what success means.
 
-Examples:
-- config audit: exact field chain is verified;
-- code fix: original reproduction no longer occurs and no regression appears;
-- balance: target range is met across representative levels;
-- economy: sources/sinks remain healthy over the intended horizon;
-- design: player decision quality improves without violating Fixed Rules.
+Use:
+- measurable target;
+- acceptance criteria;
+- reproducible behavior;
+- exact evidence chain;
+- player-observable outcome.
 
-If success cannot be measured numerically, define observable acceptance criteria.
+A strong Success Bar is falsifiable.
 
 ## 4. Evidence Gate
 
-Before design or diagnosis, separate:
+Separate:
+- confirmed user constraints;
+- current project evidence;
+- supported inference;
+- assumptions;
+- external references;
+- unknowns.
 
-- what the user explicitly confirmed;
-- what current project evidence proves;
-- what is inferred;
-- what is missing.
+Current project evidence outranks:
+old docs -> memory -> naming -> similar games -> benchmark.
 
-For existing projects, current evidence outranks old docs, previous answers, names, and analogies.
+When evidence is missing, do not fill the template with invented facts.
 
-If required evidence is absent, do not “complete the template” with invented facts. Use:
-- NOT ASSESSED — NO DATA
-- unverified
-- externally-blocked
+Valid outputs include:
+- `NOT ASSESSED — NO DATA`
+- `NEEDS_CONTEXT`
+- `externally-blocked`
+- conditional candidate under explicit assumptions.
 
 Absence of evidence is not evidence of absence.
 
-## 5. Alternatives and Hypotheses
+## 5. Stage Gate Semantics
+
+The active workflow comes from `22-professional-workflows.md`.
+
+Every important stage has:
+
+`Input -> Artifact -> Exit Criteria -> Blocked Condition`
+
+Do not advance because:
+- the answer seems obvious;
+- the user is in a hurry;
+- a benchmark looks similar;
+- an old answer already chose a direction;
+- a candidate is easy to implement.
+
+Stage output is not private chain-of-thought. Surface only useful artifacts such as evidence, model, alternatives, finding, decision, or validation plan.
+
+## 6. Alternative / Hypothesis Discipline
 
 ### Design
-For material system decisions, compare at least two credible approaches unless only one is technically possible.
+When a material structural choice has real alternatives, compare 2–3 materially different options.
 
-For each option, check:
-- player experience;
-- systemic cost;
-- implementation complexity;
-- balance risk;
-- long-term scalability;
-- failure mode.
+Check only dimensions that can change the decision:
+- player behavior;
+- clarity/agency;
+- pacing;
+- balance stability;
+- economy/progression effect;
+- implementation/content cost;
+- exploit risk;
+- scalability.
 
-Do not manufacture fake alternatives just to fill a table.
+Do not create fake alternatives to satisfy a quota.
 
-### Debug / Audit
-Use one explicit hypothesis at a time:
-- hypothesis;
-- supporting evidence;
-- falsifying evidence;
-- smallest test.
+### Debug
+Use:
+`Hypothesis -> Prediction -> Evidence For/Against -> Smallest Discriminating Test`
 
-If the test fails, discard or revise the hypothesis instead of stacking unrelated fixes.
+One leading hypothesis at a time. A failed prediction weakens or falsifies the hypothesis; it is not an invitation to stack another patch.
 
-## 6. Evaluation
+## 7. Model Before Precision
 
-Evaluate only dimensions that can change the decision.
+For quantitative work define:
+- variables/units;
+- baseline;
+- equation/order;
+- cap/floor/rounding;
+- frequency/coverage/uptime;
+- audience/build/content context;
+- target band;
+- sensitivity parameters;
+- validation scenarios.
 
-Useful lenses:
-- power budget;
-- DPS/HPS/EHP/TTK;
-- source/sink flow;
-- probability distribution;
-- action economy;
-- replacement cadence;
-- progression curve;
-- usability/error state;
-- implementation dependency chain.
+Prefer range before point value.
 
-For randomness, check distribution/tails, not only the average.
+If a value has no model, it is `candidate`.
 
-For systems, check second-order effects:
-- What does this make easier/harder elsewhere?
-- Which resource, build, hero, encounter, or UI state becomes dominant?
-- Does the fix merely move the problem downstream?
+## 8. Breakpoint / Distribution / Tail
 
-## 7. Adversarial Check
+Averages hide game behavior.
 
-Before finalizing, challenge the preferred conclusion:
+When relevant inspect:
+- discrete actions/turns/hits;
+- thresholds and discontinuities;
+- low / median / high investment;
+- weak / ordinary / optimized play;
+- lucky / median / unlucky RNG;
+- P50 / P90 / P95;
+- worst legitimate cases.
+
+For repeated tuning, preserve failed scenarios as regression cases.
+
+## 9. Root Cause Classification
+
+Before accepting a fix, classify the cause:
+
+- Local Parameter;
+- Rule Interaction;
+- System Structure;
+- Cross-system Coupling;
+- Content Environment;
+- Information / UX;
+- Implementation / Data Flow;
+- Evidence Error.
+
+A symptom patch is acceptable only when explicitly labeled mitigation.
+
+## 10. Reference-Case Order
+
+Prefer:
+
+1. current-project working analogue;
+2. current-project rules/data;
+3. external benchmark;
+4. new invention.
+
+External success is not proof of local fit.
+
+## 11. Adversarial Pass
+
+Before finalizing ask:
 
 - What is the strongest alternative explanation?
-- What edge case breaks this?
+- What exploit or dominant strategy appears?
+- What legitimate player/build breaks this?
+- What happens under bad RNG or edge timing?
 - What hidden assumption matters most?
-- What could make the recommendation harmful?
-- What evidence would reverse the recommendation?
+- Which downstream system inherits the cost?
+- What evidence would reverse the conclusion?
 
-Only surface concise results, not private chain-of-thought.
+Use only relevant questions; do not mechanically inspect everything.
 
-## 8. Smallest Defensible Decision
+## 12. Smallest Defensible Decision
 
 Prefer:
 - root-cause fix over symptom patch;
-- smallest change that solves the actual problem;
-- reversible change when uncertainty is high;
-- parameter tuning before mechanism rewrite when mechanics are Fixed Rules;
-- explicit trade-offs over fake certainty.
+- reversible change under uncertainty;
+- tuning before mechanism rewrite when mechanics are Fixed Rules;
+- existing pattern before new framework;
+- explicit tradeoff over false certainty.
 
-## 9. Verification
+Do not expand scope merely to appear thorough.
 
-Every important recommendation should include how to prove it.
+## 13. Completion Gate
 
-Examples:
-- run 100 / 1000 combat simulations;
-- compare Lv1/Lv20/Lv40/Lv60/Lv80 samples;
-- reproduce before/after;
-- inspect exact config tuple;
-- trace Config → Parser → Runtime Consumer;
-- measure P50/P90/P95;
-- validate UI state transitions;
-- compare source/sink balance over D1–D7.
+Before any claim equivalent to fixed/passed/ready/balanced/complete:
 
-A recommendation without a verification path remains candidate.
+`Claim -> Required Evidence -> Fresh Check -> Read Result -> Residual Risk -> Status`
+
+Evidence levels do not auto-upgrade:
+- config inspected -> verified-config;
+- code inspected -> verified-code;
+- simulation passed -> not-yet-playtested;
+- runtime/log -> verified-runtime;
+- player behavior -> playtest evidence.
+
+Use `DONE / DONE_WITH_CONCERNS / BLOCKED / NEEDS_CONTEXT / NOT ASSESSED` when useful.
+
+## 14. Reasoning TDD
+
+When modifying the Chat Edition itself:
+
+1. reproduce a baseline failure;
+2. add the smallest rule/workflow change that addresses it;
+3. rerun the same case;
+4. run a pressure/counterexample variant;
+5. check prior passing regressions;
+6. keep the rule only if benefit exceeds complexity.
+
+Use `evals/quality-regression.md` and `evals/reasoning-pressure-regression.md`.
+
+## 15. Anti-patterns
+
+- First-Idea Lock-in
+- Symptom Patch
+- Checklist Cargo Cult
+- Benchmark Copying
+- Decorative Precision
+- Average-only Balance
+- No Baseline
+- Unfalsifiable Explanation
+- Cross-system Blindness
+- Missing Evidence -> PASS
+- Verification Theater
+- Completion by Confidence
+- Over-processing trivial tasks
