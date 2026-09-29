@@ -1872,3 +1872,117 @@ Meta问题往往来自对象之间的关系，不是某个对象单独数值错�
 - **Power Creep Normalization**：通过全体敌人加血适配新角色膨胀；
 - **Small Sample Ranking**：低样本对象硬排名；
 - **Environment Blindness**：内容环境偏斜被误判为角色数值问题。
+
+
+---
+
+# Chat Edition Deepening Layer — Balance Reasoning & Benchmark Transfer
+
+## A. Theoretical vs Practical Performance
+
+Never treat paper maximum as realized power.
+
+For each important build/hero/system, separate:
+
+- **Theoretical Max**: perfect uptime/rotation/targeting;
+- **Optimized Practical**: skilled player, realistic encounter;
+- **Ordinary Practical**: intended mainstream execution;
+- **Underpowered Legitimate**: valid but weaker progression/build;
+- **Failure Case**: interrupted rotation, poor RNG, target loss, resource starvation.
+
+Balance targets should normally be set on practical performance, with theoretical max used as a ceiling/risk check.
+
+## B. Repeated-Tuning Simulator Contract
+
+If a system will be tuned repeatedly, prefer a persistent parameterized simulator instead of one-off arithmetic.
+
+A combat simulator should expose:
+- actor stats;
+- skill/attack data;
+- cooldown/action timing;
+- resources;
+- targeting;
+- mitigation;
+- buffs/debuffs;
+- random seed;
+- encounter phases;
+- rotation policy.
+
+Report:
+- burst;
+- sustained throughput;
+- TTK/TTD;
+- EHP/survival;
+- resource net;
+- uptime;
+- idle/downtime;
+- failure rate;
+- P50/P90/P95 where randomness matters.
+
+A progression simulator should expose:
+- level/milestone curve;
+- cost curve;
+- earning rate;
+- unlocks;
+- caps;
+- catch-up;
+- content gates.
+
+Report:
+- time/attempts to milestone;
+- cumulative cost;
+- power ratio vs content;
+- affordability;
+- breakpoint/cliff;
+- ordinary/weak/optimized paths.
+
+Verify at least one representative result by hand before trusting the tool.
+
+## C. Reference Normalization
+
+When studying commercial games, do not compare raw percentages directly.
+
+Normalize observations into outcome-oriented dimensions:
+
+- role contribution share;
+- rotation length;
+- action/field-time cost;
+- uptime;
+- target factor;
+- resource economy;
+- reliability;
+- breakpoint;
+- growth ratio;
+- item/build opportunity cost;
+- time-to-upgrade;
+- time-to-BiS / graduation distribution.
+
+A 500% multiplier in one game is not comparable to 500% in another without formula, frequency, target count and stat scale.
+
+## D. Benchmark Transfer Test
+
+Before transferring an external pattern, record:
+
+1. Source game / page;
+2. Observed fact;
+3. Formula/environment assumptions;
+4. Player-control model;
+5. Progression/economy context;
+6. Why the pattern works there;
+7. What differs in the current project;
+8. Transferable abstraction;
+9. Candidate local parameter;
+10. Validation test.
+
+Use `knowledge/10-external-reference-library.md` when external benchmark sources are needed.
+
+## E. Sensitivity First, Precision Later
+
+Before tuning a long table:
+- identify top 3 sensitive parameters;
+- sweep them first;
+- locate breakpoint regions;
+- choose target bands;
+- only then fill the detailed curve.
+
+Do not spend time “perfecting” low-sensitivity decimals while a high-sensitivity parameter remains unbounded.
