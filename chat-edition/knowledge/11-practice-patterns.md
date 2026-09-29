@@ -227,3 +227,158 @@ Before finalizing a non-trivial answer, check:
 - Did I use numbers where adjectives would be misleading?
 - Did I define what evidence would reverse my conclusion?
 - Did I give a validation path?
+
+
+# 2026-09-30 Research Update — High-Adoption GameDev / Agent Patterns
+
+The following sources were reviewed as process references. Star counts are only a discovery snapshot, not authority.
+
+| Repository | Snapshot | What is useful |
+|---|---:|---|
+| `Donchitos/Claude-Code-Game-Studios` | 25k+ stars | stage gates, context-first design, dependency reads, acceptance criteria, adversarial review |
+| `openai/plugins` | 7k+ stars | game-studio routing, browser playtest evidence, implementation/playtest separation |
+| `gamedev-skills/awesome-gamedev-agent-skills` | 1.2k+ stars | portable game-dev router, level-design metrics, engine/task composition |
+| `Unity-Technologies/skills` | 1k+ stars | official Unity preflight, async state verification, before/after test discipline |
+| `Yuki001/game-dev-skills` | 80+ stars | executable balance models, context-specific balance targets, simulator-as-spec |
+| `fagemx/gstack-game` | 70+ stars | player-experience review, game QA, playtest/review loops |
+| `rondorkerin/gamestack` | 30+ stars | compact domain decomposition for level, pacing, worldbuilding, narrative |
+| `baxatron-git/claude-game-design-suite` | 10+ stars | level/encounter deliverables, narrative integration, playtest protocol structure |
+
+## A. GameDev Patterns Worth Migrating
+
+### Player Metrics Before Geometry
+
+From high-use level-design skills:
+
+`Player Capability -> Safe Range -> Hard Range -> Geometry -> Playtest`
+
+Do not eyeball traversal metrics. If speed/jump/reach/camera changes, affected geometry assumptions must be revalidated.
+
+For non-spatial games, translate the same principle to:
+- action range;
+- targeting distance;
+- wave timing;
+- UI reaction window;
+- interaction latency.
+
+### Pacing as Data
+
+Represent a level/session as beats with:
+- role;
+- duration;
+- intensity;
+- pressure type;
+- recovery;
+- purpose.
+
+This makes pacing reviewable before content polish.
+
+Do not confuse intensity with difficulty.
+
+### Critical Path as a State/Dependency Graph
+
+For gated progression, validate reachability under actual unlock order.
+
+The transferable pattern is:
+`Node -> Requirement -> Grant -> Reachability`
+
+Use it for:
+- level keys;
+- tutorial unlocks;
+- progression systems;
+- chapter gates;
+- feature dependencies.
+
+### Executable Numerical Models
+
+For substantive balance work:
+- known baseline;
+- ordinary cases;
+- boundary cases;
+- deterministic seed where random;
+- parameter sweep;
+- regression cases.
+
+For repeated tuning, the simulator/spreadsheet should act as an executable specification of the numerical model.
+
+Do not tune parameters to compensate for a known model defect.
+
+### Playtesting With a Question
+
+A playtest should declare:
+- hypothesis;
+- what is not being tested;
+- target player segment;
+- build/content slice;
+- observations;
+- metrics;
+- threshold;
+- interpretation.
+
+Useful types:
+- Blind;
+- Facilitated;
+- A/B;
+- Stress/adversarial;
+- Focus.
+
+“Play it and see” is exploration, not validation.
+
+### Trigger -> Poll -> Read Result
+
+From official Unity workflow patterns:
+
+For asynchronous operations, triggering the operation is not evidence of success.
+
+Use:
+`Trigger -> Status/Poll -> Terminal State -> Read Output -> Claim`
+
+Apply beyond Unity to:
+- builds;
+- tests;
+- data generation;
+- import;
+- deployment;
+- simulations;
+- long-running analysis.
+
+Distinguish “ran and failed” from “did not produce a verdict”.
+
+### Small Reviewable Patches
+
+For implementation work:
+- establish baseline;
+- change one coherent group;
+- compile/test;
+- inspect result;
+- then continue.
+
+This aligns with Code Output Integrity and reduces ambiguous regressions.
+
+## B. Patterns Not Migrated Literally
+
+Do not copy:
+- Claude Code-only agent spawning as fake multi-agent roleplay;
+- mandatory user approval after every tiny section in ordinary Chat;
+- arbitrary 0–10 scores without a grounded rubric/target;
+- genre templates that prescribe exact slot/rarity/count values;
+- “every currency needs a sink” rules;
+- engine-specific implementation detail inside the universal game-design kernel;
+- huge checklists whose items cannot change the decision.
+
+The transferable unit is the decision logic, evidence gate, or workflow—not the surrounding runtime syntax.
+
+## C. Chat Edition Design Principle
+
+When improving a rule, first ask what kind of failure it addresses:
+
+| Failure | Better instruction form |
+|---|---|
+| Model knowingly skips a rule under pressure | Hard Gate + explicit red flags/stop condition |
+| Output shape is wrong | Positive output contract |
+| Required element is omitted | Required structural slot |
+| Behavior depends on context | Conditional rule keyed to an observable predicate |
+| Domain knowledge is missing | Reference/knowledge module |
+| Conclusion is shallow | Stage-gated workflow + alternatives/tests |
+
+Adding more MUST/NEVER text is not the default solution.
