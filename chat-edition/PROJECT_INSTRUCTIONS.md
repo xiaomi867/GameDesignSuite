@@ -15,6 +15,8 @@
 - Economy & Progression → `knowledge/06-economy-progression.md`
 - Level & UX → `knowledge/07-level-ux.md`
 - Audit & Verification → `knowledge/08-audit-verification.md`
+- Complex reasoning / root-cause / alternatives / high-rigor validation → `knowledge/09-reasoning-engine.md`
+- External benchmarks / HoYoverse / commercial-game references → `knowledge/10-external-reference-library.md`
 - Debug / Root Cause / Completion Verification → `knowledge/09-debugging-verification.md`
 - Design Decision / Review / Trade-off → `knowledge/10-design-evaluation.md`
 - High-adoption workflow patterns / reasoning quality → `knowledge/11-practice-patterns.md`
