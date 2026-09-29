@@ -821,3 +821,256 @@ Expansion should add possibility without making the game unreadable.
 | Metrics | Are scale/time/distance grounded in player capabilities? |
 | Production | Can the runtime and content budget express the design? |
 | Validation | Is there a greybox/playtest/telemetry plan? |
+
+
+# Chat Edition V2 — Level Type Router & Production Gates
+
+This layer prevents all levels from being evaluated as the same problem.
+
+## N. First Gate — Level Purpose / Type
+
+Before changing encounter density, TTK, enemy stats, route, or rewards, classify the primary job:
+
+- Mainline / Exploration / Travel;
+- Challenge / Roguelite / Wave;
+- Boss;
+- Tutorial / FTUE;
+- Resource / Farming;
+- Narrative / Spectacle;
+- Hub / Recovery.
+
+Secondary purposes are allowed, but one primary purpose controls the budget.
+
+A level whose primary purpose is travel/discovery/unlock should not be judged mainly by challenge-stage pressure.
+
+## O. Mainline / Exploration Workflow
+
+Use:
+
+`Purpose -> Entry Orientation -> Journey Question -> Travel Beat -> Discovery/Event -> Optional Decision -> Light Pressure -> Reward/Unlock -> Reorientation -> Exit`
+
+Required checks:
+
+- What makes the player want to move to the next space?
+- What changes during travel?
+- What can be discovered rather than marked?
+- What event changes interpretation or route?
+- What unlock/reward gives forward momentum?
+- Does combat support the journey or consume it?
+- Can the player recover after failure without replaying dead travel time?
+
+Useful ratios:
+
+- travel / combat / event / choice / reward time;
+- event density by time and distance;
+- optional-route uptake;
+- wrong-turn rate;
+- backtrack time;
+- objective-stall time;
+- unlock friction;
+- quit/abort location.
+
+For a single-map structure, travel variation can come from state change, encounter/event grammar, route availability, character interaction, world reaction, and visual/audio reveal rather than from map count.
+
+## P. Challenge / Roguelite / Wave Workflow
+
+Use:
+
+`Run State -> Build State -> Wave Role -> Pressure Axis -> Composition -> TTK/Attrition -> Choice/Reward -> Recovery -> Escalation -> Boss Test`
+
+Track separately:
+
+- challenge intensity;
+- difficulty;
+- resource attrition;
+- build opportunity;
+- build completion probability;
+- reward cadence;
+- recovery cadence.
+
+Do not use a monotonically rising curve. Peaks require recovery/replan windows.
+
+Test:
+- weak / ordinary / optimized builds;
+- lucky / median / unlucky offer sequences;
+- single-target / multi-target;
+- sustain / burst / control;
+- early / mid / late wave.
+
+Use P50/P90/P95 when tail failure matters.
+
+## Q. Checkpoint / Failure Recovery
+
+A checkpoint is an economy of replayed time.
+
+For each failure point define:
+
+- retry location;
+- state restored;
+- resources restored/lost;
+- buffs/build preserved;
+- narrative/event state;
+- travel repeated;
+- encounter repeated;
+- expected retry delay;
+- learning retained.
+
+Measure:
+
+`Failure Cost = Lost Progress + Repeated Time + Resource Loss + Cognitive Reset`
+
+High difficulty can remain fair when failure cost is low and cause is readable.
+
+Avoid:
+- long dead travel before the real test;
+- unrecoverable resource starvation after retry;
+- checkpoint after the lesson but before the player can practice it;
+- retry state that changes the intended test unintentionally.
+
+## R. Level Economy
+
+Treat rewards/resources as part of level structure.
+
+For each level or beat record:
+
+- entry resource state;
+- expected spend/loss;
+- guaranteed reward;
+- variable reward;
+- optional reward;
+- recovery source;
+- exit resource state;
+- farming repeat time;
+- source dominance risk.
+
+A reward should reinforce level purpose. Do not make optional exploration economically mandatory through overwhelming reward.
+
+For farming stages, compare:
+`Reward per run / time / difficulty / failure risk / daily limit`
+against other sources.
+
+## S. Spatial Pressure
+
+Encounter difficulty is partly spatial.
+
+Check:
+
+- threat entry directions;
+- front/back/side pressure;
+- safe space availability;
+- chokepoints;
+- ranged lanes;
+- cover;
+- mobility demand;
+- formation compression;
+- target-priority visibility;
+- camera/readability;
+- player escape route;
+- hazard overlap.
+
+The same enemy stats can create different difficulty when space changes.
+
+## T. Enemy Composition Contract
+
+Describe enemies by pressure role, not only ID:
+
+- Anchor / tank;
+- Burst threat;
+- Sustained pressure;
+- Ranged pressure;
+- Flanker/diver;
+- Controller;
+- Summoner/add source;
+- Support/buffer/healer;
+- Objective disruptor;
+- Attrition source.
+
+For each encounter ask what decision the composition creates:
+target priority, movement, timing, interrupt, resource conservation, burst window, formation response, or build adaptation.
+
+Two different enemy lists that create the same decision are low variety.
+
+## U. Learning -> Test -> Mastery
+
+For each important mechanic:
+
+1. Introduce with low punishment;
+2. Practice with one main variable;
+3. Combine with an existing mechanic;
+4. Twist the context;
+5. Test under real pressure;
+6. Reuse later without re-teaching.
+
+Track whether the player failed because:
+- they did not notice;
+- did not understand;
+- understood but could not execute;
+- executed but lacked legitimate power/resources;
+- were hit by hidden randomness.
+
+These are different problems.
+
+## V. Boss Teaching Contract
+
+Bosses should test previously established verbs unless the novelty is intentionally the lesson.
+
+For each phase:
+
+`Telegraph -> Player Read -> Required Response -> Feedback -> Recovery -> Escalation`
+
+Check:
+- what prior content taught this response;
+- whether the boss stresses or nullifies hero/build identities;
+- whether phase transitions reset readability;
+- whether add phases introduce a new decision or only more HP;
+- whether fail reason is legible.
+
+## W. Replayability & Procedural Levels
+
+Procedural generation is distribution design, not automatic replayability.
+
+Define:
+
+- invariant structure;
+- variable slots;
+- slot roles;
+- allowed combinations;
+- forbidden combinations;
+- pacing constraints;
+- key/gate reachability;
+- reward guarantees;
+- encounter compatibility;
+- seed/reproduction method;
+- bad-run recovery.
+
+Validate generated content with:
+- reachability;
+- no soft-lock;
+- minimum/maximum beat spacing;
+- difficulty band;
+- resource floor;
+- content repetition rate;
+- build/roster coverage.
+
+Authorial intent should live in constraints and grammar, not only random weights.
+
+## X. Level Acceptance Matrix V2
+
+| Layer | Question |
+|---|---|
+| Purpose | Is primary job explicit and preserved? |
+| Journey | What does the player anticipate, discover, decide and remember? |
+| Beat/Rhythm | Are pressure and recovery intentionally sequenced? |
+| Traversal | Are movement/time/route metrics grounded? |
+| Exploration/Event | Does travel create change or only delay? |
+| Encounter | What decision does each encounter force? |
+| Spatial Pressure | How does geometry change the threat? |
+| Composition | Are enemy roles creating varied priorities? |
+| Difficulty/TTK | Is the target tied to level type and player segment? |
+| Learning | Is there a teach-practice-test-mastery chain? |
+| Boss | Does it test readable learned verbs? |
+| Checkpoint | Is failure cost intentional? |
+| Economy | Do rewards/resources support the level job? |
+| Replayability | Do repeated/generative runs preserve pacing and validity? |
+| Mainline vs Challenge | Is combat pressure subordinate or primary for the right reason? |
+| Validation | What greybox/playtest/telemetry evidence can falsify the design? |
