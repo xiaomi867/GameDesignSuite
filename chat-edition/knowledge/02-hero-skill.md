@@ -1951,3 +1951,249 @@ A production-ready hero should pass:
 | Text | Can players correctly predict behavior from tooltips? |
 | Roster | Is the hero meaningfully distinct without raw power creep? |
 | Validation | What is verified and what still needs simulation/playtest/runtime evidence? |
+
+
+# Chat Edition V2 — Hero & Skill Production Gates
+
+This layer is the domain-specific execution contract used with `22-professional-workflows.md`. It does not replace the detailed reference above.
+
+## J. Hero Design Gate Sequence
+
+Use:
+
+`Hero Concept -> Roster Slot -> Combat Fantasy -> Kit Loop -> Team/Counterplay -> Stat Envelope -> Skill Mechanism -> Skill Value -> Growth -> Content Fit -> Tooltip -> Verification`
+
+Do not merge all of these into one pass.
+
+### J1. Hero Concept
+
+Required fields:
+
+- World Rule / why this person can exist;
+- Identity / occupation / social position;
+- Faction / relationships;
+- Personality / value / fear / contradiction;
+- Story function;
+- Character Fantasy;
+- Combat Fantasy;
+- Visual Keywords;
+- Silhouette / prop / material;
+- Animation verbs;
+- Player Recognition: what the player should understand within seconds;
+- Differentiation: what cannot be swapped with another hero without loss of identity.
+
+The concept gate fails when the hero is only “element + weapon + combat role + appearance”.
+
+### J2. Roster Slot
+
+Before full kit design, compare against the current roster:
+
+- role;
+- target pattern;
+- action/field-time demand;
+- resource grammar;
+- trigger topology;
+- damage/heal/shield shape;
+- team hook;
+- build dependency;
+- mastery curve;
+- content coverage;
+- narrative function.
+
+A new hero needs at least one meaningful new decision or relationship, not merely more throughput.
+
+### J3. Combat Loop / Kit
+
+Required:
+
+- Role;
+- Combat Loop;
+- Basic Attack;
+- Skill;
+- Ultimate;
+- Passive(s);
+- Resource;
+- Trigger;
+- State;
+- Target;
+- Team Hook;
+- Counterplay;
+- Skill Expression;
+- Synergy;
+- Anti-synergy;
+- Failure State;
+- Recovery;
+- Action / Field-Time Budget.
+
+Every slot should support the loop, set up a payoff, provide recovery, or deliberately solve a separate utility need.
+
+## K. Hero Stat Progression Contract
+
+For Lv1->cap / Lv100 tasks, define:
+
+- HP / ATK / DEF;
+- Speed / attack interval / action identity;
+- Crit / Crit DMG;
+- energy/resource cap;
+- role-relevant secondary stats;
+- fixed vs level-scaled stats;
+- Ascension / Breakthrough deltas;
+- Power Budget;
+- EHP / DPS / HPS expectations;
+- breakpoints;
+- representative level sampling.
+
+Recommended process:
+
+`Role Envelope -> Lv1 Baseline -> Max Target -> Curve Family -> Ascension Delta -> Samples -> Practical DPS/EHP/HPS -> Sensitivity -> Content Check`
+
+Minimum samples for a long curve should cover:
+- Lv1;
+- early milestone;
+- one or more midgame points;
+- pre/post breakthrough pairs where jumps occur;
+- late game;
+- cap.
+
+Do not judge the curve only from endpoints.
+
+## L. Skill Mechanism Gate
+
+Skill mechanism and skill numerical value are separate Decision Objects.
+
+Before final values, lock:
+
+| Field | Question |
+|---|---|
+| Skill Purpose | What job does this skill perform in the loop? |
+| Trigger | What starts it? |
+| Target | Who/what receives the effect? |
+| State | What state is required/created? |
+| Damage/Heal/Shield | What effect families exist? |
+| Resource | Cost/generate/refund/convert? |
+| Timing | Cast time, delay, interval, action lock? |
+| Buff/Debuff | What changes and on whom? |
+| Stack | How are layers gained/lost/capped? |
+| Group / Exclusive | What is mutually exclusive or grouped? |
+| Proc | What can trigger secondary effects? |
+| Crit | Which components can crit? |
+| Snapshot | Snapshot or dynamic? At what moment? |
+| Refresh | Refresh, extend, replace, independent instances? |
+| Interaction | What other skills/states/systems modify it? |
+| Counterplay | What can the enemy/player do around it? |
+| Boundary | Invalid targets, death, wave change, overflow, immunity, zero/negative cases? |
+| Runtime Semantics | What config/code actually implements the rule? |
+
+If one of these materially changes the formula or rotation and remains unknown, final Skill Value is blocked.
+
+## M. Skill Numerical Gate
+
+After mechanism is stable, define:
+
+| Parameter | Requirement |
+|---|---|
+| Scaling Object | ATK / HP / DEF / fixed / target stat / hybrid |
+| Multiplier | baseline and unit |
+| Hit Count | number of independent hits/ticks |
+| Target Factor | single / blast / AoE / bounce / random |
+| Coverage | expected targets affected |
+| Frequency | casts/procs per rotation/time |
+| Reliability | hit/proc/control realization |
+| Duration | persistent effect duration |
+| Cooldown | explicit or implicit action lock |
+| Energy / Resource | cycle cost and generation |
+| Uptime | practical, not only theoretical |
+| Level 1..N | curve family and per-level delta |
+| Star / Ascension | numerical vs mechanism node |
+| Breakpoint | threshold that changes actions/turns/cycle |
+| Formula | full order/caps/rounding |
+| Evidence | config/code/runtime/candidate |
+
+Evaluate value at rotation level, not only per tooltip event:
+
+`Practical Contribution = Event Value × Frequency × Coverage × Reliability × Uptime / Rotation Length`
+
+Use a more exact domain formula where one exists.
+
+## N. Lv1..N / Star / Ascension Separation
+
+Do not let every growth layer raise the same parameter blindly.
+
+Classify each upgrade:
+
+- Throughput;
+- Reliability;
+- Rotation;
+- Resource;
+- Duration/Uptime;
+- Target/Coverage;
+- QoL;
+- Rule Expansion;
+- Team Hook;
+- Capstone;
+- Mechanic Replacement.
+
+Check cumulative interaction. A small skill-level increase can become a large cliff when multiplied by star effects, speed breakpoints, target count, set bonuses, or team amplification.
+
+## O. Skill Description / Tooltip Gate
+
+Player-facing wording must be generated from the same semantic contract used for calculation.
+
+Preferred order:
+
+`Trigger/Action -> Target -> Effect -> Value -> Duration -> Stack/Limit -> Exception`
+
+Description QA:
+
+- correct subject;
+- exact target phrase;
+- correct scaling object;
+- correct displayed level/star context;
+- hit/tick count when player-relevant;
+- chance semantics;
+- duration;
+- stack cap;
+- refresh behavior;
+- group/exclusive rule where player-relevant;
+- proc/ICD limit;
+- threshold condition;
+- locked/unlocked state;
+- special exception.
+
+A clean sentence that predicts the wrong runtime behavior fails.
+
+## P. Runtime Verification
+
+For an existing project, use:
+
+`Tooltip -> Skill Config -> Parameter/Level Row -> Target -> Buff/Debuff -> Trigger/Group -> Parser -> Runtime Consumer -> Result`
+
+Evidence states must stay separate:
+- config tuple found = verified-config;
+- calculation/consumer path found = verified-code;
+- battle/log reproduction = verified-runtime.
+
+Skill balance is not runtime-verified merely because the formula sheet is correct.
+
+## Q. Hero/Skill Failure Modes
+
+Explicitly check:
+
+- Base kit intentionally crippled then repaired by star;
+- one teammate becomes mandatory;
+- one content type disables the core loop;
+- target selector contradicts fantasy/text;
+- scaling source contradicts stat progression;
+- speed/resource breakpoint creates hidden double value;
+- utility scaling grows without a cap while damage is budgeted;
+- random target invalidates stated reliability;
+- Snapshot/Refresh ambiguity changes realized value;
+- high theoretical DPS cannot fit the actual action window;
+- tooltip omits a rule that changes player decisions;
+- mechanic and numerical changes are bundled so root cause cannot be isolated.
+
+## R. Hero / Skill Acceptance
+
+A production candidate should answer:
+
+`Who is this -> Why this roster needs them -> What the player repeatedly does -> What decision expresses mastery -> How stats support that loop -> How each skill is calculated -> How upgrades change the loop -> What content enables/counters it -> What the tooltip promises -> What evidence verifies implementation`.
