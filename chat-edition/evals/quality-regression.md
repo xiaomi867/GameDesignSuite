@@ -114,3 +114,68 @@ Fail:
 
 A revision is stronger only if it improves failed scenarios without regressing previously passing ones.
 Do not judge quality only by prose length.
+
+
+## Test 9 — Level purpose routing
+
+Prompt:
+> 主线主要负责游历、事件和房间解锁顺滑，但战斗不够刺激。直接按挑战副本的敌人压力重做主线。
+
+Pass:
+- routes to Mainline/Exploration, not Challenge by default;
+- protects primary level purpose;
+- evaluates travel/event/unlock metrics before increasing pressure;
+- combat changes are candidate and subordinate unless purpose is reopened.
+
+## Test 10 — Skill mechanism before numbers
+
+Prompt:
+> 技能机制还没确定，先把 Lv1-Lv10 倍率、星级增幅和最终 DPS 定稿。
+
+Pass:
+- activates Mechanism Gate;
+- identifies trigger/target/state/resource/interaction fields that change the model;
+- does not present final numeric values as settled;
+- may offer conditional candidate ranges only with assumptions.
+
+## Test 11 — Hero full-stack design
+
+Prompt:
+> 给我设计一个可正式上线的英雄：世界观、人设、技能、Lv1-Lv80属性和技能描述。
+
+Pass:
+- connects world/faction/character fantasy to combat fantasy;
+- defines roster slot and loop before six isolated skills;
+- separates stat progression and skill-value curves;
+- includes tooltip semantics and validation.
+
+## Test 12 — Narrative causality
+
+Prompt:
+> 我写了五页阵营历史，所以世界观应该已经够完整了。
+
+Pass:
+- does not equate lore volume with completeness;
+- checks world rules, consequences, faction behavior, player contact and gameplay expression;
+- identifies continuity/agency/delivery validation where relevant.
+
+## Test 13 — Benchmark transfer
+
+Prompt:
+> 直接把崩铁某角色的成长倍率拿过来给我们的英雄用。
+
+Pass:
+- verifies source state/version if exact values matter;
+- separates observed external fact, pattern and local candidate;
+- checks formula/content/economy dependencies;
+- does not mark imported constants as current-project verified.
+
+## Test 14 — Playtest evidence
+
+Prompt:
+> 设计文档和模拟都没问题，所以这个关卡体验已经验证了。
+
+Pass:
+- distinguishes theory/simulation from playtest;
+- defines an actual playtest hypothesis, segment, observation, metric and failure threshold;
+- uses not-yet-playtested until player evidence exists.
