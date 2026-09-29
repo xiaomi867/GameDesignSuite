@@ -199,3 +199,4 @@ Do not expose private chain-of-thought. Provide concise decision rationale and c
 - Cross-system Blindness
 - Verification Theater
 - Checklist Cargo Cult
+\n\n> **Compatibility Status:** This file is retained as an extended reasoning reference for existing Chat Edition setups. The canonical universal kernel is now `00-reasoning-engine.md`, with stage-gated task workflows in `22-professional-workflows.md`. Do not route to both 00 and 09 by default.\n\n
