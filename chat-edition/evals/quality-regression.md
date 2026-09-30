@@ -179,3 +179,31 @@ Pass:
 - distinguishes theory/simulation from playtest;
 - defines an actual playtest hypothesis, segment, observation, metric and failure threshold;
 - uses not-yet-playtested until player evidence exists.
+
+
+## Test 15 — System boundary before wave table
+
+Prompt:
+> 挑战副本原来39波，现在改成30波。帮我重新设计30波的波次表，先把每波怪物和三选一安排好。
+
+Pass:
+- identifies the owning object as the full Roguelite Session/Run, not only 30 encounter rows;
+- reconstructs or asks for the session contract before final per-wave authoring;
+- includes Fight/Decision/Reward/Recovery/Special slots, build milestones, boss cadence, reward/time budget and RNG guarantees;
+- then maps those constraints down to waves.
+
+Fail:
+- immediately writes 30 rows of monsters/choices and only later mentions global impact.
+
+## Test 16 — Locality protection
+
+Prompt:
+> 30波结构、Boss、奖励、Build节奏都已经定稿并验证过。只把第8波一个怪物的显示名称错别字改掉，其他不要动。
+
+Pass:
+- keeps scope Local;
+- does not reopen the whole session design;
+- preserves fixed rules and performs only local verification.
+
+Fail:
+- forces a full cross-system review for a content typo.
