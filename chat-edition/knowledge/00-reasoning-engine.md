@@ -22,7 +22,70 @@ Scope:
 
 Use the lightest process that is still capable of catching the real failure. Do not apply a Cross-system ritual to a one-line edit, and do not treat an economy/roster/content problem as Local because the visible symptom is one number.
 
-## 2. Decision Object
+## 2. System Context & Boundary Gate
+
+Before choosing the Decision Object for a non-trivial design/rework, understand the system that owns the problem.
+
+A visible object is not automatically the system boundary:
+- one wave is not automatically the whole challenge system;
+- one price is not automatically the whole economy;
+- one hero skill is not automatically the whole hero loop;
+- one reward row is not automatically the progression contract;
+- one UI page is not automatically the player journey.
+
+Build the smallest **System Context Map** capable of preserving the whole behavior:
+
+`System Job -> Loop Layer -> Entry State -> Inputs -> Internal Phases -> Outputs -> Upstream -> Downstream -> Feedback Loops -> Session/Meta Consequence -> Fixed Rules`
+
+### Loop Stack
+
+Check the relevant layer(s):
+
+`Moment/Action -> Encounter -> Session/Run -> Meta Progression -> Long-term Content/Economy`
+
+A change at a lower layer must be escalated when it changes the contract of a higher layer.
+
+### Scope Escalation
+
+Treat a task as **Local** only when all are true:
+- the surrounding system contract is already understood;
+- the change does not alter cadence/count/state transitions;
+- it does not change decision budget, build opportunity, reward budget, resource flow, unlock timing, difficulty band, failure/recovery, or session length;
+- no meaningful downstream consumer changes;
+- verification can be local.
+
+Escalate to **System** when one system's internal loop or lifecycle changes.
+
+Escalate to **Cross-system** when outputs/constraints materially change another owner such as combat, economy, progression, level, roster, task, UI, liveops, or monetization.
+
+### Boundary-Mismatch Example
+
+Changing a Roguelite challenge from 39 waves to 30 is not primarily a “wave-table edit” if it changes:
+- total run time;
+- Fight / Decision / Reward / Recovery slot budget;
+- number and timing of skill/attribute choices;
+- build formation and power-spike timing;
+- special-system opportunities;
+- boss cadence;
+- reward budget;
+- failure/recovery structure.
+
+The Decision Object is then the **whole Session/Run contract**, and per-wave enemy rows are downstream implementation detail.
+
+### Context Exit Criteria
+
+Do not proceed to candidate design until you can answer:
+1. Why does this system exist?
+2. Where does it sit in the player's loop?
+3. What enters it?
+4. What repeatedly happens inside it?
+5. What leaves it, and who consumes that output?
+6. Which surrounding systems constrain it?
+7. Which player-facing outcome would change if this decision changes?
+
+If the answer is genuinely local, keep the task local. Global thinking is a boundary test, not an excuse to redesign everything.
+
+## 4. Decision Object
 
 State internally what is actually being decided.
 
@@ -35,7 +98,7 @@ Examples:
 
 If the prompt mixes several independent decisions, order them by dependency.
 
-## 3. Success Bar
+## 4. Success Bar
 
 Before proposing the final answer, define what success means.
 
@@ -48,7 +111,7 @@ Use:
 
 A strong Success Bar is falsifiable.
 
-## 4. Evidence Gate
+## 5. Evidence Gate
 
 Separate:
 - confirmed user constraints;
@@ -71,7 +134,7 @@ Valid outputs include:
 
 Absence of evidence is not evidence of absence.
 
-## 5. Stage Gate Semantics
+## 6. Stage Gate Semantics
 
 The active workflow comes from `22-professional-workflows.md`.
 
@@ -88,7 +151,7 @@ Do not advance because:
 
 Stage output is not private chain-of-thought. Surface only useful artifacts such as evidence, model, alternatives, finding, decision, or validation plan.
 
-## 6. Alternative / Hypothesis Discipline
+## 7. Alternative / Hypothesis Discipline
 
 ### Design
 When a material structural choice has real alternatives, compare 2–3 materially different options.
@@ -111,7 +174,7 @@ Use:
 
 One leading hypothesis at a time. A failed prediction weakens or falsifies the hypothesis; it is not an invitation to stack another patch.
 
-## 7. Model Before Precision
+## 8. Model Before Precision
 
 For quantitative work define:
 - variables/units;
@@ -128,7 +191,7 @@ Prefer range before point value.
 
 If a value has no model, it is `candidate`.
 
-## 8. Breakpoint / Distribution / Tail
+## 9. Breakpoint / Distribution / Tail
 
 Averages hide game behavior.
 
@@ -143,7 +206,7 @@ When relevant inspect:
 
 For repeated tuning, preserve failed scenarios as regression cases.
 
-## 9. Root Cause Classification
+## 10. Root Cause Classification
 
 Before accepting a fix, classify the cause:
 
@@ -158,7 +221,7 @@ Before accepting a fix, classify the cause:
 
 A symptom patch is acceptable only when explicitly labeled mitigation.
 
-## 10. Reference-Case Order
+## 11. Reference-Case Order
 
 Prefer:
 
@@ -169,7 +232,7 @@ Prefer:
 
 External success is not proof of local fit.
 
-## 11. Adversarial Pass
+## 12. Adversarial Pass
 
 Before finalizing ask:
 
@@ -183,7 +246,7 @@ Before finalizing ask:
 
 Use only relevant questions; do not mechanically inspect everything.
 
-## 12. Smallest Defensible Decision
+## 13. Smallest Defensible Decision
 
 Prefer:
 - root-cause fix over symptom patch;
@@ -194,7 +257,7 @@ Prefer:
 
 Do not expand scope merely to appear thorough.
 
-## 13. Completion Gate
+## 14. Completion Gate
 
 Before any claim equivalent to fixed/passed/ready/balanced/complete:
 
@@ -209,7 +272,7 @@ Evidence levels do not auto-upgrade:
 
 Use `DONE / DONE_WITH_CONCERNS / BLOCKED / NEEDS_CONTEXT / NOT ASSESSED` when useful.
 
-## 14. Reasoning TDD
+## 15. Reasoning TDD
 
 When modifying the Chat Edition itself:
 
@@ -222,7 +285,7 @@ When modifying the Chat Edition itself:
 
 Use `evals/quality-regression.md` and `evals/reasoning-pressure-regression.md`.
 
-## 15. Anti-patterns
+## 16. Anti-patterns
 
 - First-Idea Lock-in
 - Symptom Patch
