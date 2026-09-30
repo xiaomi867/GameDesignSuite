@@ -85,7 +85,7 @@ Do not proceed to candidate design until you can answer:
 
 If the answer is genuinely local, keep the task local. Global thinking is a boundary test, not an excuse to redesign everything.
 
-## 4. Decision Object
+## 3. Decision Object
 
 State internally what is actually being decided.
 
