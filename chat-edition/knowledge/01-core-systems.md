@@ -393,6 +393,88 @@ GDD、System Spec、Pitch Design Doc等正式文档。
 
 用户要求“不改机制”时，机制属于 Fixed Rule，只能调整允许变化的 Tunables。
 
+## System Context First — 先理解系统，再设计系统
+
+系统策划最危险的错误不是少检查一个字段，而是**一开始就把设计对象框小了**。
+
+在设计、重构或大幅调参前，先回答“这个系统在整套游戏和整局体验里负责什么”，再决定当前任务是不是局部问题。
+
+### System Role Reconstruction
+
+优先建立：
+
+`Game Promise -> Loop Stack -> System Job -> Session Contract -> Internal Loop -> Outputs -> Adjacent Systems -> Meta Consequence`
+
+至少确认：
+
+- 系统为什么存在；
+- 玩家何时进入、为什么进入；
+- 进入时带着什么状态/资源/Build；
+- 内部有哪些阶段和重复决策；
+- 玩家什么时候获得压力、选择、奖励、恢复和Payoff；
+- 系统产出什么；
+- 这些产出被谁消费；
+- 下一次循环被什么反馈改变；
+- 它与战斗、关卡、英雄、Build、经济、成长、任务、UI等哪些系统有真实依赖；
+- 哪些是 Fixed Rules。
+
+### Granularity Rule
+
+**当前看到的对象 ≠ 正确的设计边界。**
+
+例如：
+- 波次表是 Session 的一种表达，不等于 Session 本身；
+- 商店价格是经济系统一个接口，不等于价值循环；
+- 单技能倍率是 Hero Rotation 一个参数，不等于英雄强度；
+- 单关奖励是 Progression/Economy 一个出口，不等于关卡价值；
+- 一个界面节点是 Player Journey 一个触点，不等于完整UX路径。
+
+先判断对象所属的上一级循环；只有上一级合同不受影响，才允许按 Local 处理。
+
+### Scope Decision
+
+**Local**
+- 系统职责与完整合同已知；
+- 只改独立参数/内容；
+- 不改变节奏、状态、选择、资源、奖励、Build、解锁、失败恢复或Session时长；
+- 下游不需要联动调节。
+
+**System**
+- 改变内部生命周期、阶段、数量、节奏、规则、选择预算、奖励预算或失败恢复。
+
+**Cross-system**
+- 输出变化会要求其他专业域同步重算、重配或重验。
+
+### Session-first Rule
+
+涉及“总波数、总层数、总回合数、章节长度、Run长度、每日次数、奖励节点数量、选择次数”等**结构数量变化**时，默认先升到 Session/System 层检查。
+
+例如 Roguelite 39波改30波，必须先重算：
+- Session总时长；
+- Fight / Decision / Reward / Recovery / Special Event 的 Slot Budget；
+- Build Seed / Engine / Scaler / Stabilizer / Capstone 的成型节奏；
+- 技能/属性/特殊系统选择次数与间隔；
+- Power Spike；
+- Boss Check；
+- 随机保底；
+- Reward Budget；
+- Cognitive Load；
+- Failure / Recovery。
+
+这些稳定后，才进入“第几波放什么怪/给什么选择”。
+
+### Context Sufficiency
+
+不是要求每次都做全游戏审计。
+
+如果一项修改能明确证明：
+1. 不改变上一级Loop合同；
+2. 不改变上下游；
+3. 不改变玩家长期/整局行为；
+4. 可以用局部证据验证；
+
+则保持 Local，避免把小问题无限放大。
+
 ## 系统设计模板
 
 对每个系统明确：
