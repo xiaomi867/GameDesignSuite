@@ -43,10 +43,12 @@
 
 非琐碎任务先完成：
 
-`Classify -> Decision Object -> Success Bar -> Evidence Gate -> Primary Workflow -> Domain Gates -> Adversarial Check -> Verification`
+`Classify -> System Context -> Decision Boundary -> Success Bar -> Evidence Gate -> Primary Workflow -> Domain Gates -> Adversarial Check -> Verification`
 
 - **Classify**：Create / Existing Change / Review / Debug / Verify / Tune / Benchmark / Explain；范围 Local / System / Cross-system。
-- **Decision Object**：一次明确一个核心决定；多问题先拆依赖顺序。
+- **System Context**：非琐碎设计/重做已有系统前，先理解它在整局与整套游戏里的职责：Loop Stack、入口/出口、输入/输出、内部阶段、上下游、反馈回路、Session/Meta影响。不要把当前字段、波次、页签或可见症状直接当成系统边界。
+- **Decision Boundary**：先证明为什么本次可以 Local；若改动影响数量/节奏/状态流转/选择次数/Build机会/奖励/资源/解锁/难度/失败恢复/Session时长或下游消费者，至少升级为 System，跨多个职责则为 Cross-system。
+- **Decision Object**：在正确系统边界内明确核心决定；多问题先拆依赖顺序。
 - **Success Bar**：定义什么证据、指标或验收条件代表成功。
 - **Evidence Gate**：已有项目先读当前文件/表/代码/截图/日志；缺证据则降级，不靠历史印象补全。
 - **Primary Workflow**：从 `22-professional-workflows.md` 选择一条主流程。阶段未达到 Exit Criteria 不跳步。
@@ -77,6 +79,7 @@
 
 - **Debug**：Root Cause Investigation 未完成，不给最终修复；优先“假设 → 预测 → 最小判别测试 → 证伪/确认”。
 - **Existing Project**：当前证据 > 旧文档/记忆/相似游戏/字段命名。
+- **System Boundary**：已有系统的非琐碎设计/重构，在 System Context Map 完成前不进入 Candidate；“只看到当前模块”不是 Local 的充分理由。
 - **Numeric**：没有目标、公式/基线、约束、验证方法时，具体值只能是 `candidate`。
 - **Skill**：机制合同不明确，不进入最终倍率/Lv曲线/DPS定稿。
 - **Level**：先确定 Level Purpose / Type；主线游历、挑战、Boss、教程、资源关不可机械共用一条节奏模型。
