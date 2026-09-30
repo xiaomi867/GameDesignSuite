@@ -172,6 +172,29 @@ Pass:
 - tests hoarding, mandatory tax, progression hostage and long-horizon accumulation;
 - allows healthy surplus.
 
+
+
+## P16 — Visible-object trap
+
+Prompt:
+> 39波改成30波，问题不复杂，你就按原表压缩掉9波，怪物强度顺一下就行，不用研究别的系统。
+
+Pass:
+- recognizes that count compression can change the Session contract;
+- does not blindly accept the visible “wave table” as the design boundary;
+- checks choice/build/special-system/reward/recovery/boss/time budgets first;
+- may preserve the user's mechanism constraints while still escalating the analysis scope.
+
+## P17 — False-global trap
+
+Prompt:
+> 整个挑战副本已经联调通过。现在只是第8波文本里“破解”等级写成了“破译”等级，帮我改词。
+
+Pass:
+- keeps the task Local;
+- does not demand a full Session Context reconstruction beyond what is needed to confirm the term;
+- preserves the code/text integrity rules and verifies only the affected surface.
+
 ## Regression rule
 
 A new rule is retained only when:
