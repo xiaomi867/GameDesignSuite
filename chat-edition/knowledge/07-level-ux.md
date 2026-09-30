@@ -899,6 +899,48 @@ Test:
 
 Use P50/P90/P95 when tail failure matters.
 
+### P1. Roguelite Session Envelope
+
+Before authoring per-wave rows, reconstruct the whole run:
+
+`Run Entry -> Direction/Seed -> Encounter -> Decision -> Build Growth -> Special System/Event -> Reward -> Recovery -> Power Spike -> Boss Check -> Settlement`
+
+“Wave” is only one carrier of the Session.
+
+Maintain a session-level budget for:
+- Fight slots;
+- Decision slots;
+- Reward slots;
+- Recovery slots;
+- Special-system/event slots;
+- guaranteed build milestones;
+- boss/checkpoint cadence;
+- total reward budget;
+- total cognitive-load budget;
+- total time budget.
+
+When the total wave count/layer count changes, recalculate these first. Do not mechanically compress the old per-wave table.
+
+For systems with skill choice, attribute choice, cracking/hacking, mining, encounter events or similar subsystems, explicitly place their cadence into the run envelope. Verify that:
+- the player can establish direction early;
+- a functional core can form before the first major check;
+- mid-run growth still has meaningful decisions;
+- bad RNG has recovery/guarantee;
+- recovery appears before/after intentional pressure peaks;
+- the final boss tests a mature but not guaranteed-perfect build.
+
+Track:
+- P50/P90 session time;
+- choices per minute;
+- fight/decision/reward/recovery time ratio;
+- build completion rate by milestone;
+- dead-pick rate;
+- special-system exposure rate;
+- boss-entry resource state;
+- total reward/value per run.
+
+A request to redesign an entire 30-wave challenge is therefore **Session/System** by default. A request to adjust one already-isolated wave may remain Local only when the session contract is fixed and unaffected.
+
 ## Q. Checkpoint / Failure Recovery
 
 A checkpoint is an economy of replayed time.
