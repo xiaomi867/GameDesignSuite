@@ -16,11 +16,61 @@ Do not jump over a stage because the likely answer seems obvious.
 
 Do not expose private chain-of-thought. Expose the artifact needed for review: evidence, model, alternatives, tradeoffs, findings, or validation.
 
+## 1.5 System Understanding / Boundary Gate
+
+Use this before non-trivial Create / Existing Project Change / Tune work.
+
+The goal is not to inspect every system. The goal is to prevent optimizing the wrong boundary.
+
+### Required artifact — System Context Map
+
+Capture only the relevant fields:
+
+| Field | Question |
+|---|---|
+| System Job | Why does this system exist for the player/game? |
+| Loop Layer | Moment / Encounter / Session / Meta / Long-term? |
+| Entry | What state/resources/player intent enter? |
+| Internal Flow | What phases/decisions repeat inside? |
+| Output | What state/reward/progression leaves? |
+| Upstream | What supplies or unlocks it? |
+| Downstream | Who consumes its output? |
+| Feedback Loop | What output changes the next repetition? |
+| Session Contract | How does it affect time, pressure, choice, recovery, payoff? |
+| Fixed Rules | What cannot be changed? |
+
+### Boundary Decision
+
+After the map, explicitly decide:
+- `Local`: one parameter/content item, surrounding contract unchanged;
+- `System`: internal lifecycle/cadence/state/reward/decision structure changes;
+- `Cross-system`: another owner must be retuned/revalidated.
+
+### Automatic escalation triggers
+
+Do not keep a task Local merely because the user named one feature. Escalate when the change modifies any of:
+- total count or cadence;
+- state-transition topology;
+- number/timing of meaningful choices;
+- build formation or breakpoint timing;
+- reward/resource budget;
+- unlock/progression pacing;
+- difficulty/TTK envelope;
+- failure/recovery;
+- session duration;
+- outputs consumed by another system.
+
+### Locality protection
+
+Do not over-expand a truly local task.
+
+If the system contract is already fixed and verified, and the request only changes a typo, label, visual value, isolated constant, or content row with no material downstream effect, keep the response Local and verify locally.
+
 ## 2. Create / New Design
 
 Use for new systems, features, heroes, levels, economies, itemization, or major redesigns.
 
-`Intent -> Player Outcome -> Constraints -> Existing Pattern -> Problem Model -> Alternatives -> Tradeoff -> Candidate -> Cross-system Ripple -> Failure Modes -> Validation -> Acceptance`
+`Intent -> System Context -> Boundary -> Player Outcome -> Constraints -> Existing Pattern -> Problem Model -> Alternatives -> Tradeoff -> Candidate -> Cross-system Ripple -> Failure Modes -> Validation -> Acceptance`
 
 ### Gates
 
@@ -56,11 +106,13 @@ Use for new systems, features, heroes, levels, economies, itemization, or major 
 
 Use when the user asks to modify an existing system, configuration, code path, document, hero, level, or economy.
 
-`Evidence -> Current State -> Symptom -> Root Cause -> Constraint -> Candidates -> Minimal Change -> Ripple -> Verification`
+`Evidence -> System Context -> Boundary -> Current State -> Symptom -> Root Cause -> Constraint -> Candidates -> Minimal Change -> Ripple -> Verification`
 
 ### Gates
 
 - **Evidence Gate**: inspect current artifact first. Historical memory is context, not proof.
+- **System Context Gate**: reconstruct the owning loop and upstream/downstream contract before deciding the change is Local.
+- **Boundary Gate**: justify Local/System/Cross-system using observable impact, not the feature/file name.
 - **Current-State Gate**: describe what actually happens now.
 - **Root-Cause Gate**: classify Local Parameter / Rule Interaction / System Structure / Cross-system / Content / UX / Implementation / Evidence Error.
 - **Change Gate**: choose smallest change that addresses the cause; temporary mitigation must be labeled.
